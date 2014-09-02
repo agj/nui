@@ -3,13 +3,16 @@
  */
 
 requirejs.config({
-	baseUrl: "js/lib",
+	baseUrl: 'js/lib',
 	paths: {
-		"app": "../app"
+		'app': '../app',
 	},
 	shim: {
-	}
+		'lazy': {
+			exports: 'Lazy',
+		},
+	},
 });
 
-require(["app/main"]);
+require(['app/main']);
 

@@ -23,7 +23,7 @@ gulp.task('bower', function () {
 			'bacon/dist/Bacon.min.js',
 			'jquery/dist/jquery.min.js',
 			'lazy.js/lazy.js',
-			'rsvp/rsvp.min.js',
+			'rsvp/rsvp.js',
 			'signals/dist/signals.min.js',
 		].map( function (t) { return path.bower + t; })
 	)
