@@ -6,7 +6,6 @@ var rjsReplace = require('gulp-requirejs-replace-script');
 var replace = require('gulp-replace');
 var clean = require('gulp-clean');
 var rename = require('gulp-rename');
-// require('sugar');
 
 
 var path = {
@@ -15,29 +14,33 @@ var path = {
 	bower: 'src/bower_components/',
 };
 
+var bowerComponents = [
+	'requirejs/require.js',
+	'bacon/dist/Bacon.min.js',
+	'jquery/dist/jquery.min.js',
+	'lazy.js/lazy.js',
+	'rsvp/rsvp.js',
+	'signals/dist/signals.min.js',
+];
 
-gulp.task('bower', function () {
-	gulp.src(
-		[
-			'requirejs/require.js',
-			'bacon/dist/Bacon.min.js',
-			'jquery/dist/jquery.min.js',
-			'lazy.js/lazy.js',
-			'rsvp/rsvp.js',
-			'signals/dist/signals.min.js',
-		].map( function (t) { return path.bower + t; })
-	)
-		.pipe(rename( function (path) {
-			path.basename = path.basename.split('.')[0];
-		}))
-		.pipe(gulp.dest('src/js/lib'));
-});
+
+/////
 
 gulp.task('default', ['clean'], function () {
 	gulp.start('build');
 });
 gulp.task('build', ['copyHTML', 'copyFiles', 'parseAMD']);
 
+gulp.task('bower', function () {
+	gulp.src( bowerComponents.map( function (t) { return path.bower + t; }) )
+		.pipe(rename( function (path) {
+			path.basename = path.basename.replace(/\.min$/, '');
+		}))
+		.pipe(gulp.dest('src/js/lib'));
+});
+
+
+/////
 
 gulp.task('clean', function () {
 	return gulp.src([path.build + '**/*'], { read: false })

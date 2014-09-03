@@ -7,6 +7,7 @@ define( function(require) {
 	var sequence = require('agj/function/sequence');
 	var to = require('agj/to');
 	var is = require('agj/is');
+	var log = require('agj/utils/log');
 
 	function fromThenable(thenable) {
 		return new RSVP.Promise( function (resolve, reject) {
