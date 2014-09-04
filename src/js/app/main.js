@@ -28,7 +28,7 @@ define( function(require) {
 				.map( function (path) {
 					return parsePath($(path).attr('d')).map(parsePathInstruction);
 				})
-				.flatten()
+				// .flatten()
 				.toArray();
 
 		}).then(doDraw);
