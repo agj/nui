@@ -2,42 +2,47 @@
 define( function(require) {
 	'use strict';
 
-	var $ = require('jquery');
+	var $    = require('jquery');
 	var lazy = require('lazy');
-	var λ = require('lambda-functional');
+	var λ    = require('lambda-functional');
 
-	var log = require('agj/utils/log');
-	var draw = require('agj/graphics/draw');
+	var log       = require('agj/utils/log');
+	var draw      = require('agj/graphics/draw');
 	var DrawStyle = require('agj/graphics/DrawStyle');
-	var merge = require('agj/object/merge');
-	var mapObj = require('agj/object/map');
-	var first = require('agj/array/first');
-	var last = require('agj/array/last');
+	var merge     = require('agj/object/merge');
+	var mapObj    = require('agj/object/map');
+	var first     = require('agj/array/first');
+	var last      = require('agj/array/last');
 	var findIndex = require('agj/array/findIndex');
-	var clone = require('agj/array/clone');
-	var within = require('agj/array/within');
-	var partial = require('agj/function/partial');
+	var clone     = require('agj/array/clone');
+	var within    = require('agj/array/within');
+	var partial   = require('agj/function/partial');
 	var autoCurry = require('agj/function/autoCurry');
-	var seq = require('agj/function/sequence');
-	var not = require('agj/function/not');
-	var is = require('agj/is');
-	var to = require('agj/to');
+	var seq       = require('agj/function/sequence');
+	var not       = require('agj/function/not');
+	var fixArity  = require('agj/function/fixArity');
+	var is        = require('agj/is');
+	var to        = require('agj/to');
 
-	var drawA = require('app/drawA');
+	var drawA       = require('app/drawA');
 	var argumentize = require('app/argumentize');
-	var provided = require('app/provided');
+	var provided    = require('app/provided');
 	var offsetPoint = require('app/point/add');
-	var distance = require('app/point/distance');
+	var distance    = require('app/point/distance');
+
+	var fix = fixArity(1);
 
 	var doDraw = autoCurry( function (canvas, strokes) {
 		var ctx = canvas.getContext('2d');
 
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+
 		var drawHole = drawA.hole(ctx);
 		var drawPin = drawA.pin(ctx);
 
-		strokes
-		.map(normalize({ x: canvas.width, y: canvas.width }))
-		.map(removeRedundancy())
+		removeRedundancy(
+			strokes.map(normalize({ x: canvas.width, y: canvas.width }))
+		)
 
 		.forEach( function (stroke) {
 			lazy(stroke).consecutive(2).each( argumentize( function (a, b) {
@@ -72,9 +77,11 @@ define( function(require) {
 		};
 	}
 
-	function removeRedundancy() {
-		var points = [];
-		return function (stroke) {
+	function removeRedundancy(strokes) {
+		// var points = [];
+		var points = strokes.map(fix(first)).concat(strokes.map(fix(last)));
+
+		return strokes.map( function (stroke) {
 			var firstOrLast = within([first(stroke), last(stroke)]);
 			return stroke.map( provided( not(firstOrLast), to.id,
 				function (point) {
@@ -87,7 +94,7 @@ define( function(require) {
 					}
 				}
 			));
-		};
+		});
 	}
 
 	return doDraw;
