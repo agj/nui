@@ -16,6 +16,7 @@ define( function(require) {
 	var findIndex = require('agj/array/findIndex');
 	var clone     = require('agj/array/clone');
 	var within    = require('agj/array/within');
+	var flatten   = require('agj/array/flatten');
 	var partial   = require('agj/function/partial');
 	var autoCurry = require('agj/function/autoCurry');
 	var seq       = require('agj/function/sequence');
@@ -27,6 +28,8 @@ define( function(require) {
 	var drawA       = require('app/drawA');
 	var argumentize = require('app/argumentize');
 	var provided    = require('app/provided');
+	var unify       = require('app/unify');
+	var inspect     = require('app/inspect');
 	var offsetPoint = require('app/point/add');
 	var distance    = require('app/point/distance');
 
@@ -45,7 +48,7 @@ define( function(require) {
 		)
 
 		.forEach( function (stroke) {
-			lazy(stroke).consecutive(2).each( argumentize( function (a, b) {
+			lazy(stroke).consecutive(2).each( argumentize(function (a, b) {
 				draw.line(ctx, new DrawStyle().lineColor(0x000000).lineWeight(3).lineAlpha(0.3), a, b);
 			}));
 			drawHole(first(stroke));
@@ -78,23 +81,42 @@ define( function(require) {
 	}
 
 	function removeRedundancy(strokes) {
-		// var points = [];
 		var points = strokes.map(fix(first)).concat(strokes.map(fix(last)));
 
 		return strokes.map( function (stroke) {
 			var firstOrLast = within([first(stroke), last(stroke)]);
-			return stroke.map( provided( not(firstOrLast), to.id,
-				function (point) {
-					var ptIndex = findIndex(points, seq(distance(point), is.lt(15)));
-					if (ptIndex === -1) {
-						points.push(point);
-						return point;
-					} else {
-						return points[ptIndex];
+			stroke = lazy(stroke)
+				.map( provided( not(firstOrLast), to.id,
+					function (point) {
+						var ptIndex = findIndex(points, seq(distance(point), is.lt(15)));
+						if (ptIndex === -1) {
+							points.push(point);
+							return point;
+						} else {
+							return points[ptIndex];
+						}
 					}
-				}
-			));
+				))
+				.toArray();
+
+			if (stroke.length < 3) return stroke;
+			return lazy(stroke)
+				.consecutive(3)
+				.reduce( argumentizeReduce(function (r, before, point, after) {
+					log(r, before, point, after);
+					if (distance(point, before) >= 15) {
+						r = r.concat([point]);
+					}
+					return r;
+				}), [first(stroke)])
+				.concat([last(stroke)]);
 		});
+	}
+
+	function argumentizeReduce(fn) {
+		return function (accumulated, next) {
+			return fn.apply(this, [accumulated].concat(next));
+		};
 	}
 
 	return doDraw;
