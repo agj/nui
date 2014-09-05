@@ -25,11 +25,13 @@ define( function(require) {
 	var is        = require('agj/is');
 	var to        = require('agj/to');
 
+	var config      = require('app/config');
 	var drawA       = require('app/drawA');
 	var argumentize = require('app/argumentize');
 	var provided    = require('app/provided');
 	var unify       = require('app/unify');
 	var inspect     = require('app/inspect');
+	var map         = require('app/map');
 	var offsetPoint = require('app/point/add');
 	var distance    = require('app/point/distance');
 
@@ -43,19 +45,51 @@ define( function(require) {
 		var drawHole = drawA.hole(ctx);
 		var drawPin = drawA.pin(ctx);
 
-		removeRedundancy(
-			strokes.map(normalize({ x: canvas.width, y: canvas.width }))
-		)
+		// removeRedundancy(
+			strokes
+			.map(absolutizeStrokes())
+			.map(strokeToPoints)
+			.map(map(normalizePoint({ x: canvas.width, y: canvas.width })))
+			// .map(normalize({ x: canvas.width, y: canvas.width }))
+		// )
 
-		.forEach( function (stroke) {
-			lazy(stroke).consecutive(2).each( argumentize(function (a, b) {
+		.forEach( function (points) {
+			log(points);
+			lazy(points).consecutive(2).each( argumentize(function (a, b) {
 				draw.line(ctx, new DrawStyle().lineColor(0x000000).lineWeight(3).lineAlpha(0.3), a, b);
 			}));
-			drawHole(first(stroke));
-			drawHole(last(stroke));
-			stroke.slice(1, -1).forEach(drawPin);
+			drawHole(first(points));
+			drawHole(last(points));
+			points.slice(1, -1).forEach(drawPin);
 		});
 	});
+
+	function absolutizeStrokes() {
+		var pos = { x: 0, y: 0 };
+		return function (stroke) {
+			return stroke.map( function (inst) {
+				inst = merge({}, inst);
+				if (!inst.absolute) {
+					inst.coords = inst.coords.map(offsetPoint(pos));
+				}
+				pos = last(inst.coords);
+				return inst;
+			});
+		};
+	}
+
+	function strokeToPoints(stroke) {
+		return flatten(stroke.map( function (inst) {
+			return inst.coords;
+		}));
+	}
+
+	function normalizePoint(target) {
+		target = mapObj(target, λ('/109'));
+		return function (pt) {
+			return { x: pt.x * target.x, y: pt.y * target.y };
+		};
+	}
 
 	function normalize(target) {
 		target = mapObj(target, λ('/109'));
@@ -81,35 +115,34 @@ define( function(require) {
 	}
 
 	function removeRedundancy(strokes) {
-		var points = strokes.map(fix(first)).concat(strokes.map(fix(last)));
+		var refPoints = strokes.map(fix(first)).concat(strokes.map(fix(last)));
 
-		return strokes.map( function (stroke) {
-			var firstOrLast = within([first(stroke), last(stroke)]);
-			stroke = lazy(stroke)
+		return strokes.map( function (points) {
+			var firstOrLast = within([first(points), last(points)]);
+			points = lazy(points)
 				.map( provided( not(firstOrLast), to.id,
 					function (point) {
-						var ptIndex = findIndex(points, seq(distance(point), is.lt(15)));
+						var ptIndex = findIndex(refPoints, seq(distance(point), is.lt(15)));
 						if (ptIndex === -1) {
-							points.push(point);
+							refPoints.push(point);
 							return point;
 						} else {
-							return points[ptIndex];
+							return refPoints[ptIndex];
 						}
 					}
 				))
 				.toArray();
 
-			if (stroke.length < 3) return stroke;
-			return lazy(stroke)
+			if (points.length < 3) return points;
+			return lazy(points)
 				.consecutive(3)
 				.reduce( argumentizeReduce(function (r, before, point, after) {
-					log(r, before, point, after);
-					if (distance(point, before) >= 15) {
+					if (config.DONT_REDUCE_POINTS || distance(point, before) >= 15) {
 						r = r.concat([point]);
 					}
 					return r;
-				}), [first(stroke)])
-				.concat([last(stroke)]);
+				}), [first(points)])
+				.concat([last(points)]);
 		});
 	}
 
