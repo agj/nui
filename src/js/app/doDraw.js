@@ -13,11 +13,23 @@ define( function(require) {
 	var mapObj = require('agj/object/map');
 	var first = require('agj/array/first');
 	var last = require('agj/array/last');
+	var findIndex = require('agj/array/findIndex');
+	var clone = require('agj/array/clone');
+	var within = require('agj/array/within');
 	var partial = require('agj/function/partial');
+	var autoCurry = require('agj/function/autoCurry');
+	var seq = require('agj/function/sequence');
+	var not = require('agj/function/not');
+	var is = require('agj/is');
+	var to = require('agj/to');
 
+	var drawA = require('app/drawA');
+	var argumentize = require('app/argumentize');
+	var provided = require('app/provided');
+	var offsetPoint = require('app/point/add');
+	var distance = require('app/point/distance');
 
-	function doDraw(strokes) {
-		var canvas = $('#game')[0];
+	var doDraw = autoCurry( function (canvas, strokes) {
 		var ctx = canvas.getContext('2d');
 
 		var normal = { x: canvas.width / 109, y: canvas.width / 109 };
@@ -25,10 +37,11 @@ define( function(require) {
 			return { x: pt.x * normal.x, y: pt.y * normal.y };
 		};
 
-		var drawHole = partial(drawHole_, [ctx]);
-		var drawPin = partial(drawPin_, [ctx]);
+		var drawHole = drawA.hole(ctx);
+		var drawPin = drawA.pin(ctx);
 
 		var pos = { x: 0, y: 0 };
+		var points = [];
 
 		strokes.map( function (stroke) {
 			return lazy(stroke).map( function (inst) {
@@ -45,38 +58,30 @@ define( function(require) {
 			}).map(normalize).toArray();
 		})
 
+		.map( function (stroke) {
+			var firstOrLast = within([first(stroke), last(stroke)]);
+			return stroke.map( provided( not(firstOrLast), to.id,
+				function (point) {
+					var ptIndex = findIndex(points, seq(distance(point), is.lt(15)));
+					if (ptIndex === -1) {
+						points.push(point);
+						return point;
+					} else {
+						return points[ptIndex];
+					}
+				}
+			));
+		})
+
 		.forEach( function (stroke) {
-			lazy(stroke).consecutive(2).each( argumentize(function (a, b) {
-				draw.line(ctx, new DrawStyle().lineColor(0xff0000).lineWeight(3).lineAlpha(1), a, b);
+			lazy(stroke).consecutive(2).each( argumentize( function (a, b) {
+				draw.line(ctx, new DrawStyle().lineColor(0x000000).lineWeight(3).lineAlpha(0.3), a, b);
 			}));
 			drawHole(first(stroke));
 			drawHole(last(stroke));
 			stroke.slice(1, -1).forEach(drawPin);
 		});
-	}
-
-	function offsetPoint(pa, pb) {
-		return {
-			x: pa.x + pb.x,
-			y: pa.y + pb.y,
-		};
-	}
-
-	function argumentize(fn) {
-		return function (arr) {
-			return fn.apply(this, arr);
-		};
-	}
-
-	var holeStyle = new DrawStyle().lineColor(0xff0000).lineWeight(3).lineAlpha(1);
-	var pinStyle = new DrawStyle().fillColor(0x0000ff).fillAlpha(1);
-
-	function drawHole_(ctx, point) {
-		draw.circle(ctx, holeStyle, merge(point, { radius: 5 } ));
-	}
-	function drawPin_(ctx, point) {
-		draw.circle(ctx, pinStyle, merge(point, { radius: 3 } ));
-	}
+	});
 
 	return doDraw;
 

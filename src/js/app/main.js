@@ -10,8 +10,7 @@ define( function(require) {
 
 	var toArray = require('agj/utils/toArray');
 	var log = require('agj/utils/log');
-	var draw = require('agj/graphics/draw');
-	var DrawStyle = require('agj/graphics/DrawStyle');
+	var partial = require('agj/function/partial');
 
 	var when = require('app/when');
 	var doDraw = require('app/doDraw');
@@ -20,18 +19,17 @@ define( function(require) {
 	rsvp.on('error', raise);
 
 	when($(document).ready)
-		.then( function () {
-			return when($.get('./data/svg/04e2d.svg'));
-
-		}).then( function (result) {
-			return lazy(toArray($(result).find('path')))
-				.map( function (path) {
-					return parsePath($(path).attr('d')).map(parsePathInstruction);
-				})
-				// .flatten()
-				.toArray();
-
-		}).then(doDraw);
+	.then( function () {
+		return when($.get('./data/svg/04e2d.svg'));
+	})
+	.then( function (result) {
+		return lazy(toArray($(result).find('path')))
+			.map( function (path) {
+				return parsePath($(path).attr('d')).map(parsePathInstruction);
+			})
+			.toArray();
+	})
+	.then(doDraw($('#game')[0]));
 
 
 	function raise(err) {
