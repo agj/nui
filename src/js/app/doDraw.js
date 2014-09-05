@@ -32,19 +32,32 @@ define( function(require) {
 	var doDraw = autoCurry( function (canvas, strokes) {
 		var ctx = canvas.getContext('2d');
 
-		var normal = { x: canvas.width / 109, y: canvas.width / 109 };
-		var normalize = function (pt) {
-			return { x: pt.x * normal.x, y: pt.y * normal.y };
-		};
-
 		var drawHole = drawA.hole(ctx);
 		var drawPin = drawA.pin(ctx);
 
-		var pos = { x: 0, y: 0 };
-		var points = [];
+		strokes
+		.map(normalize({ x: canvas.width, y: canvas.width }))
+		.map(removeRedundancy())
 
-		strokes.map( function (stroke) {
-			return lazy(stroke).map( function (inst) {
+		.forEach( function (stroke) {
+			lazy(stroke).consecutive(2).each( argumentize( function (a, b) {
+				draw.line(ctx, new DrawStyle().lineColor(0x000000).lineWeight(3).lineAlpha(0.3), a, b);
+			}));
+			drawHole(first(stroke));
+			drawHole(last(stroke));
+			stroke.slice(1, -1).forEach(drawPin);
+		});
+	});
+
+	function normalize(target) {
+		target = mapObj(target, λ('/109'));
+		var normalizePoint = function (pt) {
+			return { x: pt.x * target.x, y: pt.y * target.y };
+		};
+		var pos = { x: 0, y: 0 };
+
+		return function (stroke) {
+			return stroke.map( function (inst) {
 				var pt;
 				if (inst.command === 'm') {
 					pt = inst.coords[0];
@@ -55,10 +68,13 @@ define( function(require) {
 					pos = inst.absolute ? pt : offsetPoint(pt, pos);
 					return pos;
 				}
-			}).map(normalize).toArray();
-		})
+			}).map(normalizePoint);
+		};
+	}
 
-		.map( function (stroke) {
+	function removeRedundancy() {
+		var points = [];
+		return function (stroke) {
 			var firstOrLast = within([first(stroke), last(stroke)]);
 			return stroke.map( provided( not(firstOrLast), to.id,
 				function (point) {
@@ -71,17 +87,8 @@ define( function(require) {
 					}
 				}
 			));
-		})
-
-		.forEach( function (stroke) {
-			lazy(stroke).consecutive(2).each( argumentize( function (a, b) {
-				draw.line(ctx, new DrawStyle().lineColor(0x000000).lineWeight(3).lineAlpha(0.3), a, b);
-			}));
-			drawHole(first(stroke));
-			drawHole(last(stroke));
-			stroke.slice(1, -1).forEach(drawPin);
-		});
-	});
+		};
+	}
 
 	return doDraw;
 
