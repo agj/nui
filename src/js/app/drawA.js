@@ -10,7 +10,7 @@ define( function(require) {
 
 
 	var holeStyle = new DrawStyle().lineColor(0xff0000).lineWeight(3).lineAlpha(1);
-	var pinStyle = new DrawStyle().fillColor(0x0000ff).fillAlpha(1);
+	var pinStyle = new DrawStyle().fillColor(0x0000ff).fillAlpha(0.4);
 
 	var drawHole = autoCurry( function (ctx, point) {
 		draw.circle(ctx, holeStyle, merge(point, { radius: 5 } ));

@@ -33,6 +33,7 @@ define( function(require) {
 	var unify       = require('app/unify');
 	var inspect     = require('app/inspect');
 	var map         = require('app/map');
+	var bind        = require('app/bind');
 	var offsetPoint = require('app/point/add');
 	var distance    = require('app/point/distance');
 	var interpolate = require('app/point/interpolate');
@@ -48,13 +49,21 @@ define( function(require) {
 		var drawPin = drawA.pin(ctx);
 
 		// removeRedundancy(
-			strokes
-			.map(absolutizeStrokes())
-			.map(strokeToBeziers)
-			.map( map(returnArg( seq(map(normalizePoint({ x: canvas.width, y: canvas.width })), drawBezier(ctx)) )) )
-			.map(beziersToPoints)
-			.map(map(normalizePoint({ x: canvas.width, y: canvas.width })))
 		// )
+		var bezierStrokes = strokes
+			.map(absolutizeStrokes())
+			.map(strokeToBeziers);
+
+		bezierStrokes.forEach(
+			to.call('forEach', [seq(
+				map(normalizePoint({ x: canvas.width, y: canvas.width })),
+				drawBezier(ctx)
+			)])
+		);
+
+		bezierStrokes
+		.map(beziersToPoints)
+		.map(map(normalizePoint({ x: canvas.width, y: canvas.width })))
 
 		.forEach( function (points) {
 			// lazy(points).consecutive(2).each( argumentize(function (a, b) {
@@ -95,7 +104,7 @@ define( function(require) {
 	function beziersToPoints(stroke) {
 		return flatten(
 			stroke
-			.map(bezierToPoints(3))
+			.map(bezierToPoints(1))
 		);
 	}
 
@@ -103,7 +112,7 @@ define( function(require) {
 		return [first(coords)]
 			.concat(
 				lazy.range(totalPoints)
-				.map(λ('(a+1)/' + (totalPoints + 1)))
+				.map(λ('(a + 1) /' + (totalPoints + 1)))
 				.map(bezierPointAt(coords))
 				.toArray()
 			).concat([last(coords)]);
@@ -200,7 +209,7 @@ define( function(require) {
 
 	var drawBezier = autoCurry(function (ctx, points) {
 		draw.curve.apply(null,
-			[ctx, new DrawStyle().lineColor(0x000000).lineWeight(3).lineAlpha(0.3)]
+			[ctx, new DrawStyle().lineColor(0x000000).lineWeight(2).lineAlpha(0.2)]
 			.concat(points)
 		);
 	});
