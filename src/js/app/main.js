@@ -5,7 +5,7 @@ define( function(require) {
 	var $ = require('jquery');
 	var parsePath = require('parse-svg-path');
 	var lazy = require('lazy');
-	var λ = require('lambda-functional');
+	var λ = require('lambda');
 	var rsvp = require('rsvp');
 	var path = require('path');
 
@@ -17,7 +17,7 @@ define( function(require) {
 
 	var when = require('app/when');
 	var doDraw = require('app/doDraw');
-	var parsePathInstruction = require('app/parsePathInstruction');
+	var parsePathInstruction = require('app/stroke/parsePathInstruction');
 
 	rsvp.on('error', raise);
 

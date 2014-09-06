@@ -4,7 +4,7 @@ define( function(require) {
 
 	var $    = require('jquery');
 	var lazy = require('lazy');
-	var λ    = require('lambda-functional');
+	var λ    = require('lambda');
 
 	var log       = require('agj/utils/log');
 	var draw      = require('agj/graphics/draw');
@@ -26,17 +26,22 @@ define( function(require) {
 	var is        = require('agj/is');
 	var to        = require('agj/to');
 
-	var config      = require('app/config');
-	var drawA       = require('app/drawA');
-	var argumentize = require('app/argumentize');
-	var provided    = require('app/provided');
-	var unify       = require('app/unify');
-	var inspect     = require('app/inspect');
-	var map         = require('app/map');
-	var bind        = require('app/bind');
-	var offsetPoint = require('app/point/add');
-	var distance    = require('app/point/distance');
-	var interpolate = require('app/point/interpolate');
+	var config            = require('app/config');
+	var drawA             = require('app/drawA');
+	var inspect           = require('app/inspect');
+	var argumentize       = require('app/function/argumentize');
+	var argumentizeReduce = require('app/function/argumentizeReduce');
+	var provided          = require('app/function/provided');
+	var unify             = require('app/function/unify');
+	var map               = require('app/function/map');
+	var bind              = require('app/function/bind');
+	var offsetPoint       = require('app/point/add');
+	var distance          = require('app/point/distance');
+	var interpolate       = require('app/point/interpolate');
+	var normalizePoint    = require('app/point/normalizePoint');
+	var absolutizeStrokes = require('app/stroke/absolutizeStrokes');
+	var strokeToBeziers   = require('app/stroke/strokeToBeziers');
+	var beziersToPoints   = require('app/stroke/beziersToPoints');
 
 	var fix = fixArity(1);
 
@@ -75,100 +80,6 @@ define( function(require) {
 		});
 	});
 
-	function absolutizeStrokes() {
-		var pos = { x: 0, y: 0 };
-		return function (stroke) {
-			return stroke.map( function (instr) {
-				instr = merge({}, instr);
-				if (!instr.absolute) {
-					instr.coords = instr.coords.map(offsetPoint(pos));
-				}
-				instr.absolute = true;
-				pos = last(instr.coords);
-				return instr;
-			});
-		};
-	}
-
-	function strokeToBeziers(stroke) {
-		return lazy(stroke)
-			.consecutive(2)
-			.reduce( argumentizeReduce(function (r, ia, ib) {
-				if (ib.command === 'c') {
-					return r.concat( [last(1, ia.coords).concat(ib.coords)] );
-				}
-				return r;
-			}), [])
-	}
-
-	function beziersToPoints(stroke) {
-		return flatten(
-			stroke
-			.map(bezierToPoints(1))
-		);
-	}
-
-	var bezierToPoints = autoCurry(function (totalPoints, coords) {
-		return [first(coords)]
-			.concat(
-				lazy.range(totalPoints)
-				.map(λ('(a + 1) /' + (totalPoints + 1)))
-				.map(bezierPointAt(coords))
-				.toArray()
-			).concat([last(coords)]);
-	});
-
-	var bezierPointAt = autoCurry(function (coords, pos) {
-		if (coords.length === 2) return interpolate(pos, coords[0], coords[1]);
-		return bezierPointAt(
-			lazy(coords)
-				.consecutive(2)
-				.map(argumentize(interpolate(pos)))
-				.toArray(),
-			pos
-		);
-	});
-
-	function normalizePoint(target) {
-		target = mapObj(target, λ('/109'));
-		return function (pt) {
-			return { x: pt.x * target.x, y: pt.y * target.y };
-		};
-	}
-
-	// function instructionToPoints(instr) {
-	// 	if (instr.command === 'm') {
-	// 		return instr.coords;
-	// 	} else if (instr.command === 'c') {
-	// 		return bezierToPoints(1, instr.coords);
-	// 	} else {
-	// 		throw new Error("Don't understand path instruction command: " + instr.command);
-	// 	}
-	// }
-
-	// function normalize(target) {
-	// 	target = mapObj(target, λ('/109'));
-	// 	var normalizePoint = function (pt) {
-	// 		return { x: pt.x * target.x, y: pt.y * target.y };
-	// 	};
-	// 	var pos = { x: 0, y: 0 };
-
-	// 	return function (stroke) {
-	// 		return stroke.map( function (inst) {
-	// 			var pt;
-	// 			if (inst.command === 'm') {
-	// 				pt = inst.coords[0];
-	// 				pos = inst.absolute ? pt : offsetPoint(pos, pt);
-	// 				return pos;
-	// 			} else if (inst.command === 'c') {
-	// 				pt = inst.coords[2];
-	// 				pos = inst.absolute ? pt : offsetPoint(pt, pos);
-	// 				return pos;
-	// 			}
-	// 		}).map(normalizePoint);
-	// 	};
-	// }
-
 	function removeRedundancy(strokes) {
 		var refPoints = strokes.map(fix(first)).concat(strokes.map(fix(last)));
 
@@ -199,12 +110,6 @@ define( function(require) {
 				}), [first(points)])
 				.concat([last(points)]);
 		});
-	}
-
-	function argumentizeReduce(fn) {
-		return function (accumulated, next) {
-			return fn.apply(this, [accumulated].concat(next));
-		};
 	}
 
 	var drawBezier = autoCurry(function (ctx, points) {
