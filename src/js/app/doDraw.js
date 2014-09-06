@@ -22,6 +22,7 @@ define( function(require) {
 	var seq       = require('agj/function/sequence');
 	var not       = require('agj/function/not');
 	var fixArity  = require('agj/function/fixArity');
+	var returnArg = require('agj/function/returnArg');
 	var is        = require('agj/is');
 	var to        = require('agj/to');
 
@@ -34,6 +35,7 @@ define( function(require) {
 	var map         = require('app/map');
 	var offsetPoint = require('app/point/add');
 	var distance    = require('app/point/distance');
+	var interpolate = require('app/point/interpolate');
 
 	var fix = fixArity(1);
 
@@ -48,16 +50,16 @@ define( function(require) {
 		// removeRedundancy(
 			strokes
 			.map(absolutizeStrokes())
-			.map(strokeToPoints)
+			.map(strokeToBeziers)
+			.map( map(returnArg( seq(map(normalizePoint({ x: canvas.width, y: canvas.width })), drawBezier(ctx)) )) )
+			.map(beziersToPoints)
 			.map(map(normalizePoint({ x: canvas.width, y: canvas.width })))
-			// .map(normalize({ x: canvas.width, y: canvas.width }))
 		// )
 
 		.forEach( function (points) {
-			log(points);
-			lazy(points).consecutive(2).each( argumentize(function (a, b) {
-				draw.line(ctx, new DrawStyle().lineColor(0x000000).lineWeight(3).lineAlpha(0.3), a, b);
-			}));
+			// lazy(points).consecutive(2).each( argumentize(function (a, b) {
+			// 	draw.line(ctx, new DrawStyle().lineColor(0x000000).lineWeight(3).lineAlpha(0.3), a, b);
+			// }));
 			drawHole(first(points));
 			drawHole(last(points));
 			points.slice(1, -1).forEach(drawPin);
@@ -67,22 +69,56 @@ define( function(require) {
 	function absolutizeStrokes() {
 		var pos = { x: 0, y: 0 };
 		return function (stroke) {
-			return stroke.map( function (inst) {
-				inst = merge({}, inst);
-				if (!inst.absolute) {
-					inst.coords = inst.coords.map(offsetPoint(pos));
+			return stroke.map( function (instr) {
+				instr = merge({}, instr);
+				if (!instr.absolute) {
+					instr.coords = instr.coords.map(offsetPoint(pos));
 				}
-				pos = last(inst.coords);
-				return inst;
+				instr.absolute = true;
+				pos = last(instr.coords);
+				return instr;
 			});
 		};
 	}
 
-	function strokeToPoints(stroke) {
-		return flatten(stroke.map( function (inst) {
-			return inst.coords;
-		}));
+	function strokeToBeziers(stroke) {
+		return lazy(stroke)
+			.consecutive(2)
+			.reduce( argumentizeReduce(function (r, ia, ib) {
+				if (ib.command === 'c') {
+					return r.concat( [last(1, ia.coords).concat(ib.coords)] );
+				}
+				return r;
+			}), [])
 	}
+
+	function beziersToPoints(stroke) {
+		return flatten(
+			stroke
+			.map(bezierToPoints(3))
+		);
+	}
+
+	var bezierToPoints = autoCurry(function (totalPoints, coords) {
+		return [first(coords)]
+			.concat(
+				lazy.range(totalPoints)
+				.map(λ('(a+1)/' + (totalPoints + 1)))
+				.map(bezierPointAt(coords))
+				.toArray()
+			).concat([last(coords)]);
+	});
+
+	var bezierPointAt = autoCurry(function (coords, pos) {
+		if (coords.length === 2) return interpolate(pos, coords[0], coords[1]);
+		return bezierPointAt(
+			lazy(coords)
+				.consecutive(2)
+				.map(argumentize(interpolate(pos)))
+				.toArray(),
+			pos
+		);
+	});
 
 	function normalizePoint(target) {
 		target = mapObj(target, λ('/109'));
@@ -91,28 +127,38 @@ define( function(require) {
 		};
 	}
 
-	function normalize(target) {
-		target = mapObj(target, λ('/109'));
-		var normalizePoint = function (pt) {
-			return { x: pt.x * target.x, y: pt.y * target.y };
-		};
-		var pos = { x: 0, y: 0 };
+	// function instructionToPoints(instr) {
+	// 	if (instr.command === 'm') {
+	// 		return instr.coords;
+	// 	} else if (instr.command === 'c') {
+	// 		return bezierToPoints(1, instr.coords);
+	// 	} else {
+	// 		throw new Error("Don't understand path instruction command: " + instr.command);
+	// 	}
+	// }
 
-		return function (stroke) {
-			return stroke.map( function (inst) {
-				var pt;
-				if (inst.command === 'm') {
-					pt = inst.coords[0];
-					pos = inst.absolute ? pt : offsetPoint(pos, pt);
-					return pos;
-				} else if (inst.command === 'c') {
-					pt = inst.coords[2];
-					pos = inst.absolute ? pt : offsetPoint(pt, pos);
-					return pos;
-				}
-			}).map(normalizePoint);
-		};
-	}
+	// function normalize(target) {
+	// 	target = mapObj(target, λ('/109'));
+	// 	var normalizePoint = function (pt) {
+	// 		return { x: pt.x * target.x, y: pt.y * target.y };
+	// 	};
+	// 	var pos = { x: 0, y: 0 };
+
+	// 	return function (stroke) {
+	// 		return stroke.map( function (inst) {
+	// 			var pt;
+	// 			if (inst.command === 'm') {
+	// 				pt = inst.coords[0];
+	// 				pos = inst.absolute ? pt : offsetPoint(pos, pt);
+	// 				return pos;
+	// 			} else if (inst.command === 'c') {
+	// 				pt = inst.coords[2];
+	// 				pos = inst.absolute ? pt : offsetPoint(pt, pos);
+	// 				return pos;
+	// 			}
+	// 		}).map(normalizePoint);
+	// 	};
+	// }
 
 	function removeRedundancy(strokes) {
 		var refPoints = strokes.map(fix(first)).concat(strokes.map(fix(last)));
@@ -151,6 +197,13 @@ define( function(require) {
 			return fn.apply(this, [accumulated].concat(next));
 		};
 	}
+
+	var drawBezier = autoCurry(function (ctx, points) {
+		draw.curve.apply(null,
+			[ctx, new DrawStyle().lineColor(0x000000).lineWeight(3).lineAlpha(0.3)]
+			.concat(points)
+		);
+	});
 
 	return doDraw;
 
