@@ -26,26 +26,28 @@ define( function(require) {
 	var is        = require('agj/is');
 	var to        = require('agj/to');
 
-	var config            = require('app/config');
-	var drawA             = require('app/drawA');
-	var SPY               = require('app/inspect');
-	var argumentize       = require('app/function/argumentize');
-	var argumentizeReduce = require('app/function/argumentizeReduce');
-	var provided          = require('app/function/provided');
-	var unify             = require('app/function/unify');
-	var map               = require('app/function/map');
-	var bind              = require('app/function/bind');
-	var offsetPoint       = require('app/point/add');
-	var diffPoints        = require('app/point/subtract');
-	var distance          = require('app/point/distance');
-	var interpolate       = require('app/point/interpolate');
-	var normalizePoint    = require('app/point/normalizePoint');
-	var radians           = require('app/point/radians');
-	var radianDiff        = require('app/point/radianDifference');
-	var absolutizeStrokes = require('app/stroke/absolutizeStrokes');
-	var strokeToBeziers   = require('app/stroke/strokeToBeziers');
-	var expandBezier      = require('app/stroke/expandBezier');
-	var removeEdgePoints  = require('app/stroke/removeEdgePoints');
+	var config                = require('app/config');
+	var drawA                 = require('app/drawA');
+	var SPY                   = require('app/inspect');
+	var argumentize           = require('app/function/argumentize');
+	var argumentizeReduce     = require('app/function/argumentizeReduce');
+	var provided              = require('app/function/provided');
+	var unify                 = require('app/function/unify');
+	var map                   = require('app/function/map');
+	var bind                  = require('app/function/bind');
+	var offsetPoint           = require('app/point/add');
+	var diffPoints            = require('app/point/subtract');
+	var distance              = require('app/point/distance');
+	var interpolate           = require('app/point/interpolate');
+	var normalizePoint        = require('app/point/normalizePoint');
+	var radians               = require('app/point/radians');
+	var radianDiff            = require('app/point/radianDifference');
+	var absolutizeStrokes     = require('app/stroke/absolutizeStrokes');
+	var strokeToBeziers       = require('app/stroke/strokeToBeziers');
+	var expandBezier          = require('app/stroke/expandBezier');
+	var removeEdgePoints      = require('app/stroke/removeEdgePoints');
+	var joinEnds              = require('app/stroke/joinEnds');
+	var removeRedundantPoints = require('app/stroke/removeRedundantPoints');
 
 	var fix = fixArity(1);
 	var tau = Math.PI * 2;
@@ -89,97 +91,6 @@ define( function(require) {
 			points.slice(1, -1).forEach(drawPin);
 		});
 	});
-
-	function joinEnds(strokes) {
-		var refPoints = strokes.map(fix(first));//.concat(strokes.map(fix(last)));
-		return strokes.map( function (points) {
-			var isFirstOrLast = within([first(points), last(points)]);
-			return lazy(points)
-				.map( provided( not(isFirstOrLast), to.id,
-					function (point) {
-						var ptIndex = findIndex(refPoints, seq(distance(point), is.lt(15)));
-						if (ptIndex === -1) {
-							// refPoints.push(point);
-							return point;
-						} else {
-							return refPoints[ptIndex];
-						}
-					}
-				))
-				.toArray();
-		});
-	}
-
-	function removeRedundantPoints(points) {
-		return lazy(last(-1, points))
-			.consecutive(2)
-			.reduce( argumentizeReduce(function (r, point, next) {
-				var prev = last(r);
-				if (inflects(prev, point, next))
-					return r.concat([point]);
-				return r;
-			}), [first(points)])
-			.concat([last(points)]);
-	}
-
-	function inflects(prev, point, next) {
-		// log('inflects', prev, point, next);
-		var angle = radianDiff(
-				radians(diffPoints(prev, point)),
-				radians(diffPoints(point, next))
-			) / tau;
-		// var dist = distance(point, next) / 109;
-
-		// log(dist, 'dist');
-		// log(angle, 'angle');
-		// log(radians(diffPoints(prev, point)), 'angle a');
-		// log(radians(diffPoints(point, next)), 'angle b');
-
-		return angle > 1 / 8;
-
-		// if (dist < 1 / 64) return SPY(angle > 1 / 1);
-		// if (dist < 1 / 32) return SPY(angle > 1 / 1);
-		// if (dist < 1 / 16) return SPY(angle > 1 / 1);
-		// if (dist < 1 / 8 ) return SPY(angle > 1 / 16);
-		// if (dist < 1 / 4 ) return SPY(angle > 1 / 1);
-		// // if (dist < 1 / 2  && angle < 1 / 8) return false;
-		// // if (angle < 1 / 32) return false;
-		// return SPY(true);
-
-		// // return SPY( angle > 0.01 / dist, 'result inflects');
-	}
-
-	// function removeRedundancy(strokes) {
-	// 	var refPoints = strokes.map(fix(first)).concat(strokes.map(fix(last)));
-
-	// 	return strokes.map( function (points) {
-	// 		var firstOrLast = within([first(points), last(points)]);
-	// 		points = lazy(points)
-	// 			.map( provided( not(firstOrLast), to.id,
-	// 				function (point) {
-	// 					var ptIndex = findIndex(refPoints, seq(distance(point), is.lt(15)));
-	// 					if (ptIndex === -1) {
-	// 						refPoints.push(point);
-	// 						return point;
-	// 					} else {
-	// 						return refPoints[ptIndex];
-	// 					}
-	// 				}
-	// 			))
-	// 			.toArray();
-
-	// 		if (points.length < 3) return points;
-	// 		return lazy(points)
-	// 			.consecutive(3)
-	// 			.reduce( argumentizeReduce(function (r, before, point, after) {
-	// 				if (config.DONT_REDUCE_POINTS || distance(point, before) >= 15) {
-	// 					r = r.concat([point]);
-	// 				}
-	// 				return r;
-	// 			}), [first(points)])
-	// 			.concat([last(points)]);
-	// 	});
-	// }
 
 	var drawBezier = autoCurry(function (ctx, points) {
 		draw.curve.apply(null,
