@@ -9,7 +9,7 @@ define( function(require) {
 	var autoCurry = require('agj/function/autoCurry');
 
 
-	var holeStyle = new DrawStyle().lineColor(0xff0000).lineWeight(3).lineAlpha(1);
+	var holeStyle = new DrawStyle().lineColor(0xff0000).lineWeight(3).lineAlpha(0.5);
 	var pinStyle = new DrawStyle().fillColor(0x0000ff).fillAlpha(0.4);
 
 	var drawHole = autoCurry( function (ctx, point) {

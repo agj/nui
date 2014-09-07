@@ -7,20 +7,12 @@ define( function (require) {
 
 	var first = require('agj/array/first');
 	var last = require('agj/array/last');
-	var flatten = require('agj/array/flatten');
 	var autoCurry = require('agj/function/autoCurry');
 
 	var argumentize = require('app/function/argumentize');
 	var interpolate = require('app/point/interpolate');
 
-	function beziersToPoints(stroke) {
-		return flatten(
-			stroke
-			.map(bezierToPoints(1))
-		);
-	}
-
-	var bezierToPoints = autoCurry(function (totalPoints, coords) {
+	var expandBezier = autoCurry(function (totalPoints, coords) {
 		return [first(coords)]
 			.concat(
 				lazy.range(totalPoints)
@@ -41,6 +33,6 @@ define( function (require) {
 		);
 	});
 
-	return beziersToPoints;
+	return expandBezier;
 
 });

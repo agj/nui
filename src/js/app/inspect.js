@@ -6,7 +6,7 @@ define( function(require) {
 	var log = require('agj/utils/log');
 
 	function inspect(arg) {
-		log.apply(null, ['INSPECT:'].concat(toArray(arguments)));
+		log.apply(null, toArray(arguments));
 		return arg;
 	}
 
