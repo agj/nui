@@ -1,2 +1,3089 @@
-(function(){var a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,$,_,ab,bb,cb,db,eb,fb,gb,hb,ib=[].slice,jb={}.hasOwnProperty,kb=function(a,b){function c(){this.constructor=a}for(var d in b)jb.call(b,d)&&(a[d]=b[d]);return c.prototype=b.prototype,a.prototype=new c,a.__super__=b.prototype,a},lb=function(a,b){return function(){return a.apply(b,arguments)}};a={toString:function(){return"Bacon"}},a.version="0.7.22",m=("undefined"!=typeof global&&null!==global?global:this).Error,a.fromBinder=function(b,c){return null==c&&(c=gb.id),new l(B(a,"fromBinder",b,c),function(d){var e,f,g;return g=!1,e=function(){return"undefined"!=typeof f&&null!==f?(g||f(),g=!0):void 0},f=b(function(){var b,g,h,i,j,l;for(b=1<=arguments.length?ib.call(arguments,0):[],i=c.apply(null,b),J(i)&&gb.last(i)instanceof k||(i=[i]),h=a.more,j=0,l=i.length;l>j;j++)if(g=i[j],h=d(g=_(g)),h===a.noMore||g.isEnd())return null!=f?e():a.scheduler.setTimeout(e,0),h;return h}),e})},a.$={asEventStream:function(b,c,d){var e;return L(c)&&(e=[c,null],d=e[0],c=e[1]),eb(this.selector||this,"asEventStream",b,a.fromBinder(function(a){return function(d){return a.on(b,c,d),function(){return a.off(b,c,d)}}}(this),d))}},null!=(hb="undefined"!=typeof jQuery&&null!==jQuery?jQuery:"undefined"!=typeof Zepto&&null!==Zepto?Zepto:null)&&(hb.fn.asEventStream=a.$.asEventStream),a.fromEventTarget=function(b,c,d){var e,f,g,h,i,j;return e=null!=(g=b.addEventListener)?g:null!=(h=b.addListener)?h:b.bind,f=null!=(i=b.removeEventListener)?i:null!=(j=b.removeListener)?j:b.unbind,eb(a,"fromEventTarget",b,c,a.fromBinder(function(a){return e.call(b,c,a),function(){return f.call(b,c,a)}},d))},a.fromPromise=function(b,c){return eb(a,"fromPromise",b,a.fromBinder(function(a){return b.then(a,function(b){return a(new j(b))}),function(){return c&&"function"==typeof b.abort?b.abort():void 0}},function(a){return[a,C()]}))},a.noMore=["<no-more>"],a.more=["<more>"],a.later=function(b,c){return eb(a,"later",b,c,a.sequentially(b,[c]))},a.sequentially=function(b,c){var d;return d=0,eb(a,"sequentially",b,c,a.fromPoll(b,function(){var a;return a=c[d++],d<c.length?a:d===c.length?[a,C()]:C()}))},a.repeatedly=function(b,c){var d;return d=0,eb(a,"repeatedly",b,c,a.fromPoll(b,function(){return c[d++%c.length]}))},a.spy=function(a){return Z.push(a)},Z=[],Y=function(a){var b,c,d,e;if(Z.length&&!Y.running)try{for(Y.running=!0,e=[],c=0,d=Z.length;d>c;c++)b=Z[c],e.push(b(a));return e}finally{delete Y.running}},fb=function(a){return function(){var b,c,d,e;return d=arguments[0],b=2<=arguments.length?ib.call(arguments,1):[],"object"==typeof d&&b.length&&(c=d,e=b[0],d=function(){return c[e].apply(c,arguments)},b=b.slice(1)),a.apply(null,[d].concat(ib.call(b)))}},O=function(b,c){return fb(function(){var d,e,f;return e=arguments[0],d=2<=arguments.length?ib.call(arguments,1):[],f=W(c,[function(a,b){return e.apply(null,ib.call(a).concat([b]))}]),eb.apply(null,[a,b,e].concat(ib.call(d),[a.combineAsArray(d).flatMap(f)]))})},a.fromCallback=O("fromCallback",function(){var b,c;return c=arguments[0],b=2<=arguments.length?ib.call(arguments,1):[],a.fromBinder(function(a){return P(c,b)(a),V},function(a){return[a,C()]})}),a.fromNodeCallback=O("fromNodeCallback",function(){var b,c;return c=arguments[0],b=2<=arguments.length?ib.call(arguments,1):[],a.fromBinder(function(a){return P(c,b)(a),V},function(a,b){return a?[new j(a),C()]:[b,C()]})}),a.fromPoll=function(b,c){return eb(a,"fromPoll",b,c,a.fromBinder(function(c){var d;return d=a.scheduler.setInterval(c,b),function(){return a.scheduler.clearInterval(d)}},c))},a.interval=function(b,c){return null==c&&(c={}),eb(a,"interval",b,c,a.fromPoll(b,function(){return U(c)}))},a.constant=function(b){return new r(B(a,"constant",b),function(a){return a(I(b)),a(C()),V})},a.never=function(){return eb(a,"never",a.fromArray([]))},a.once=function(b){return eb(a,"once",b,a.fromArray([b]))},a.fromArray=function(b){return b=x(b),new l(B(a,"fromArray",b),function(c){var d,e,f;for(e=!1,d=a.more;d!==a.noMore&&!e;)gb.empty(b)?(c(C()),d=a.noMore):(f=b.shift(),d=c(_(f)));return function(){return e=!0}})},a.mergeAll=function(){var b;return b=1<=arguments.length?ib.call(arguments,0):[],J(b[0])&&(b=b[0]),b.length?new l(B.apply(null,[a,"mergeAll"].concat(ib.call(b))),function(c){var d,e,f;return d=0,f=function(e){return function(f){return e.subscribeInternal(function(e){var g;return e.isEnd()?(d++,d===b.length?c(C()):a.more):(g=c(e),g===a.noMore&&f(),g)})}},e=gb.map(f,b),y.apply(null,e)}):a.never()},a.zipAsArray=function(){var b;return b=1<=arguments.length?ib.call(arguments,0):[],J(b[0])&&(b=b[0]),eb.apply(null,[a,"zipAsArray"].concat(ib.call(b),[a.zipWith(b,function(){var a;return a=1<=arguments.length?ib.call(arguments,0):[]})]))},a.zipWith=function(){var b,c,d;return b=arguments[0],c=2<=arguments.length?ib.call(arguments,1):[],L(b)||(d=[b,c[0]],c=d[0],b=d[1]),c=gb.map(function(a){return a.toEventStream()},c),eb.apply(null,[a,"zipWith",b].concat(ib.call(c),[a.when(c,b)]))},a.groupSimultaneous=function(){var c,d,e;return e=1<=arguments.length?ib.call(arguments,0):[],1===e.length&&J(e[0])&&(e=e[0]),d=function(){var a,d,f;for(f=[],a=0,d=e.length;d>a;a++)c=e[a],f.push(new b(c));return f}(),eb.apply(null,[a,"groupSimultaneous"].concat(ib.call(e),[a.when(d,function(){var a;return a=1<=arguments.length?ib.call(arguments,0):[]})]))},a.combineAsArray=function(){var b,c,d,e,f,g,h;for(f=1<=arguments.length?ib.call(arguments,0):[],1===f.length&&J(f[0])&&(f=f[0]),b=g=0,h=f.length;h>g;b=++g)e=f[b],M(e)||(f[b]=a.constant(e));return f.length?(d=function(){var a,b,d;for(d=[],a=0,b=f.length;b>a;a++)c=f[a],d.push(new u(c,!0,c.subscribeInternal));return d}(),eb.apply(null,[a,"combineAsArray"].concat(ib.call(f),[a.when(d,function(){var a;return a=1<=arguments.length?ib.call(arguments,0):[]}).toProperty()]))):a.constant([])},a.onValues=function(){var b,c,d;return c=2<=arguments.length?ib.call(arguments,0,d=arguments.length-1):(d=0,[]),b=arguments[d++],a.combineAsArray(c).onValues(b)},a.combineWith=function(){var b,c;return b=arguments[0],c=2<=arguments.length?ib.call(arguments,1):[],eb.apply(null,[a,"combineWith",b].concat(ib.call(c),[a.combineAsArray(c).map(function(a){return b.apply(null,a)})]))},a.combineTemplate=function(b){var c,d,e,f,g,h,i,j,k,l;return i=[],l=[],h=function(a){return a[a.length-1]},k=function(a,b,c){return h(a)[b]=c},c=function(a,b){return function(c,d){return k(c,a,d[b])}},g=function(a,b){return function(c){return k(c,a,b)}},j=function(a){return J(a)?[]:{}},e=function(a,b){var d,e;return M(b)?(l.push(b),i.push(c(a,l.length-1))):b!==Object(b)||"function"==typeof b||b instanceof RegExp||b instanceof Date?i.push(g(a,b)):(e=function(a){return function(c){var d;return d=j(b),k(c,a,d),c.push(d)}},d=function(a){return a.pop()},i.push(e(a)),f(b),i.push(d))},f=function(a){return gb.each(a,e)},f(b),d=function(a){var c,d,e,f,g;for(e=j(b),c=[e],f=0,g=i.length;g>f;f++)(d=i[f])(c,a);return e},eb(a,"combineTemplate",b,a.combineAsArray(l).map(d))},a.retry=function(b){var c,d,e,f,g,h;if(!L(b.source))throw new m("'source' option has to be a function");return h=b.source,f=b.retries||0,e=b.maxRetries||f,c=b.delay||function(){return 0},d=b.isRetryable||function(){return!0},g=function(b){var g,i;return i={source:h,retries:f-1,maxRetries:e,delay:c,isRetryable:d},g=function(){return a.retry(i)},a.later(c(b)).filter(!1).concat(a.once().flatMap(g))},eb(a,"retry",b,h().flatMapError(function(b){return d(b)&&f>0?g({error:b,retriesDone:e-f}):a.once(new a.Error(b))}))},D=0,k=function(){function a(){this.id=++D}return a.prototype.isEvent=function(){return!0},a.prototype.isEnd=function(){return!1},a.prototype.isInitial=function(){return!1},a.prototype.isNext=function(){return!1},a.prototype.isError=function(){return!1},a.prototype.hasValue=function(){return!1},a.prototype.filter=function(){return!0},a.prototype.inspect=function(){return this.toString()},a.prototype.log=function(){return this.toString()},a}(),o=function(a){function b(a){b.__super__.constructor.call(this),this.value=L(a)?gb.cached(a):gb.always(a)}return kb(b,a),b.prototype.isNext=function(){return!0},b.prototype.hasValue=function(){return!0},b.prototype.fmap=function(a){var b;return b=this.value,this.apply(function(){return a(b())})},b.prototype.apply=function(a){return new b(a)},b.prototype.filter=function(a){return a(this.value())},b.prototype.toString=function(){return gb.toString(this.value())},b.prototype.log=function(){return this.value()},b}(k),n=function(a){function b(){return b.__super__.constructor.apply(this,arguments)}return kb(b,a),b.prototype.isInitial=function(){return!0},b.prototype.isNext=function(){return!1},b.prototype.apply=function(a){return new b(a)},b.prototype.toNext=function(){return new o(this.value)},b}(o),i=function(a){function b(){return b.__super__.constructor.apply(this,arguments)}return kb(b,a),b.prototype.isEnd=function(){return!0},b.prototype.fmap=function(){return this},b.prototype.apply=function(){return this},b.prototype.toString=function(){return"<end>"},b}(k),j=function(a){function b(a){this.error=a}return kb(b,a),b.prototype.isError=function(){return!0},b.prototype.fmap=function(){return this},b.prototype.apply=function(){return this},b.prototype.toString=function(){return"<error> "+gb.toString(this.error)},b}(k),H=0,q=function(){function b(a){this.flatMapError=lb(this.flatMapError,this),this.id=++H,eb(a,this),this.initialDesc=this.desc}return b.prototype.onValue=function(){var a;return a=Q(arguments),this.subscribe(function(b){return b.hasValue()?a(b.value()):void 0})},b.prototype.onValues=function(a){return this.onValue(function(b){return a.apply(null,b)})},b.prototype.onError=function(){var a;return a=Q(arguments),this.subscribe(function(b){return b.isError()?a(b.error):void 0})},b.prototype.onEnd=function(){var a;return a=Q(arguments),this.subscribe(function(b){return b.isEnd()?a():void 0})},b.prototype.errors=function(){return eb(this,"errors",this.filter(function(){return!1}))},b.prototype.filter=function(){var b,c;return c=arguments[0],b=2<=arguments.length?ib.call(arguments,1):[],A(this,c,b,function(b){return eb(this,"filter",b,this.withHandler(function(c){return c.filter(b)?this.push(c):a.more}))})},b.prototype.takeWhile=function(){var b,c;return c=arguments[0],b=2<=arguments.length?ib.call(arguments,1):[],A(this,c,b,function(b){return eb(this,"takeWhile",b,this.withHandler(function(c){return c.filter(b)?this.push(c):(this.push(C()),a.noMore)}))})},b.prototype.endOnError=function(){var a,b;return b=arguments[0],a=2<=arguments.length?ib.call(arguments,1):[],null==b&&(b=!0),A(this,b,a,function(a){return eb(this,"endOnError",this.withHandler(function(b){return b.isError()&&a(b.error)?(this.push(b),this.push(C())):this.push(b)}))})},b.prototype.take=function(b){return 0>=b?a.never():eb(this,"take",b,this.withHandler(function(c){return c.hasValue()?(b--,b>0?this.push(c):(0===b&&this.push(c),this.push(C()),a.noMore)):this.push(c)}))},b.prototype.map=function(){var a,b;return b=arguments[0],a=2<=arguments.length?ib.call(arguments,1):[],b instanceof r?b.sampledBy(this,G):A(this,b,a,function(a){return eb(this,"map",a,this.withHandler(function(b){return this.push(b.fmap(a))}))})},b.prototype.mapError=function(){var a;return a=Q(arguments),eb(this,"mapError",a,this.withHandler(function(b){return this.push(b.isError()?U(a(b.error)):b)}))},b.prototype.mapEnd=function(){var b;return b=Q(arguments),eb(this,"mapEnd",b,this.withHandler(function(c){return c.isEnd()?(this.push(U(b(c))),this.push(C()),a.noMore):this.push(c)}))},b.prototype.doAction=function(){var a;return a=Q(arguments),eb(this,"doAction",a,this.withHandler(function(b){return b.hasValue()&&a(b.value()),this.push(b)}))},b.prototype.skip=function(b){return eb(this,"skip",b,this.withHandler(function(c){return c.hasValue()&&b>0?(b--,a.more):this.push(c)}))},b.prototype.skipDuplicates=function(a){return null==a&&(a=function(a,b){return a===b}),eb(this,"skipDuplicates",this.withStateMachine(p,function(b,c){return c.hasValue()?c.isInitial()||b===p||!a(b.get(),c.value())?[new t(c.value()),[c]]:[b,[]]:[b,[c]]}))},b.prototype.skipErrors=function(){return eb(this,"skipErrors",this.withHandler(function(b){return b.isError()?a.more:this.push(b)}))},b.prototype.withStateMachine=function(b,c){var d;return d=b,eb(this,"withStateMachine",b,c,this.withHandler(function(b){var e,f,g,h,i,j,k;for(e=c(d,b),f=e[0],h=e[1],d=f,i=a.more,j=0,k=h.length;k>j;j++)if(g=h[j],i=this.push(g),i===a.noMore)return i;return i}))},b.prototype.scan=function(b,c,d){var e,f,g,h;return null==d&&(d={}),f=$(c),c=d.lazyF?f:function(a,b){return f(a(),b())},e=cb(b).map(function(a){return gb.always(a)}),h=function(b){return function(f){var h,i,j,k;return h=!1,k=V,i=a.more,j=function(){return h?void 0:e.forEach(function(b){return h=!0,i=f(new n(b)),i===a.noMore?(k(),k=V):void 0})},k=b.subscribeInternal(function(b){var g,k;return b.hasValue()?h&&b.isInitial()?a.more:(b.isInitial()||j(),h=!0,k=e.getOrElse(function(){return void 0}),g=gb.cached(function(){return c(k,b.value)}),e=new t(g),d.eager&&g(),f(b.apply(g))):(b.isEnd()&&(i=j()),i!==a.noMore?f(b):void 0)}),v.whenDoneWith(g,j),k}}(this),g=new r(B(this,"scan",b,c),h)},b.prototype.fold=function(a,b,c){return eb(this,"fold",a,b,this.scan(a,b,c).sampledBy(this.filter(!1).mapEnd().toProperty()))},b.prototype.zip=function(b,c){return null==c&&(c=Array),eb(this,"zip",b,a.zipWith([this,b],c))},b.prototype.diff=function(a,b){return b=$(b),eb(this,"diff",a,b,this.scan([a],function(a,c){return[c,b(a[0],c)]}).filter(function(a){return 2===a.length}).map(function(a){return a[1]}))},b.prototype.flatMap=function(){return F(this,T(arguments))},b.prototype.flatMapFirst=function(){return F(this,T(arguments),!0)},b.prototype.flatMapWithConcurrencyLimit=function(){var a,b;return b=arguments[0],a=2<=arguments.length?ib.call(arguments,1):[],eb.apply(null,[this,"flatMapWithConcurrencyLimit",b].concat(ib.call(a),[F(this,T(a),!1,b)]))},b.prototype.flatMapLatest=function(){var a,b;return a=T(arguments),b=this.toEventStream(),eb(this,"flatMapLatest",a,b.flatMap(function(c){return S(a(c)).takeUntil(b)}))},b.prototype.flatMapError=function(b){return eb(this,"flatMapError",b,this.mapError(function(b){return new a.Error(b)}).flatMap(function(c){return c instanceof a.Error?b(c.error):a.once(c)}))},b.prototype.flatMapConcat=function(){return eb.apply(null,[this,"flatMapConcat"].concat(ib.call(arguments),[this.flatMapWithConcurrencyLimit.apply(this,[1].concat(ib.call(arguments)))]))},b.prototype.bufferingThrottle=function(b){return eb(this,"bufferingThrottle",b,this.flatMapConcat(function(c){return a.once(c).concat(a.later(b).filter(!1))}))},b.prototype.not=function(){return eb(this,"not",this.map(function(a){return!a}))},b.prototype.log=function(){var a;return a=1<=arguments.length?ib.call(arguments,0):[],this.subscribe(function(b){return"undefined"!=typeof console&&null!==console&&"function"==typeof console.log?console.log.apply(console,ib.call(a).concat([b.log()])):void 0}),this},b.prototype.slidingWindow=function(a,b){return null==b&&(b=0),eb(this,"slidingWindow",a,b,this.scan([],function(b,c){return b.concat([c]).slice(-a)}).filter(function(a){return a.length>=b}))},b.prototype.combine=function(b,c){var d;return d=$(c),eb(this,"combine",b,c,a.combineAsArray(this,b).map(function(a){return d(a[0],a[1])}))},b.prototype.decode=function(b){return eb(this,"decode",b,this.combine(a.combineTemplate(b),function(a,b){return b[a]}))},b.prototype.awaiting=function(b){return eb(this,"awaiting",b,a.groupSimultaneous(this,b).map(function(a){var b,c;return b=a[0],c=a[1],0===c.length}).toProperty(!1).skipDuplicates())},b.prototype.name=function(a){return this._name=a,this},b.prototype.withDescription=function(){return B.apply(null,arguments).apply(this)},b.prototype.dependsOn=function(a){return f.dependsOn(this,a)},b.prototype.toString=function(){return this._name?this._name:this.desc.toString()},b.prototype.internalDeps=function(){return this.initialDesc.deps()},b}(),q.prototype.reduce=q.prototype.fold,q.prototype.assign=q.prototype.onValue,q.prototype.inspect=q.prototype.toString,F=function(b,c,e,g){var h,i;return h=[b],i=new l(B(b,"flatMap"+(e?"First":""),c),function(i){var j,k,l,m,o;return l=new d,m=[],o=function(b){var d;return d=S(c(b.value())),h.push(d),f.invalidate(),l.add(function(b,c){return d.subscribeInternal(function(e){var g;return e.isEnd()?(gb.remove(d,h),f.invalidate(),k(),j(c),a.noMore):(e instanceof n&&(e=e.toNext()),g=i(e),g===a.noMore&&b(),g)})})},k=function(){var a;return a=m.shift(),a?o(a):void 0},j=function(a){return a(),l.empty()?i(C()):void 0},l.add(function(c,d){return b.subscribeInternal(function(b){return b.isEnd()?j(d):b.isError()?i(b):e&&l.count()>1?a.more:l.unsubscribed?a.noMore:g&&l.count()>g?m.push(b):o(b)})}),l.unsubscribe}),i.internalDeps=function(){return h},i},l=function(b){function c(a,b){var d;L(a)&&(b=a,a=[]),c.__super__.constructor.call(this,a),d=new h(b),this.subscribeInternal=d.subscribe,this.subscribe=v.wrappedSubscribe(this),this.hasSubscribers=d.hasSubscribers,Y(this)}return kb(c,b),c.prototype.delay=function(b){return eb(this,"delay",b,this.flatMap(function(c){return a.later(b,c)}))},c.prototype.debounce=function(b){return eb(this,"debounce",b,this.flatMapLatest(function(c){return a.later(b,c)}))},c.prototype.debounceImmediate=function(b){return eb(this,"debounceImmediate",b,this.flatMapFirst(function(c){return a.once(c).concat(a.later(b).filter(!1))}))},c.prototype.throttle=function(a){return eb(this,"throttle",a,this.bufferWithTime(a).map(function(a){return a[a.length-1]}))},c.prototype.bufferWithTime=function(a){return eb(this,"bufferWithTime",a,this.bufferWithTimeOrCount(a,Number.MAX_VALUE))},c.prototype.bufferWithCount=function(a){return eb(this,"bufferWithCount",a,this.bufferWithTimeOrCount(void 0,a))},c.prototype.bufferWithTimeOrCount=function(a,b){var c;return c=function(c){return c.values.length===b?c.flush():void 0!==a?c.schedule():void 0},eb(this,"bufferWithTimeOrCount",a,b,this.buffer(a,c,c))},c.prototype.buffer=function(b,c,d){var e,f,g;return null==c&&(c=function(){}),null==d&&(d=function(){}),e={scheduled:!1,end:null,values:[],flush:function(){var b;if(this.scheduled=!1,this.values.length>0){if(b=this.push(U(this.values)),this.values=[],null!=this.end)return this.push(this.end);if(b!==a.noMore)return d(this)}else if(null!=this.end)return this.push(this.end)},schedule:function(){return this.scheduled?void 0:(this.scheduled=!0,b(function(a){return function(){return a.flush()}}(this)))}},g=a.more,L(b)||(f=b,b=function(b){return a.scheduler.setTimeout(b,f)}),eb(this,"buffer",this.withHandler(function(a){return e.push=this.push,a.isError()?g=this.push(a):a.isEnd()?(e.end=a,e.scheduled||e.flush()):(e.values.push(a.value()),c(e)),g}))},c.prototype.merge=function(b){var c;return c=this,eb(c,"merge",b,a.mergeAll(this,b))},c.prototype.toProperty=function(a){return 0===arguments.length&&(a=p),eb(this,"toProperty",a,this.scan(a,N,{lazyF:!0}))},c.prototype.toEventStream=function(){return this},c.prototype.sampledBy=function(a,b){return eb(this,"sampledBy",a,b,this.toProperty().sampledBy(a,b))},c.prototype.concat=function(a){var b;return b=this,new c(B(b,"concat",a),function(c){var d,e;return e=V,d=b.subscribeInternal(function(b){return b.isEnd()?e=a.subscribeInternal(c):c(b)}),function(){return d(),e()}})},c.prototype.takeUntil=function(b){var c;return c={},eb(this,"takeUntil",b,a.groupSimultaneous(this.mapEnd(c),b.skipErrors()).withHandler(function(d){var e,f,g,h,i,j;if(d.hasValue()){if(j=d.value(),e=j[0],b=j[1],b.length)return this.push(C());for(f=a.more,h=0,i=e.length;i>h;h++)g=e[h],f=this.push(g===c?C():U(g));return f}return this.push(d)}))},c.prototype.skipUntil=function(a){var b;return b=a.take(1).map(!0).toProperty(!1),eb(this,"skipUntil",a,this.filter(b))},c.prototype.skipWhile=function(){var b,c,d;return c=arguments[0],b=2<=arguments.length?ib.call(arguments,1):[],d=!1,A(this,c,b,function(b){return eb(this,"skipWhile",b,this.withHandler(function(c){return!d&&c.hasValue()&&b(c.value())?a.more:(c.hasValue()&&(d=!0),this.push(c))}))})},c.prototype.holdWhen=function(b){var c,d,e;return e=b.startWith(!1),d=e.filter(function(a){return!a}),c=e.filter(gb.id),eb(this,"holdWhen",b,this.filter(!1).merge(e.flatMapConcat(function(b){return function(e){return e?b.scan([],function(a,b){return a.concat(b)},{eager:!0}).sampledBy(d).take(1).flatMap(a.fromArray):b.takeUntil(c)}}(this))))},c.prototype.startWith=function(b){return eb(this,"startWith",b,a.once(b).concat(this))},c.prototype.withHandler=function(a){var b;return b=new h(this.subscribeInternal,a),new c(B(this,"withHandler",a),b.subscribe)},c}(q),r=function(b){function c(a,b,d){L(a)&&(d=b,b=a,a=[]),c.__super__.constructor.call(this,a),this.subscribeInternal=d===!0?b:new s(this,b,d).subscribe,this.subscribe=v.wrappedSubscribe(this),Y(this)}return kb(c,b),c.prototype.sampledBy=function(b,d){var e,f,g,h,i;return null!=d?d=$(d):(e=!0,d=function(a){return a()}),i=new u(this,!1,this.subscribeInternal,e),g=new u(b,!0,b.subscribeInternal,e),h=a.when([i,g],d),f=b instanceof c?h.toProperty():h,eb(this,"sampledBy",b,d,f)},c.prototype.sample=function(b){return eb(this,"sample",b,this.sampledBy(a.interval(b,{})))},c.prototype.changes=function(){return new l(B(this,"changes"),function(a){return function(b){return a.subscribeInternal(function(a){return a.isInitial()?void 0:b(a)})}}(this))},c.prototype.withHandler=function(a){return new c(B(this,"withHandler",a),this.subscribeInternal,a)},c.prototype.toProperty=function(){return this},c.prototype.toEventStream=function(){return new l(B(this,"toEventStream"),function(a){return function(b){return a.subscribeInternal(function(a){return a.isInitial()&&(a=a.toNext()),b(a)})}}(this))},c.prototype.and=function(a){return eb(this,"and",a,this.combine(a,function(a,b){return a&&b}))},c.prototype.or=function(a){return eb(this,"or",a,this.combine(a,function(a,b){return a||b}))},c.prototype.delay=function(a){return this.delayChanges("delay",a,function(b){return b.delay(a)})},c.prototype.debounce=function(a){return this.delayChanges("debounce",a,function(b){return b.debounce(a)})},c.prototype.throttle=function(a){return this.delayChanges("throttle",a,function(b){return b.throttle(a)})},c.prototype.delayChanges=function(){var a,b,c;return a=2<=arguments.length?ib.call(arguments,0,c=arguments.length-1):(c=0,[]),b=arguments[c++],eb.apply(null,[this].concat(ib.call(a),[w(this,b(this.changes()))]))},c.prototype.takeUntil=function(a){var b;return b=this.changes().takeUntil(a),eb(this,"takeUntil",a,w(this,b))},c.prototype.startWith=function(a){return eb(this,"startWith",a,this.scan(a,function(a,b){return b}))},c.prototype.bufferingThrottle=function(){var a;return(a=c.__super__.bufferingThrottle.apply(this,arguments)).bufferingThrottle.apply(a,arguments).toProperty()},c}(q),A=function(a,b,c,d){var e;return b instanceof r?(e=b.sampledBy(a,function(a,b){return[a,b]}),d.apply(e,[function(a){var b,c;return b=a[0],c=a[1],b}]).map(function(a){var b,c;return b=a[0],c=a[1]})):(b=P(b,c),d.apply(a,[b]))},w=function(b,c){var d;return d=new l(B(b,"justInitValue"),function(c){var e,f;return f=null,e=b.subscribeInternal(function(b){return b.hasValue()&&(f=b),a.noMore}),v.whenDoneWith(d,function(){return null!=f&&c(f),c(C())}),e}),d.concat(c).toProperty()},h=function(){function b(b,c){var d,e,f,g,h,i,j,k,l,m;null==b&&(b=function(){return V}),k=[],i=[],h=!1,e=!1,this.hasSubscribers=function(){return k.length>0},f=null,l=V,j=function(a){return k=gb.without(a,k)},m=null,d=function(){var a,b,c,d,e;if(null!=m){for(b=m,m=null,e=[],c=0,d=b.length;d>c;c++)a=b[c],e.push(a());return e}},g=function(b){var c,e,g,m,n,o;if(h)return i.push(b),a.more;if(b!==f){b.isError()&&(f=b),g=!1;try{for(h=!0,m=k,n=0,o=m.length;o>n;n++)e=m[n],c=e.sink(b),(c===a.noMore||b.isEnd())&&j(e);g=!0}finally{h=!1,g||(i=[])}for(g=!0;i.length;)b=i.shift(),this.push(b);return d(b),this.hasSubscribers()?a.more:(l(),a.noMore)}},this.push=function(a){return function(b){return v.inTransaction(b,a,g,[b])}}(this),null==c&&(c=function(a){return this.push(a)}),this.handleEvent=function(a){return function(b){return b.isEnd()&&(e=!0),c.apply(a,[b])}}(this),this.subscribe=function(a){return function(c){var d,f;return e?(c(C()),V):(d={sink:c},k.push(d),1===k.length&&(f=b(a.handleEvent),l=function(){return f(),l=V}),function(){return j(d),a.hasSubscribers()?void 0:l()})}}(this)}return b}(),s=function(b){function c(b,d,e){var f,g,h,i;c.__super__.constructor.call(this,d,e),f=p,g=void 0,i=this.push,d=this.subscribe,h=!1,this.push=function(a){return function(b){return b.isEnd()&&(h=!0),b.hasValue()&&(f=new t(b),g=v.currentEventId()),i.apply(a,[b])}}(this),this.subscribe=function(c){return function(e){var i,j,k,l,m;return j=!1,l=a.more,k=function(){return l===a.noMore?V:h?(e(C()),V):d.apply(this,[e])},f.isDefined&&(c.hasSubscribers()||h)?(i=v.currentEventId(),m=g,!h&&m&&i&&i!==m?(v.whenDoneWith(b,function(){return g===m?e(I(f.get().value())):void 0}),k()):(v.inTransaction(void 0,c,function(){return l=e(I(f.get().value()))},[]),k())):k()}}(this)}return kb(c,b),c}(h),c=function(b){function c(){var b,d,e,f,g,h,i,k;e=void 0,h=[],b=!1,d=function(b){return function(c){return c.isEnd()?(k(b),a.noMore):e(c)}},i=function(){var a,b,c,d;for(d=[],b=0,c=h.length;c>b;b++)a=h[b],d.push("function"==typeof a.unsub?a.unsub():void 0);return d},g=function(a){return a.unsub=a.input.subscribeInternal(d(a.input))},k=function(a){var b,c,d,e;for(b=d=0,e=h.length;e>d;b=++d)if(c=h[b],c.input===a)return"function"==typeof c.unsub&&c.unsub(),void h.splice(b,1)},f=function(a){var b,c,d,f;for(e=a,f=x(h),c=0,d=f.length;d>c;c++)b=f[c],g(b);return i},c.__super__.constructor.call(this,B(a,"Bus"),f),this.plug=function(a){var c;if(!b)return c={input:a},h.push(c),null!=e&&g(c),function(){return k(a)}},this.push=function(a){return"function"==typeof e?e(U(a)):void 0},this.error=function(a){return"function"==typeof e?e(new j(a)):void 0},this.end=function(){return b=!0,i(),"function"==typeof e?e(C()):void 0}}return kb(c,b),c}(l),u=function(){function a(a,b,c,d){this.obs=a,this.sync=b,this.subscribe=c,this.lazy=null!=d?d:!1,this.queue=[],null==this.subscribe&&(this.subscribe=this.obs.subscribeInternal)}return a.prototype.toString=function(){return this.obs.toString.call(this)},a.prototype.markEnded=function(){return this.ended=!0},a.prototype.consume=function(){return this.lazy?gb.always(this.queue[0]):this.queue[0]},a.prototype.push=function(a){return this.queue=[a]},a.prototype.mayHave=function(){return!0},a.prototype.hasAtLeast=function(){return this.queue.length},a.prototype.flatten=!0,a}(),e=function(a){function b(){return b.__super__.constructor.apply(this,arguments)}return kb(b,a),b.prototype.consume=function(){return this.queue.shift()},b.prototype.push=function(a){return this.queue.push(a)},b.prototype.mayHave=function(a){return!this.ended||this.queue.length>=a},b.prototype.hasAtLeast=function(a){return this.queue.length>=a},b.prototype.flatten=!1,b}(u),b=function(a){function b(a){this.obs=a,b.__super__.constructor.call(this,this.obs,!0,this.obs.subscribeInternal)}return kb(b,a),b.prototype.consume=function(){var a;return a=this.queue,this.queue=[],function(){return a}},b.prototype.push=function(a){return this.queue.push(a())},b.prototype.hasAtLeast=function(){return!0},b}(u),u.isTrigger=function(a){return a instanceof u?a.sync:a instanceof l},u.fromObservable=function(a){return a instanceof u?a:a instanceof r?new u(a,!1):new e(a,!0)},B=function(){var a,b,c;return b=arguments[0],c=arguments[1],a=3<=arguments.length?ib.call(arguments,2):[],(b||c)instanceof g?b||c:new g(b,c,a)},E=function(a){return J(a)?gb.flatMap(E,a):M(a)?[a]:a instanceof u?[a.obs]:[]},g=function(){function a(a,b,c){this.context=a,this.method=b,this.args=c,this.cached=null}return a.prototype.deps=function(){return this.cached||(this.cached=E([this.context].concat(this.args)))},a.prototype.apply=function(a){return a.desc=this,a},a.prototype.toString=function(){return gb.toString(this.context)+"."+gb.toString(this.method)+"("+gb.map(gb.toString,this.args)+")"},a}(),eb=function(){var a,b,c;return a=2<=arguments.length?ib.call(arguments,0,c=arguments.length-1):(c=0,[]),b=arguments[c++],B.apply(null,a).apply(b)},a.when=function(){var b,c,d,e,f,g,h,i,j,k,m,n,o,p,q,r,s,t,w,x;if(k=1<=arguments.length?ib.call(arguments,0):[],0===k.length)return a.never();for(f=k.length,q="when: expecting arguments in the form (Observable+,function)+",o=[],j=[],c=0;f>c;){for(i=gb.toArray(k[c]),b=k[c+1],h={f:L(b)?b:function(){return b},ixs:[]},p=!1,r=0,t=i.length;t>r;r++){for(n=i[r],d=gb.indexOf(o,n),p||(p=u.isTrigger(n)),0>d&&(o.push(n),d=o.length-1),x=h.ixs,s=0,w=x.length;w>s;s++)e=x[s],e.index===d&&e.count++;h.ixs.push({index:d,count:1})}i.length>0&&j.push(h),c+=2}return o.length?(o=gb.map(u.fromObservable,o),g=gb.any(o,function(a){return a.flatten})&&z(gb.map(function(a){return a.obs},o)),m=new l(B.apply(null,[a,"when"].concat(ib.call(k))),function(b){var d,e,f,h,i,k,l;return l=[],f=!1,h=function(a){var b,d,e;for(e=a.ixs,b=0,d=e.length;d>b;b++)if(c=e[b],!o[c.index].hasAtLeast(c.count))return!1;return!0},e=function(a){return!a.sync||a.ended},d=function(a){var b,d,e;for(e=a.ixs,b=0,d=e.length;d>b;b++)if(c=e[b],!o[c.index].mayHave(c.count))return!0},i=function(a){return!a.source.flatten},k=function(k){return function(n){var p,q,r;return q=function(){return v.whenDoneWith(m,p)},r=function(){var d,e,f,g,k,m;if(!(l.length>0))return a.more;for(f=a.more,g=l.pop(),k=0,m=j.length;m>k;k++)if(e=j[k],h(e))return d=function(){var a,b,d,f;for(d=e.ixs,f=[],a=0,b=d.length;b>a;a++)c=d[a],f.push(o[c.index].consume());return f}(),f=b(g.e.apply(function(){var a,b;return b=function(){var b,c,e;for(e=[],b=0,c=d.length;c>b;b++)a=d[b],e.push(a());return e}(),e.f.apply(e,b)})),l.length&&(l=gb.filter(i,l)),f===a.noMore?f:r()},p=function(){var c;return c=r(),f&&(f=!1,(gb.all(o,e)||gb.all(j,d))&&(c=a.noMore,b(C()))),c===a.noMore&&n(),c},k.subscribe(function(c){var d;return c.isEnd()?(f=!0,k.markEnded(),q()):c.isError()?d=b(c):(k.push(c.value),k.sync&&(l.push({source:k,e:c}),g||v.hasWaiters()?q():p())),d===a.noMore&&n(),d||a.more})}},y.apply(null,function(){var a,b,c;for(c=[],a=0,b=o.length;b>a;a++)n=o[a],c.push(k(n));return c}())})):a.never()},z=function(b,c){var d;return null==c&&(c=[]),d=function(b){var e;return a._.contains(c,b)?!0:(e=b.internalDeps(),e.length?(c.push(b),a._.any(e,d)):(c.push(b),!1))},a._.any(b,d)},a.update=function(){var b,c,d,e;for(c=arguments[0],e=2<=arguments.length?ib.call(arguments,1):[],d=function(a){return function(){var b;return b=1<=arguments.length?ib.call(arguments,0):[],function(c){return a.apply(null,[c].concat(b))}}},b=e.length-1;b>0;)e[b]instanceof Function||(e[b]=function(a){return function(){return a}}(e[b])),e[b]=d(e[b]),b-=2;return eb.apply(null,[a,"update",c].concat(ib.call(e),[a.when.apply(a,e).scan(c,function(a,b){return b(a)})]))},y=function(){var a;return a=1<=arguments.length?ib.call(arguments,0):[],new d(a).unsubscribe},d=function(){function a(a){var b,c,d;for(null==a&&(a=[]),this.unsubscribe=lb(this.unsubscribe,this),this.unsubscribed=!1,this.subscriptions=[],this.starting=[],c=0,d=a.length;d>c;c++)b=a[c],this.add(b)}return a.prototype.add=function(a){var b,c,d;if(!this.unsubscribed)return b=!1,c=V,this.starting.push(a),d=function(d){return function(){return d.unsubscribed?void 0:(b=!0,d.remove(c),gb.remove(a,d.starting))}}(this),c=a(this.unsubscribe,d),this.unsubscribed||b||this.subscriptions.push(c),gb.remove(a,this.starting),c},a.prototype.remove=function(a){return this.unsubscribed?void 0:void 0!==gb.remove(a,this.subscriptions)?a():void 0},a.prototype.unsubscribe=function(){var a,b,c,d;if(!this.unsubscribed){for(this.unsubscribed=!0,d=this.subscriptions,b=0,c=d.length;c>b;b++)(a=d[b])();return this.subscriptions=[],this.starting=[]}},a.prototype.count=function(){return this.unsubscribed?0:this.subscriptions.length+this.starting.length},a.prototype.empty=function(){return 0===this.count()
-},a}(),a.CompositeUnsubscribe=d,t=function(){function a(a){this.value=a}return a.prototype.getOrElse=function(){return this.value},a.prototype.get=function(){return this.value},a.prototype.filter=function(b){return b(this.value)?new a(this.value):p},a.prototype.map=function(b){return new a(b(this.value))},a.prototype.forEach=function(a){return a(this.value)},a.prototype.isDefined=!0,a.prototype.toArray=function(){return[this.value]},a.prototype.inspect=function(){return"Some("+this.value+")"},a.prototype.toString=function(){return this.inspect()},a}(),p={getOrElse:function(a){return a},filter:function(){return p},map:function(){return p},forEach:function(){},isDefined:!1,toArray:function(){return[]},inspect:function(){return"None"},toString:function(){return this.inspect()}},f=function(){var a,b,c,d;return c={},b=function(b,d){var e;return e=c[b.id],e||(e=c[b.id]={},a(b,b)),e[d.id]},a=function(b,d){var e,f,g,h,i;for(h=d.internalDeps(),i=[],f=0,g=h.length;g>f;f++)e=h[f],c[b.id][e.id]=!0,i.push(a(b,e));return i},d=function(){return c={}},{invalidate:d,dependsOn:b}}(),v=function(){var b,c,d,e,g,h,i,j,k,l,m,n,o;return l=void 0,m=[],c=[],b=function(a){return l?c.push(a):a()},j=function(a){return!gb.any(m,function(b){return f.dependsOn(a.obs,b.obs)})},n=function(a,b){return l?m.push({obs:a,f:b}):b()},e=function(){for(;!j(m[0]);)m.push(m.shift());return m.shift()},g=function(){var a;for(a=[];m.length;)a.push(e().f());return a},k=f.invalidate,i=function(a,b,d,e){var f,h,i,j;if(l)return d.apply(b,e);l=a;try{f=d.apply(b,e),g()}finally{for(l=void 0;c.length;)for(h=c,c=[],i=0,j=h.length;j>i;i++)(d=h[i])();k()}return f},d=function(){return l?l.id:void 0},o=function(c){return function(d){var e,f,g;return g=!1,e=function(){},f=function(){return g=!0,e()},e=c.subscribeInternal(function(c){return b(function(){var b;return g||(b=d(c),b!==a.noMore)?void 0:f()})}),f}},h=function(){return m.length>0},{whenDoneWith:n,hasWaiters:h,inTransaction:i,currentEventId:d,wrappedSubscribe:o}}(),a.EventStream=l,a.Property=r,a.Observable=q,a.Bus=c,a.Initial=n,a.Next=o,a.End=i,a.Error=j,V=function(){},N=function(a,b){return b()},G=function(a){return a},I=function(a){return new n(gb.always(a))},U=function(a){return new o(gb.always(a))},C=function(){return new i},_=function(a){return a instanceof k?a:U(a)},x=function(a){return a.slice(0)},L=function(a){return"function"==typeof a},J=function(a){return a instanceof Array},M=function(a){return a instanceof q},W=function(a,b){return function(){var c;return c=1<=arguments.length?ib.call(arguments,0):[],a.apply(null,b.concat(c))}},T=function(a){return 1===a.length&&M(a[0])?gb.always(a[0]):Q(a)},Q=function(a){return a=Array.prototype.slice.call(a),R.apply(null,a)},R=fb(function(){var a,b;return b=arguments[0],a=2<=arguments.length?ib.call(arguments,1):[],L(b)?a.length?W(b,a):b:K(b)?ab(b,a):gb.always(b)}),P=function(a,b){return R.apply(null,[a].concat(ib.call(b)))},S=function(b){return M(b)?b:a.once(b)},K=function(a){return"string"==typeof a&&a.length>1&&"."===a.charAt(0)},a.isFieldKey=K,ab=function(a,b){var c,d;return d=a.slice(1).split("."),c=gb.map(db(b),d),function(b){var d,e;for(d=0,e=c.length;e>d;d++)a=c[d],b=a(b);return b}},db=function(a){return function(b){return function(c){var d;return null==c?void 0:(d=c[b],L(d)?d.apply(c,a):d)}}},bb=function(a){return a.slice(1)},$=function(a){var b;return L(a)?a:K(a)?(b=bb(a),function(a,c){return a[b](c)}):void 0},cb=function(a){return a instanceof t||a===p?a:new t(a)},gb={indexOf:Array.prototype.indexOf?function(a,b){return a.indexOf(b)}:function(a,b){var c,d,e,f;for(c=e=0,f=a.length;f>e;c=++e)if(d=a[c],b===d)return c;return-1},indexWhere:function(a,b){var c,d,e,f;for(c=e=0,f=a.length;f>e;c=++e)if(d=a[c],b(d))return c;return-1},head:function(a){return a[0]},always:function(a){return function(){return a}},negate:function(a){return function(b){return!a(b)}},empty:function(a){return 0===a.length},tail:function(a){return a.slice(1,a.length)},filter:function(a,b){var c,d,e,f;for(c=[],e=0,f=b.length;f>e;e++)d=b[e],a(d)&&c.push(d);return c},map:function(a,b){var c,d,e,f;for(f=[],d=0,e=b.length;e>d;d++)c=b[d],f.push(a(c));return f},each:function(a,b){var c,d,e;e=[];for(c in a)d=a[c],e.push(b(c,d));return e},toArray:function(a){return J(a)?a:[a]},contains:function(a,b){return-1!==gb.indexOf(a,b)},id:function(a){return a},last:function(a){return a[a.length-1]},all:function(a,b){var c,d,e;for(null==b&&(b=gb.id),d=0,e=a.length;e>d;d++)if(c=a[d],!b(c))return!1;return!0},any:function(a,b){var c,d,e;for(null==b&&(b=gb.id),d=0,e=a.length;e>d;d++)if(c=a[d],b(c))return!0;return!1},without:function(a,b){return gb.filter(function(b){return b!==a},b)},remove:function(a,b){var c;return c=gb.indexOf(b,a),c>=0?b.splice(c,1):void 0},fold:function(a,b,c){var d,e,f;for(e=0,f=a.length;f>e;e++)d=a[e],b=c(b,d);return b},flatMap:function(a,b){return gb.fold(b,[],function(b,c){return b.concat(a(c))})},cached:function(a){var b;return b=p,function(){return b===p&&(b=a(),a=null),b}},toString:function(a){var b,c,d,e;try{return X++,null==a?"undefined":L(a)?"function":J(a)?X>5?"[..]":"["+gb.map(gb.toString,a).toString()+"]":null!=(null!=a?a.toString:void 0)&&a.toString!==Object.prototype.toString?a.toString():"object"==typeof a?X>5?"{..}":(c=function(){var c;c=[];for(d in a)jb.call(a,d)&&(e=function(){try{return a[d]}catch(c){return b=c}}(),c.push(gb.toString(d)+":"+gb.toString(e)));return c}(),"{"+c+"}"):a}finally{X--}}},X=0,a._=gb,a.scheduler={setTimeout:function(a,b){return setTimeout(a,b)},setInterval:function(a,b){return setInterval(a,b)},clearInterval:function(a){return clearInterval(a)},now:function(){return(new Date).getTime()}},"undefined"!=typeof define&&null!==define&&null!=define.amd?(define([],function(){return a}),this.Bacon=a):"undefined"!=typeof module&&null!==module?(module.exports=a,a.Bacon=a):this.Bacon=a}).call(this);
+(function() {
+  var Bacon, BufferingSource, Bus, CompositeUnsubscribe, ConsumingSource, DepCache, Desc, Dispatcher, End, Error, Event, EventStream, Exception, Initial, Next, None, Observable, Property, PropertyDispatcher, Some, Source, UpdateBarrier, addPropertyInitValueToStream, assert, assertArray, assertEventStream, assertFunction, assertNoArguments, assertString, cloneArray, compositeUnsubscribe, containsDuplicateDeps, convertArgsToFunction, describe, end, eventIdCounter, findDeps, flatMap_, former, idCounter, initial, isArray, isFieldKey, isFunction, isObservable, latterF, liftCallback, makeFunction, makeFunctionArgs, makeFunction_, makeObservable, makeSpawner, next, nop, partiallyApplied, recursionDepth, registerObs, spys, toCombinator, toEvent, toFieldExtractor, toFieldKey, toOption, toSimpleExtractor, withDescription, withMethodCallSupport, _, _ref,
+    __slice = [].slice,
+    __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+
+  Bacon = {
+    toString: function() {
+      return "Bacon";
+    }
+  };
+
+  Bacon.version = '0.7.22';
+
+  Exception = (typeof global !== "undefined" && global !== null ? global : this).Error;
+
+  Bacon.fromBinder = function(binder, eventTransformer) {
+    if (eventTransformer == null) {
+      eventTransformer = _.id;
+    }
+    return new EventStream(describe(Bacon, "fromBinder", binder, eventTransformer), function(sink) {
+      var unbind, unbinder, unbound;
+      unbound = false;
+      unbind = function() {
+        if (typeof unbinder !== "undefined" && unbinder !== null) {
+          if (!unbound) {
+            unbinder();
+          }
+          return unbound = true;
+        }
+      };
+      unbinder = binder(function() {
+        var args, event, reply, value, _i, _len;
+        args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+        value = eventTransformer.apply(null, args);
+        if (!(isArray(value) && _.last(value) instanceof Event)) {
+          value = [value];
+        }
+        reply = Bacon.more;
+        for (_i = 0, _len = value.length; _i < _len; _i++) {
+          event = value[_i];
+          reply = sink(event = toEvent(event));
+          if (reply === Bacon.noMore || event.isEnd()) {
+            if (unbinder != null) {
+              unbind();
+            } else {
+              Bacon.scheduler.setTimeout(unbind, 0);
+            }
+            return reply;
+          }
+        }
+        return reply;
+      });
+      return unbind;
+    });
+  };
+
+  Bacon.$ = {
+    asEventStream: function(eventName, selector, eventTransformer) {
+      var _ref;
+      if (isFunction(selector)) {
+        _ref = [selector, null], eventTransformer = _ref[0], selector = _ref[1];
+      }
+      return withDescription(this.selector || this, "asEventStream", eventName, Bacon.fromBinder((function(_this) {
+        return function(handler) {
+          _this.on(eventName, selector, handler);
+          return function() {
+            return _this.off(eventName, selector, handler);
+          };
+        };
+      })(this), eventTransformer));
+    }
+  };
+
+  if ((_ref = typeof jQuery !== "undefined" && jQuery !== null ? jQuery : typeof Zepto !== "undefined" && Zepto !== null ? Zepto : null) != null) {
+    _ref.fn.asEventStream = Bacon.$.asEventStream;
+  }
+
+  Bacon.fromEventTarget = function(target, eventName, eventTransformer) {
+    var sub, unsub, _ref1, _ref2, _ref3, _ref4;
+    sub = (_ref1 = target.addEventListener) != null ? _ref1 : (_ref2 = target.addListener) != null ? _ref2 : target.bind;
+    unsub = (_ref3 = target.removeEventListener) != null ? _ref3 : (_ref4 = target.removeListener) != null ? _ref4 : target.unbind;
+    return withDescription(Bacon, "fromEventTarget", target, eventName, Bacon.fromBinder(function(handler) {
+      sub.call(target, eventName, handler);
+      return function() {
+        return unsub.call(target, eventName, handler);
+      };
+    }, eventTransformer));
+  };
+
+  Bacon.fromPromise = function(promise, abort) {
+    return withDescription(Bacon, "fromPromise", promise, Bacon.fromBinder(function(handler) {
+      promise.then(handler, function(e) {
+        return handler(new Error(e));
+      });
+      return function() {
+        if (abort) {
+          return typeof promise.abort === "function" ? promise.abort() : void 0;
+        }
+      };
+    }, (function(value) {
+      return [value, end()];
+    })));
+  };
+
+  Bacon.noMore = ["<no-more>"];
+
+  Bacon.more = ["<more>"];
+
+  Bacon.later = function(delay, value) {
+    return withDescription(Bacon, "later", delay, value, Bacon.sequentially(delay, [value]));
+  };
+
+  Bacon.sequentially = function(delay, values) {
+    var index;
+    index = 0;
+    return withDescription(Bacon, "sequentially", delay, values, Bacon.fromPoll(delay, function() {
+      var value;
+      value = values[index++];
+      if (index < values.length) {
+        return value;
+      } else if (index === values.length) {
+        return [value, end()];
+      } else {
+        return end();
+      }
+    }));
+  };
+
+  Bacon.repeatedly = function(delay, values) {
+    var index;
+    index = 0;
+    return withDescription(Bacon, "repeatedly", delay, values, Bacon.fromPoll(delay, function() {
+      return values[index++ % values.length];
+    }));
+  };
+
+  Bacon.spy = function(spy) {
+    return spys.push(spy);
+  };
+
+  spys = [];
+
+  registerObs = function(obs) {
+    var spy, _i, _len, _results;
+    if (spys.length) {
+      if (!registerObs.running) {
+        try {
+          registerObs.running = true;
+          _results = [];
+          for (_i = 0, _len = spys.length; _i < _len; _i++) {
+            spy = spys[_i];
+            _results.push(spy(obs));
+          }
+          return _results;
+        } finally {
+          delete registerObs.running;
+        }
+      }
+    }
+  };
+
+  withMethodCallSupport = function(wrapped) {
+    return function() {
+      var args, context, f, methodName;
+      f = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+      if (typeof f === "object" && args.length) {
+        context = f;
+        methodName = args[0];
+        f = function() {
+          return context[methodName].apply(context, arguments);
+        };
+        args = args.slice(1);
+      }
+      return wrapped.apply(null, [f].concat(__slice.call(args)));
+    };
+  };
+
+  liftCallback = function(desc, wrapped) {
+    return withMethodCallSupport(function() {
+      var args, f, stream;
+      f = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+      stream = partiallyApplied(wrapped, [
+        function(values, callback) {
+          return f.apply(null, __slice.call(values).concat([callback]));
+        }
+      ]);
+      return withDescription.apply(null, [Bacon, desc, f].concat(__slice.call(args), [Bacon.combineAsArray(args).flatMap(stream)]));
+    });
+  };
+
+  Bacon.fromCallback = liftCallback("fromCallback", function() {
+    var args, f;
+    f = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+    return Bacon.fromBinder(function(handler) {
+      makeFunction(f, args)(handler);
+      return nop;
+    }, (function(value) {
+      return [value, end()];
+    }));
+  });
+
+  Bacon.fromNodeCallback = liftCallback("fromNodeCallback", function() {
+    var args, f;
+    f = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+    return Bacon.fromBinder(function(handler) {
+      makeFunction(f, args)(handler);
+      return nop;
+    }, function(error, value) {
+      if (error) {
+        return [new Error(error), end()];
+      }
+      return [value, end()];
+    });
+  });
+
+  Bacon.fromPoll = function(delay, poll) {
+    return withDescription(Bacon, "fromPoll", delay, poll, Bacon.fromBinder((function(handler) {
+      var id;
+      id = Bacon.scheduler.setInterval(handler, delay);
+      return function() {
+        return Bacon.scheduler.clearInterval(id);
+      };
+    }), poll));
+  };
+
+  Bacon.interval = function(delay, value) {
+    if (value == null) {
+      value = {};
+    }
+    return withDescription(Bacon, "interval", delay, value, Bacon.fromPoll(delay, function() {
+      return next(value);
+    }));
+  };
+
+  Bacon.constant = function(value) {
+    return new Property(describe(Bacon, "constant", value), function(sink) {
+      sink(initial(value));
+      sink(end());
+      return nop;
+    });
+  };
+
+  Bacon.never = function() {
+    return withDescription(Bacon, "never", Bacon.fromArray([]));
+  };
+
+  Bacon.once = function(value) {
+    return withDescription(Bacon, "once", value, Bacon.fromArray([value]));
+  };
+
+  Bacon.fromArray = function(values) {
+    assertArray(values);
+    values = cloneArray(values);
+    return new EventStream(describe(Bacon, "fromArray", values), function(sink) {
+      var reply, unsubd, value;
+      unsubd = false;
+      reply = Bacon.more;
+      while ((reply !== Bacon.noMore) && !unsubd) {
+        if (_.empty(values)) {
+          sink(end());
+          reply = Bacon.noMore;
+        } else {
+          value = values.shift();
+          reply = sink(toEvent(value));
+        }
+      }
+      return function() {
+        return unsubd = true;
+      };
+    });
+  };
+
+  Bacon.mergeAll = function() {
+    var streams;
+    streams = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+    if (isArray(streams[0])) {
+      streams = streams[0];
+    }
+    if (streams.length) {
+      return new EventStream(describe.apply(null, [Bacon, "mergeAll"].concat(__slice.call(streams))), function(sink) {
+        var ends, sinks, smartSink;
+        ends = 0;
+        smartSink = function(obs) {
+          return function(unsubBoth) {
+            return obs.subscribeInternal(function(event) {
+              var reply;
+              if (event.isEnd()) {
+                ends++;
+                if (ends === streams.length) {
+                  return sink(end());
+                } else {
+                  return Bacon.more;
+                }
+              } else {
+                reply = sink(event);
+                if (reply === Bacon.noMore) {
+                  unsubBoth();
+                }
+                return reply;
+              }
+            });
+          };
+        };
+        sinks = _.map(smartSink, streams);
+        return compositeUnsubscribe.apply(null, sinks);
+      });
+    } else {
+      return Bacon.never();
+    }
+  };
+
+  Bacon.zipAsArray = function() {
+    var streams;
+    streams = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+    if (isArray(streams[0])) {
+      streams = streams[0];
+    }
+    return withDescription.apply(null, [Bacon, "zipAsArray"].concat(__slice.call(streams), [Bacon.zipWith(streams, function() {
+      var xs;
+      xs = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+      return xs;
+    })]));
+  };
+
+  Bacon.zipWith = function() {
+    var f, streams, _ref1;
+    f = arguments[0], streams = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+    if (!isFunction(f)) {
+      _ref1 = [f, streams[0]], streams = _ref1[0], f = _ref1[1];
+    }
+    streams = _.map((function(s) {
+      return s.toEventStream();
+    }), streams);
+    return withDescription.apply(null, [Bacon, "zipWith", f].concat(__slice.call(streams), [Bacon.when(streams, f)]));
+  };
+
+  Bacon.groupSimultaneous = function() {
+    var s, sources, streams;
+    streams = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+    if (streams.length === 1 && isArray(streams[0])) {
+      streams = streams[0];
+    }
+    sources = (function() {
+      var _i, _len, _results;
+      _results = [];
+      for (_i = 0, _len = streams.length; _i < _len; _i++) {
+        s = streams[_i];
+        _results.push(new BufferingSource(s));
+      }
+      return _results;
+    })();
+    return withDescription.apply(null, [Bacon, "groupSimultaneous"].concat(__slice.call(streams), [Bacon.when(sources, (function() {
+      var xs;
+      xs = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+      return xs;
+    }))]));
+  };
+
+  Bacon.combineAsArray = function() {
+    var index, s, sources, stream, streams, _i, _len;
+    streams = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+    if (streams.length === 1 && isArray(streams[0])) {
+      streams = streams[0];
+    }
+    for (index = _i = 0, _len = streams.length; _i < _len; index = ++_i) {
+      stream = streams[index];
+      if (!(isObservable(stream))) {
+        streams[index] = Bacon.constant(stream);
+      }
+    }
+    if (streams.length) {
+      sources = (function() {
+        var _j, _len1, _results;
+        _results = [];
+        for (_j = 0, _len1 = streams.length; _j < _len1; _j++) {
+          s = streams[_j];
+          _results.push(new Source(s, true, s.subscribeInternal));
+        }
+        return _results;
+      })();
+      return withDescription.apply(null, [Bacon, "combineAsArray"].concat(__slice.call(streams), [Bacon.when(sources, (function() {
+        var xs;
+        xs = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+        return xs;
+      })).toProperty()]));
+    } else {
+      return Bacon.constant([]);
+    }
+  };
+
+  Bacon.onValues = function() {
+    var f, streams, _i;
+    streams = 2 <= arguments.length ? __slice.call(arguments, 0, _i = arguments.length - 1) : (_i = 0, []), f = arguments[_i++];
+    return Bacon.combineAsArray(streams).onValues(f);
+  };
+
+  Bacon.combineWith = function() {
+    var f, streams;
+    f = arguments[0], streams = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+    return withDescription.apply(null, [Bacon, "combineWith", f].concat(__slice.call(streams), [Bacon.combineAsArray(streams).map(function(values) {
+      return f.apply(null, values);
+    })]));
+  };
+
+  Bacon.combineTemplate = function(template) {
+    var applyStreamValue, combinator, compile, compileTemplate, constantValue, current, funcs, mkContext, setValue, streams;
+    funcs = [];
+    streams = [];
+    current = function(ctxStack) {
+      return ctxStack[ctxStack.length - 1];
+    };
+    setValue = function(ctxStack, key, value) {
+      return current(ctxStack)[key] = value;
+    };
+    applyStreamValue = function(key, index) {
+      return function(ctxStack, values) {
+        return setValue(ctxStack, key, values[index]);
+      };
+    };
+    constantValue = function(key, value) {
+      return function(ctxStack) {
+        return setValue(ctxStack, key, value);
+      };
+    };
+    mkContext = function(template) {
+      if (isArray(template)) {
+        return [];
+      } else {
+        return {};
+      }
+    };
+    compile = function(key, value) {
+      var popContext, pushContext;
+      if (isObservable(value)) {
+        streams.push(value);
+        return funcs.push(applyStreamValue(key, streams.length - 1));
+      } else if (value === Object(value) && typeof value !== "function" && !(value instanceof RegExp) && !(value instanceof Date)) {
+        pushContext = function(key) {
+          return function(ctxStack) {
+            var newContext;
+            newContext = mkContext(value);
+            setValue(ctxStack, key, newContext);
+            return ctxStack.push(newContext);
+          };
+        };
+        popContext = function(ctxStack) {
+          return ctxStack.pop();
+        };
+        funcs.push(pushContext(key));
+        compileTemplate(value);
+        return funcs.push(popContext);
+      } else {
+        return funcs.push(constantValue(key, value));
+      }
+    };
+    compileTemplate = function(template) {
+      return _.each(template, compile);
+    };
+    compileTemplate(template);
+    combinator = function(values) {
+      var ctxStack, f, rootContext, _i, _len;
+      rootContext = mkContext(template);
+      ctxStack = [rootContext];
+      for (_i = 0, _len = funcs.length; _i < _len; _i++) {
+        f = funcs[_i];
+        f(ctxStack, values);
+      }
+      return rootContext;
+    };
+    return withDescription(Bacon, "combineTemplate", template, Bacon.combineAsArray(streams).map(combinator));
+  };
+
+  Bacon.retry = function(options) {
+    var delay, isRetryable, maxRetries, retries, retry, source;
+    if (!isFunction(options.source)) {
+      throw new Exception("'source' option has to be a function");
+    }
+    source = options.source;
+    retries = options.retries || 0;
+    maxRetries = options.maxRetries || retries;
+    delay = options.delay || function() {
+      return 0;
+    };
+    isRetryable = options.isRetryable || function() {
+      return true;
+    };
+    retry = function(context) {
+      var delayedRetry, nextAttemptOptions;
+      nextAttemptOptions = {
+        source: source,
+        retries: retries - 1,
+        maxRetries: maxRetries,
+        delay: delay,
+        isRetryable: isRetryable
+      };
+      delayedRetry = function() {
+        return Bacon.retry(nextAttemptOptions);
+      };
+      return Bacon.later(delay(context)).filter(false).concat(Bacon.once().flatMap(delayedRetry));
+    };
+    return withDescription(Bacon, "retry", options, source().flatMapError(function(e) {
+      if (isRetryable(e) && retries > 0) {
+        return retry({
+          error: e,
+          retriesDone: maxRetries - retries
+        });
+      } else {
+        return Bacon.once(new Bacon.Error(e));
+      }
+    }));
+  };
+
+  eventIdCounter = 0;
+
+  Event = (function() {
+    function Event() {
+      this.id = ++eventIdCounter;
+    }
+
+    Event.prototype.isEvent = function() {
+      return true;
+    };
+
+    Event.prototype.isEnd = function() {
+      return false;
+    };
+
+    Event.prototype.isInitial = function() {
+      return false;
+    };
+
+    Event.prototype.isNext = function() {
+      return false;
+    };
+
+    Event.prototype.isError = function() {
+      return false;
+    };
+
+    Event.prototype.hasValue = function() {
+      return false;
+    };
+
+    Event.prototype.filter = function() {
+      return true;
+    };
+
+    Event.prototype.inspect = function() {
+      return this.toString();
+    };
+
+    Event.prototype.log = function() {
+      return this.toString();
+    };
+
+    return Event;
+
+  })();
+
+  Next = (function(_super) {
+    __extends(Next, _super);
+
+    function Next(valueF) {
+      Next.__super__.constructor.call(this);
+      if (isFunction(valueF)) {
+        this.value = _.cached(valueF);
+      } else {
+        this.value = _.always(valueF);
+      }
+    }
+
+    Next.prototype.isNext = function() {
+      return true;
+    };
+
+    Next.prototype.hasValue = function() {
+      return true;
+    };
+
+    Next.prototype.fmap = function(f) {
+      var value;
+      value = this.value;
+      return this.apply(function() {
+        return f(value());
+      });
+    };
+
+    Next.prototype.apply = function(value) {
+      return new Next(value);
+    };
+
+    Next.prototype.filter = function(f) {
+      return f(this.value());
+    };
+
+    Next.prototype.toString = function() {
+      return _.toString(this.value());
+    };
+
+    Next.prototype.log = function() {
+      return this.value();
+    };
+
+    return Next;
+
+  })(Event);
+
+  Initial = (function(_super) {
+    __extends(Initial, _super);
+
+    function Initial() {
+      return Initial.__super__.constructor.apply(this, arguments);
+    }
+
+    Initial.prototype.isInitial = function() {
+      return true;
+    };
+
+    Initial.prototype.isNext = function() {
+      return false;
+    };
+
+    Initial.prototype.apply = function(value) {
+      return new Initial(value);
+    };
+
+    Initial.prototype.toNext = function() {
+      return new Next(this.value);
+    };
+
+    return Initial;
+
+  })(Next);
+
+  End = (function(_super) {
+    __extends(End, _super);
+
+    function End() {
+      return End.__super__.constructor.apply(this, arguments);
+    }
+
+    End.prototype.isEnd = function() {
+      return true;
+    };
+
+    End.prototype.fmap = function() {
+      return this;
+    };
+
+    End.prototype.apply = function() {
+      return this;
+    };
+
+    End.prototype.toString = function() {
+      return "<end>";
+    };
+
+    return End;
+
+  })(Event);
+
+  Error = (function(_super) {
+    __extends(Error, _super);
+
+    function Error(error) {
+      this.error = error;
+    }
+
+    Error.prototype.isError = function() {
+      return true;
+    };
+
+    Error.prototype.fmap = function() {
+      return this;
+    };
+
+    Error.prototype.apply = function() {
+      return this;
+    };
+
+    Error.prototype.toString = function() {
+      return "<error> " + _.toString(this.error);
+    };
+
+    return Error;
+
+  })(Event);
+
+  idCounter = 0;
+
+  Observable = (function() {
+    function Observable(desc) {
+      this.flatMapError = __bind(this.flatMapError, this);
+      this.id = ++idCounter;
+      withDescription(desc, this);
+      this.initialDesc = this.desc;
+    }
+
+    Observable.prototype.onValue = function() {
+      var f;
+      f = makeFunctionArgs(arguments);
+      return this.subscribe(function(event) {
+        if (event.hasValue()) {
+          return f(event.value());
+        }
+      });
+    };
+
+    Observable.prototype.onValues = function(f) {
+      return this.onValue(function(args) {
+        return f.apply(null, args);
+      });
+    };
+
+    Observable.prototype.onError = function() {
+      var f;
+      f = makeFunctionArgs(arguments);
+      return this.subscribe(function(event) {
+        if (event.isError()) {
+          return f(event.error);
+        }
+      });
+    };
+
+    Observable.prototype.onEnd = function() {
+      var f;
+      f = makeFunctionArgs(arguments);
+      return this.subscribe(function(event) {
+        if (event.isEnd()) {
+          return f();
+        }
+      });
+    };
+
+    Observable.prototype.errors = function() {
+      return withDescription(this, "errors", this.filter(function() {
+        return false;
+      }));
+    };
+
+    Observable.prototype.filter = function() {
+      var args, f;
+      f = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+      return convertArgsToFunction(this, f, args, function(f) {
+        return withDescription(this, "filter", f, this.withHandler(function(event) {
+          if (event.filter(f)) {
+            return this.push(event);
+          } else {
+            return Bacon.more;
+          }
+        }));
+      });
+    };
+
+    Observable.prototype.takeWhile = function() {
+      var args, f;
+      f = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+      return convertArgsToFunction(this, f, args, function(f) {
+        return withDescription(this, "takeWhile", f, this.withHandler(function(event) {
+          if (event.filter(f)) {
+            return this.push(event);
+          } else {
+            this.push(end());
+            return Bacon.noMore;
+          }
+        }));
+      });
+    };
+
+    Observable.prototype.endOnError = function() {
+      var args, f;
+      f = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+      if (f == null) {
+        f = true;
+      }
+      return convertArgsToFunction(this, f, args, function(f) {
+        return withDescription(this, "endOnError", this.withHandler(function(event) {
+          if (event.isError() && f(event.error)) {
+            this.push(event);
+            return this.push(end());
+          } else {
+            return this.push(event);
+          }
+        }));
+      });
+    };
+
+    Observable.prototype.take = function(count) {
+      if (count <= 0) {
+        return Bacon.never();
+      }
+      return withDescription(this, "take", count, this.withHandler(function(event) {
+        if (!event.hasValue()) {
+          return this.push(event);
+        } else {
+          count--;
+          if (count > 0) {
+            return this.push(event);
+          } else {
+            if (count === 0) {
+              this.push(event);
+            }
+            this.push(end());
+            return Bacon.noMore;
+          }
+        }
+      }));
+    };
+
+    Observable.prototype.map = function() {
+      var args, p;
+      p = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+      if (p instanceof Property) {
+        return p.sampledBy(this, former);
+      } else {
+        return convertArgsToFunction(this, p, args, function(f) {
+          return withDescription(this, "map", f, this.withHandler(function(event) {
+            return this.push(event.fmap(f));
+          }));
+        });
+      }
+    };
+
+    Observable.prototype.mapError = function() {
+      var f;
+      f = makeFunctionArgs(arguments);
+      return withDescription(this, "mapError", f, this.withHandler(function(event) {
+        if (event.isError()) {
+          return this.push(next(f(event.error)));
+        } else {
+          return this.push(event);
+        }
+      }));
+    };
+
+    Observable.prototype.mapEnd = function() {
+      var f;
+      f = makeFunctionArgs(arguments);
+      return withDescription(this, "mapEnd", f, this.withHandler(function(event) {
+        if (event.isEnd()) {
+          this.push(next(f(event)));
+          this.push(end());
+          return Bacon.noMore;
+        } else {
+          return this.push(event);
+        }
+      }));
+    };
+
+    Observable.prototype.doAction = function() {
+      var f;
+      f = makeFunctionArgs(arguments);
+      return withDescription(this, "doAction", f, this.withHandler(function(event) {
+        if (event.hasValue()) {
+          f(event.value());
+        }
+        return this.push(event);
+      }));
+    };
+
+    Observable.prototype.skip = function(count) {
+      return withDescription(this, "skip", count, this.withHandler(function(event) {
+        if (!event.hasValue()) {
+          return this.push(event);
+        } else if (count > 0) {
+          count--;
+          return Bacon.more;
+        } else {
+          return this.push(event);
+        }
+      }));
+    };
+
+    Observable.prototype.skipDuplicates = function(isEqual) {
+      if (isEqual == null) {
+        isEqual = function(a, b) {
+          return a === b;
+        };
+      }
+      return withDescription(this, "skipDuplicates", this.withStateMachine(None, function(prev, event) {
+        if (!event.hasValue()) {
+          return [prev, [event]];
+        } else if (event.isInitial() || prev === None || !isEqual(prev.get(), event.value())) {
+          return [new Some(event.value()), [event]];
+        } else {
+          return [prev, []];
+        }
+      }));
+    };
+
+    Observable.prototype.skipErrors = function() {
+      return withDescription(this, "skipErrors", this.withHandler(function(event) {
+        if (event.isError()) {
+          return Bacon.more;
+        } else {
+          return this.push(event);
+        }
+      }));
+    };
+
+    Observable.prototype.withStateMachine = function(initState, f) {
+      var state;
+      state = initState;
+      return withDescription(this, "withStateMachine", initState, f, this.withHandler(function(event) {
+        var fromF, newState, output, outputs, reply, _i, _len;
+        fromF = f(state, event);
+        newState = fromF[0], outputs = fromF[1];
+        state = newState;
+        reply = Bacon.more;
+        for (_i = 0, _len = outputs.length; _i < _len; _i++) {
+          output = outputs[_i];
+          reply = this.push(output);
+          if (reply === Bacon.noMore) {
+            return reply;
+          }
+        }
+        return reply;
+      }));
+    };
+
+    Observable.prototype.scan = function(seed, f, options) {
+      var acc, f_, resultProperty, subscribe;
+      if (options == null) {
+        options = {};
+      }
+      f_ = toCombinator(f);
+      f = options.lazyF ? f_ : function(x, y) {
+        return f_(x(), y());
+      };
+      acc = toOption(seed).map(function(x) {
+        return _.always(x);
+      });
+      subscribe = (function(_this) {
+        return function(sink) {
+          var initSent, reply, sendInit, unsub;
+          initSent = false;
+          unsub = nop;
+          reply = Bacon.more;
+          sendInit = function() {
+            if (!initSent) {
+              return acc.forEach(function(valueF) {
+                initSent = true;
+                reply = sink(new Initial(valueF));
+                if (reply === Bacon.noMore) {
+                  unsub();
+                  return unsub = nop;
+                }
+              });
+            }
+          };
+          unsub = _this.subscribeInternal(function(event) {
+            var next, prev;
+            if (event.hasValue()) {
+              if (initSent && event.isInitial()) {
+                return Bacon.more;
+              } else {
+                if (!event.isInitial()) {
+                  sendInit();
+                }
+                initSent = true;
+                prev = acc.getOrElse(function() {
+                  return void 0;
+                });
+                next = _.cached(function() {
+                  return f(prev, event.value);
+                });
+                acc = new Some(next);
+                if (options.eager) {
+                  next();
+                }
+                return sink(event.apply(next));
+              }
+            } else {
+              if (event.isEnd()) {
+                reply = sendInit();
+              }
+              if (reply !== Bacon.noMore) {
+                return sink(event);
+              }
+            }
+          });
+          UpdateBarrier.whenDoneWith(resultProperty, sendInit);
+          return unsub;
+        };
+      })(this);
+      return resultProperty = new Property(describe(this, "scan", seed, f), subscribe);
+    };
+
+    Observable.prototype.fold = function(seed, f, options) {
+      return withDescription(this, "fold", seed, f, this.scan(seed, f, options).sampledBy(this.filter(false).mapEnd().toProperty()));
+    };
+
+    Observable.prototype.zip = function(other, f) {
+      if (f == null) {
+        f = Array;
+      }
+      return withDescription(this, "zip", other, Bacon.zipWith([this, other], f));
+    };
+
+    Observable.prototype.diff = function(start, f) {
+      f = toCombinator(f);
+      return withDescription(this, "diff", start, f, this.scan([start], function(prevTuple, next) {
+        return [next, f(prevTuple[0], next)];
+      }).filter(function(tuple) {
+        return tuple.length === 2;
+      }).map(function(tuple) {
+        return tuple[1];
+      }));
+    };
+
+    Observable.prototype.flatMap = function() {
+      return flatMap_(this, makeSpawner(arguments));
+    };
+
+    Observable.prototype.flatMapFirst = function() {
+      return flatMap_(this, makeSpawner(arguments), true);
+    };
+
+    Observable.prototype.flatMapWithConcurrencyLimit = function() {
+      var args, limit;
+      limit = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+      return withDescription.apply(null, [this, "flatMapWithConcurrencyLimit", limit].concat(__slice.call(args), [flatMap_(this, makeSpawner(args), false, limit)]));
+    };
+
+    Observable.prototype.flatMapLatest = function() {
+      var f, stream;
+      f = makeSpawner(arguments);
+      stream = this.toEventStream();
+      return withDescription(this, "flatMapLatest", f, stream.flatMap(function(value) {
+        return makeObservable(f(value)).takeUntil(stream);
+      }));
+    };
+
+    Observable.prototype.flatMapError = function(fn) {
+      return withDescription(this, "flatMapError", fn, this.mapError(function(err) {
+        return new Bacon.Error(err);
+      }).flatMap(function(x) {
+        if (x instanceof Bacon.Error) {
+          return fn(x.error);
+        } else {
+          return Bacon.once(x);
+        }
+      }));
+    };
+
+    Observable.prototype.flatMapConcat = function() {
+      return withDescription.apply(null, [this, "flatMapConcat"].concat(__slice.call(arguments), [this.flatMapWithConcurrencyLimit.apply(this, [1].concat(__slice.call(arguments)))]));
+    };
+
+    Observable.prototype.bufferingThrottle = function(minimumInterval) {
+      return withDescription(this, "bufferingThrottle", minimumInterval, this.flatMapConcat(function(x) {
+        return Bacon.once(x).concat(Bacon.later(minimumInterval).filter(false));
+      }));
+    };
+
+    Observable.prototype.not = function() {
+      return withDescription(this, "not", this.map(function(x) {
+        return !x;
+      }));
+    };
+
+    Observable.prototype.log = function() {
+      var args;
+      args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+      this.subscribe(function(event) {
+        return typeof console !== "undefined" && console !== null ? typeof console.log === "function" ? console.log.apply(console, __slice.call(args).concat([event.log()])) : void 0 : void 0;
+      });
+      return this;
+    };
+
+    Observable.prototype.slidingWindow = function(n, minValues) {
+      if (minValues == null) {
+        minValues = 0;
+      }
+      return withDescription(this, "slidingWindow", n, minValues, this.scan([], (function(window, value) {
+        return window.concat([value]).slice(-n);
+      })).filter((function(values) {
+        return values.length >= minValues;
+      })));
+    };
+
+    Observable.prototype.combine = function(other, f) {
+      var combinator;
+      combinator = toCombinator(f);
+      return withDescription(this, "combine", other, f, Bacon.combineAsArray(this, other).map(function(values) {
+        return combinator(values[0], values[1]);
+      }));
+    };
+
+    Observable.prototype.decode = function(cases) {
+      return withDescription(this, "decode", cases, this.combine(Bacon.combineTemplate(cases), function(key, values) {
+        return values[key];
+      }));
+    };
+
+    Observable.prototype.awaiting = function(other) {
+      return withDescription(this, "awaiting", other, Bacon.groupSimultaneous(this, other).map(function(_arg) {
+        var myValues, otherValues;
+        myValues = _arg[0], otherValues = _arg[1];
+        return otherValues.length === 0;
+      }).toProperty(false).skipDuplicates());
+    };
+
+    Observable.prototype.name = function(name) {
+      this._name = name;
+      return this;
+    };
+
+    Observable.prototype.withDescription = function() {
+      return describe.apply(null, arguments).apply(this);
+    };
+
+    Observable.prototype.dependsOn = function(observable) {
+      return DepCache.dependsOn(this, observable);
+    };
+
+    Observable.prototype.toString = function() {
+      if (this._name) {
+        return this._name;
+      } else {
+        return this.desc.toString();
+      }
+    };
+
+    Observable.prototype.internalDeps = function() {
+      return this.initialDesc.deps();
+    };
+
+    return Observable;
+
+  })();
+
+  Observable.prototype.reduce = Observable.prototype.fold;
+
+  Observable.prototype.assign = Observable.prototype.onValue;
+
+  Observable.prototype.inspect = Observable.prototype.toString;
+
+  flatMap_ = function(root, f, firstOnly, limit) {
+    var deps, result;
+    deps = [root];
+    result = new EventStream(describe(root, "flatMap" + (firstOnly ? "First" : ""), f), function(sink) {
+      var checkEnd, checkQueue, composite, queue, spawn;
+      composite = new CompositeUnsubscribe();
+      queue = [];
+      spawn = function(event) {
+        var child;
+        child = makeObservable(f(event.value()));
+        deps.push(child);
+        DepCache.invalidate();
+        return composite.add(function(unsubAll, unsubMe) {
+          return child.subscribeInternal(function(event) {
+            var reply;
+            if (event.isEnd()) {
+              _.remove(child, deps);
+              DepCache.invalidate();
+              checkQueue();
+              checkEnd(unsubMe);
+              return Bacon.noMore;
+            } else {
+              if (event instanceof Initial) {
+                event = event.toNext();
+              }
+              reply = sink(event);
+              if (reply === Bacon.noMore) {
+                unsubAll();
+              }
+              return reply;
+            }
+          });
+        });
+      };
+      checkQueue = function() {
+        var event;
+        event = queue.shift();
+        if (event) {
+          return spawn(event);
+        }
+      };
+      checkEnd = function(unsub) {
+        unsub();
+        if (composite.empty()) {
+          return sink(end());
+        }
+      };
+      composite.add(function(__, unsubRoot) {
+        return root.subscribeInternal(function(event) {
+          if (event.isEnd()) {
+            return checkEnd(unsubRoot);
+          } else if (event.isError()) {
+            return sink(event);
+          } else if (firstOnly && composite.count() > 1) {
+            return Bacon.more;
+          } else {
+            if (composite.unsubscribed) {
+              return Bacon.noMore;
+            }
+            if (limit && composite.count() > limit) {
+              return queue.push(event);
+            } else {
+              return spawn(event);
+            }
+          }
+        });
+      });
+      return composite.unsubscribe;
+    });
+    result.internalDeps = function() {
+      return deps;
+    };
+    return result;
+  };
+
+  EventStream = (function(_super) {
+    __extends(EventStream, _super);
+
+    function EventStream(desc, subscribe) {
+      var dispatcher;
+      if (isFunction(desc)) {
+        subscribe = desc;
+        desc = [];
+      }
+      EventStream.__super__.constructor.call(this, desc);
+      assertFunction(subscribe);
+      dispatcher = new Dispatcher(subscribe);
+      this.subscribeInternal = dispatcher.subscribe;
+      this.subscribe = UpdateBarrier.wrappedSubscribe(this);
+      this.hasSubscribers = dispatcher.hasSubscribers;
+      registerObs(this);
+    }
+
+    EventStream.prototype.delay = function(delay) {
+      return withDescription(this, "delay", delay, this.flatMap(function(value) {
+        return Bacon.later(delay, value);
+      }));
+    };
+
+    EventStream.prototype.debounce = function(delay) {
+      return withDescription(this, "debounce", delay, this.flatMapLatest(function(value) {
+        return Bacon.later(delay, value);
+      }));
+    };
+
+    EventStream.prototype.debounceImmediate = function(delay) {
+      return withDescription(this, "debounceImmediate", delay, this.flatMapFirst(function(value) {
+        return Bacon.once(value).concat(Bacon.later(delay).filter(false));
+      }));
+    };
+
+    EventStream.prototype.throttle = function(delay) {
+      return withDescription(this, "throttle", delay, this.bufferWithTime(delay).map(function(values) {
+        return values[values.length - 1];
+      }));
+    };
+
+    EventStream.prototype.bufferWithTime = function(delay) {
+      return withDescription(this, "bufferWithTime", delay, this.bufferWithTimeOrCount(delay, Number.MAX_VALUE));
+    };
+
+    EventStream.prototype.bufferWithCount = function(count) {
+      return withDescription(this, "bufferWithCount", count, this.bufferWithTimeOrCount(void 0, count));
+    };
+
+    EventStream.prototype.bufferWithTimeOrCount = function(delay, count) {
+      var flushOrSchedule;
+      flushOrSchedule = function(buffer) {
+        if (buffer.values.length === count) {
+          return buffer.flush();
+        } else if (delay !== void 0) {
+          return buffer.schedule();
+        }
+      };
+      return withDescription(this, "bufferWithTimeOrCount", delay, count, this.buffer(delay, flushOrSchedule, flushOrSchedule));
+    };
+
+    EventStream.prototype.buffer = function(delay, onInput, onFlush) {
+      var buffer, delayMs, reply;
+      if (onInput == null) {
+        onInput = (function() {});
+      }
+      if (onFlush == null) {
+        onFlush = (function() {});
+      }
+      buffer = {
+        scheduled: false,
+        end: null,
+        values: [],
+        flush: function() {
+          var reply;
+          this.scheduled = false;
+          if (this.values.length > 0) {
+            reply = this.push(next(this.values));
+            this.values = [];
+            if (this.end != null) {
+              return this.push(this.end);
+            } else if (reply !== Bacon.noMore) {
+              return onFlush(this);
+            }
+          } else {
+            if (this.end != null) {
+              return this.push(this.end);
+            }
+          }
+        },
+        schedule: function() {
+          if (!this.scheduled) {
+            this.scheduled = true;
+            return delay((function(_this) {
+              return function() {
+                return _this.flush();
+              };
+            })(this));
+          }
+        }
+      };
+      reply = Bacon.more;
+      if (!isFunction(delay)) {
+        delayMs = delay;
+        delay = function(f) {
+          return Bacon.scheduler.setTimeout(f, delayMs);
+        };
+      }
+      return withDescription(this, "buffer", this.withHandler(function(event) {
+        buffer.push = this.push;
+        if (event.isError()) {
+          reply = this.push(event);
+        } else if (event.isEnd()) {
+          buffer.end = event;
+          if (!buffer.scheduled) {
+            buffer.flush();
+          }
+        } else {
+          buffer.values.push(event.value());
+          onInput(buffer);
+        }
+        return reply;
+      }));
+    };
+
+    EventStream.prototype.merge = function(right) {
+      var left;
+      assertEventStream(right);
+      left = this;
+      return withDescription(left, "merge", right, Bacon.mergeAll(this, right));
+    };
+
+    EventStream.prototype.toProperty = function(initValue) {
+      if (arguments.length === 0) {
+        initValue = None;
+      }
+      return withDescription(this, "toProperty", initValue, this.scan(initValue, latterF, {
+        lazyF: true
+      }));
+    };
+
+    EventStream.prototype.toEventStream = function() {
+      return this;
+    };
+
+    EventStream.prototype.sampledBy = function(sampler, combinator) {
+      return withDescription(this, "sampledBy", sampler, combinator, this.toProperty().sampledBy(sampler, combinator));
+    };
+
+    EventStream.prototype.concat = function(right) {
+      var left;
+      left = this;
+      return new EventStream(describe(left, "concat", right), function(sink) {
+        var unsubLeft, unsubRight;
+        unsubRight = nop;
+        unsubLeft = left.subscribeInternal(function(e) {
+          if (e.isEnd()) {
+            return unsubRight = right.subscribeInternal(sink);
+          } else {
+            return sink(e);
+          }
+        });
+        return function() {
+          unsubLeft();
+          return unsubRight();
+        };
+      });
+    };
+
+    EventStream.prototype.takeUntil = function(stopper) {
+      var endMarker;
+      endMarker = {};
+      return withDescription(this, "takeUntil", stopper, Bacon.groupSimultaneous(this.mapEnd(endMarker), stopper.skipErrors()).withHandler(function(event) {
+        var data, reply, value, _i, _len, _ref1;
+        if (!event.hasValue()) {
+          return this.push(event);
+        } else {
+          _ref1 = event.value(), data = _ref1[0], stopper = _ref1[1];
+          if (stopper.length) {
+            return this.push(end());
+          } else {
+            reply = Bacon.more;
+            for (_i = 0, _len = data.length; _i < _len; _i++) {
+              value = data[_i];
+              if (value === endMarker) {
+                reply = this.push(end());
+              } else {
+                reply = this.push(next(value));
+              }
+            }
+            return reply;
+          }
+        }
+      }));
+    };
+
+    EventStream.prototype.skipUntil = function(starter) {
+      var started;
+      started = starter.take(1).map(true).toProperty(false);
+      return withDescription(this, "skipUntil", starter, this.filter(started));
+    };
+
+    EventStream.prototype.skipWhile = function() {
+      var args, f, ok;
+      f = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+      ok = false;
+      return convertArgsToFunction(this, f, args, function(f) {
+        return withDescription(this, "skipWhile", f, this.withHandler(function(event) {
+          if (ok || !event.hasValue() || !f(event.value())) {
+            if (event.hasValue()) {
+              ok = true;
+            }
+            return this.push(event);
+          } else {
+            return Bacon.more;
+          }
+        }));
+      });
+    };
+
+    EventStream.prototype.holdWhen = function(valve) {
+      var putToHold, releaseHold, valve_;
+      valve_ = valve.startWith(false);
+      releaseHold = valve_.filter(function(x) {
+        return !x;
+      });
+      putToHold = valve_.filter(_.id);
+      return withDescription(this, "holdWhen", valve, this.filter(false).merge(valve_.flatMapConcat((function(_this) {
+        return function(shouldHold) {
+          if (!shouldHold) {
+            return _this.takeUntil(putToHold);
+          } else {
+            return _this.scan([], (function(xs, x) {
+              return xs.concat(x);
+            }), {
+              eager: true
+            }).sampledBy(releaseHold).take(1).flatMap(Bacon.fromArray);
+          }
+        };
+      })(this))));
+    };
+
+    EventStream.prototype.startWith = function(seed) {
+      return withDescription(this, "startWith", seed, Bacon.once(seed).concat(this));
+    };
+
+    EventStream.prototype.withHandler = function(handler) {
+      var dispatcher;
+      dispatcher = new Dispatcher(this.subscribeInternal, handler);
+      return new EventStream(describe(this, "withHandler", handler), dispatcher.subscribe);
+    };
+
+    return EventStream;
+
+  })(Observable);
+
+  Property = (function(_super) {
+    __extends(Property, _super);
+
+    function Property(desc, subscribe, handler) {
+      if (isFunction(desc)) {
+        handler = subscribe;
+        subscribe = desc;
+        desc = [];
+      }
+      Property.__super__.constructor.call(this, desc);
+      assertFunction(subscribe);
+      if (handler === true) {
+        this.subscribeInternal = subscribe;
+      } else {
+        this.subscribeInternal = new PropertyDispatcher(this, subscribe, handler).subscribe;
+      }
+      this.subscribe = UpdateBarrier.wrappedSubscribe(this);
+      registerObs(this);
+    }
+
+    Property.prototype.sampledBy = function(sampler, combinator) {
+      var lazy, result, samplerSource, stream, thisSource;
+      if (combinator != null) {
+        combinator = toCombinator(combinator);
+      } else {
+        lazy = true;
+        combinator = function(f) {
+          return f();
+        };
+      }
+      thisSource = new Source(this, false, this.subscribeInternal, lazy);
+      samplerSource = new Source(sampler, true, sampler.subscribeInternal, lazy);
+      stream = Bacon.when([thisSource, samplerSource], combinator);
+      result = sampler instanceof Property ? stream.toProperty() : stream;
+      return withDescription(this, "sampledBy", sampler, combinator, result);
+    };
+
+    Property.prototype.sample = function(interval) {
+      return withDescription(this, "sample", interval, this.sampledBy(Bacon.interval(interval, {})));
+    };
+
+    Property.prototype.changes = function() {
+      return new EventStream(describe(this, "changes"), (function(_this) {
+        return function(sink) {
+          return _this.subscribeInternal(function(event) {
+            if (!event.isInitial()) {
+              return sink(event);
+            }
+          });
+        };
+      })(this));
+    };
+
+    Property.prototype.withHandler = function(handler) {
+      return new Property(describe(this, "withHandler", handler), this.subscribeInternal, handler);
+    };
+
+    Property.prototype.toProperty = function() {
+      assertNoArguments(arguments);
+      return this;
+    };
+
+    Property.prototype.toEventStream = function() {
+      return new EventStream(describe(this, "toEventStream"), (function(_this) {
+        return function(sink) {
+          return _this.subscribeInternal(function(event) {
+            if (event.isInitial()) {
+              event = event.toNext();
+            }
+            return sink(event);
+          });
+        };
+      })(this));
+    };
+
+    Property.prototype.and = function(other) {
+      return withDescription(this, "and", other, this.combine(other, function(x, y) {
+        return x && y;
+      }));
+    };
+
+    Property.prototype.or = function(other) {
+      return withDescription(this, "or", other, this.combine(other, function(x, y) {
+        return x || y;
+      }));
+    };
+
+    Property.prototype.delay = function(delay) {
+      return this.delayChanges("delay", delay, function(changes) {
+        return changes.delay(delay);
+      });
+    };
+
+    Property.prototype.debounce = function(delay) {
+      return this.delayChanges("debounce", delay, function(changes) {
+        return changes.debounce(delay);
+      });
+    };
+
+    Property.prototype.throttle = function(delay) {
+      return this.delayChanges("throttle", delay, function(changes) {
+        return changes.throttle(delay);
+      });
+    };
+
+    Property.prototype.delayChanges = function() {
+      var desc, f, _i;
+      desc = 2 <= arguments.length ? __slice.call(arguments, 0, _i = arguments.length - 1) : (_i = 0, []), f = arguments[_i++];
+      return withDescription.apply(null, [this].concat(__slice.call(desc), [addPropertyInitValueToStream(this, f(this.changes()))]));
+    };
+
+    Property.prototype.takeUntil = function(stopper) {
+      var changes;
+      changes = this.changes().takeUntil(stopper);
+      return withDescription(this, "takeUntil", stopper, addPropertyInitValueToStream(this, changes));
+    };
+
+    Property.prototype.startWith = function(value) {
+      return withDescription(this, "startWith", value, this.scan(value, function(prev, next) {
+        return next;
+      }));
+    };
+
+    Property.prototype.bufferingThrottle = function() {
+      var _ref1;
+      return (_ref1 = Property.__super__.bufferingThrottle.apply(this, arguments)).bufferingThrottle.apply(_ref1, arguments).toProperty();
+    };
+
+    return Property;
+
+  })(Observable);
+
+  convertArgsToFunction = function(obs, f, args, method) {
+    var sampled;
+    if (f instanceof Property) {
+      sampled = f.sampledBy(obs, function(p, s) {
+        return [p, s];
+      });
+      return method.apply(sampled, [
+        function(_arg) {
+          var p, s;
+          p = _arg[0], s = _arg[1];
+          return p;
+        }
+      ]).map(function(_arg) {
+        var p, s;
+        p = _arg[0], s = _arg[1];
+        return s;
+      });
+    } else {
+      f = makeFunction(f, args);
+      return method.apply(obs, [f]);
+    }
+  };
+
+  addPropertyInitValueToStream = function(property, stream) {
+    var justInitValue;
+    justInitValue = new EventStream(describe(property, "justInitValue"), function(sink) {
+      var unsub, value;
+      value = null;
+      unsub = property.subscribeInternal(function(event) {
+        if (event.hasValue()) {
+          value = event;
+        }
+        return Bacon.noMore;
+      });
+      UpdateBarrier.whenDoneWith(justInitValue, function() {
+        if (value != null) {
+          sink(value);
+        }
+        return sink(end());
+      });
+      return unsub;
+    });
+    return justInitValue.concat(stream).toProperty();
+  };
+
+  Dispatcher = (function() {
+    function Dispatcher(subscribe, handleEvent) {
+      var done, ended, prevError, pushIt, pushing, queue, removeSub, subscriptions, unsubscribeFromSource, waiters;
+      if (subscribe == null) {
+        subscribe = function() {
+          return nop;
+        };
+      }
+      subscriptions = [];
+      queue = [];
+      pushing = false;
+      ended = false;
+      this.hasSubscribers = function() {
+        return subscriptions.length > 0;
+      };
+      prevError = null;
+      unsubscribeFromSource = nop;
+      removeSub = function(subscription) {
+        return subscriptions = _.without(subscription, subscriptions);
+      };
+      waiters = null;
+      done = function() {
+        var w, ws, _i, _len, _results;
+        if (waiters != null) {
+          ws = waiters;
+          waiters = null;
+          _results = [];
+          for (_i = 0, _len = ws.length; _i < _len; _i++) {
+            w = ws[_i];
+            _results.push(w());
+          }
+          return _results;
+        }
+      };
+      pushIt = function(event) {
+        var reply, sub, success, tmp, _i, _len;
+        if (!pushing) {
+          if (event === prevError) {
+            return;
+          }
+          if (event.isError()) {
+            prevError = event;
+          }
+          success = false;
+          try {
+            pushing = true;
+            tmp = subscriptions;
+            for (_i = 0, _len = tmp.length; _i < _len; _i++) {
+              sub = tmp[_i];
+              reply = sub.sink(event);
+              if (reply === Bacon.noMore || event.isEnd()) {
+                removeSub(sub);
+              }
+            }
+            success = true;
+          } finally {
+            pushing = false;
+            if (!success) {
+              queue = [];
+            }
+          }
+          success = true;
+          while (queue.length) {
+            event = queue.shift();
+            this.push(event);
+          }
+          done(event);
+          if (this.hasSubscribers()) {
+            return Bacon.more;
+          } else {
+            unsubscribeFromSource();
+            return Bacon.noMore;
+          }
+        } else {
+          queue.push(event);
+          return Bacon.more;
+        }
+      };
+      this.push = (function(_this) {
+        return function(event) {
+          return UpdateBarrier.inTransaction(event, _this, pushIt, [event]);
+        };
+      })(this);
+      if (handleEvent == null) {
+        handleEvent = function(event) {
+          return this.push(event);
+        };
+      }
+      this.handleEvent = (function(_this) {
+        return function(event) {
+          if (event.isEnd()) {
+            ended = true;
+          }
+          return handleEvent.apply(_this, [event]);
+        };
+      })(this);
+      this.subscribe = (function(_this) {
+        return function(sink) {
+          var subscription, unsubSrc;
+          if (ended) {
+            sink(end());
+            return nop;
+          } else {
+            assertFunction(sink);
+            subscription = {
+              sink: sink
+            };
+            subscriptions.push(subscription);
+            if (subscriptions.length === 1) {
+              unsubSrc = subscribe(_this.handleEvent);
+              unsubscribeFromSource = function() {
+                unsubSrc();
+                return unsubscribeFromSource = nop;
+              };
+            }
+            assertFunction(unsubscribeFromSource);
+            return function() {
+              removeSub(subscription);
+              if (!_this.hasSubscribers()) {
+                return unsubscribeFromSource();
+              }
+            };
+          }
+        };
+      })(this);
+    }
+
+    return Dispatcher;
+
+  })();
+
+  PropertyDispatcher = (function(_super) {
+    __extends(PropertyDispatcher, _super);
+
+    function PropertyDispatcher(p, subscribe, handleEvent) {
+      var current, currentValueRootId, ended, push;
+      PropertyDispatcher.__super__.constructor.call(this, subscribe, handleEvent);
+      current = None;
+      currentValueRootId = void 0;
+      push = this.push;
+      subscribe = this.subscribe;
+      ended = false;
+      this.push = (function(_this) {
+        return function(event) {
+          if (event.isEnd()) {
+            ended = true;
+          }
+          if (event.hasValue()) {
+            current = new Some(event);
+            currentValueRootId = UpdateBarrier.currentEventId();
+          }
+          return push.apply(_this, [event]);
+        };
+      })(this);
+      this.subscribe = (function(_this) {
+        return function(sink) {
+          var dispatchingId, initSent, maybeSubSource, reply, valId;
+          initSent = false;
+          reply = Bacon.more;
+          maybeSubSource = function() {
+            if (reply === Bacon.noMore) {
+              return nop;
+            } else if (ended) {
+              sink(end());
+              return nop;
+            } else {
+              return subscribe.apply(this, [sink]);
+            }
+          };
+          if (current.isDefined && (_this.hasSubscribers() || ended)) {
+            dispatchingId = UpdateBarrier.currentEventId();
+            valId = currentValueRootId;
+            if (!ended && valId && dispatchingId && dispatchingId !== valId) {
+              UpdateBarrier.whenDoneWith(p, function() {
+                if (currentValueRootId === valId) {
+                  return sink(initial(current.get().value()));
+                }
+              });
+              return maybeSubSource();
+            } else {
+              UpdateBarrier.inTransaction(void 0, _this, (function() {
+                return reply = sink(initial(current.get().value()));
+              }), []);
+              return maybeSubSource();
+            }
+          } else {
+            return maybeSubSource();
+          }
+        };
+      })(this);
+    }
+
+    return PropertyDispatcher;
+
+  })(Dispatcher);
+
+  Bus = (function(_super) {
+    __extends(Bus, _super);
+
+    function Bus() {
+      var ended, guardedSink, sink, subscribeAll, subscribeInput, subscriptions, unsubAll, unsubscribeInput;
+      sink = void 0;
+      subscriptions = [];
+      ended = false;
+      guardedSink = function(input) {
+        return function(event) {
+          if (event.isEnd()) {
+            unsubscribeInput(input);
+            return Bacon.noMore;
+          } else {
+            return sink(event);
+          }
+        };
+      };
+      unsubAll = function() {
+        var sub, _i, _len, _results;
+        _results = [];
+        for (_i = 0, _len = subscriptions.length; _i < _len; _i++) {
+          sub = subscriptions[_i];
+          _results.push(typeof sub.unsub === "function" ? sub.unsub() : void 0);
+        }
+        return _results;
+      };
+      subscribeInput = function(subscription) {
+        return subscription.unsub = subscription.input.subscribeInternal(guardedSink(subscription.input));
+      };
+      unsubscribeInput = function(input) {
+        var i, sub, _i, _len;
+        for (i = _i = 0, _len = subscriptions.length; _i < _len; i = ++_i) {
+          sub = subscriptions[i];
+          if (sub.input === input) {
+            if (typeof sub.unsub === "function") {
+              sub.unsub();
+            }
+            subscriptions.splice(i, 1);
+            return;
+          }
+        }
+      };
+      subscribeAll = function(newSink) {
+        var subscription, _i, _len, _ref1;
+        sink = newSink;
+        _ref1 = cloneArray(subscriptions);
+        for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+          subscription = _ref1[_i];
+          subscribeInput(subscription);
+        }
+        return unsubAll;
+      };
+      Bus.__super__.constructor.call(this, describe(Bacon, "Bus"), subscribeAll);
+      this.plug = function(input) {
+        var sub;
+        if (ended) {
+          return;
+        }
+        sub = {
+          input: input
+        };
+        subscriptions.push(sub);
+        if ((sink != null)) {
+          subscribeInput(sub);
+        }
+        return function() {
+          return unsubscribeInput(input);
+        };
+      };
+      this.push = function(value) {
+        return typeof sink === "function" ? sink(next(value)) : void 0;
+      };
+      this.error = function(error) {
+        return typeof sink === "function" ? sink(new Error(error)) : void 0;
+      };
+      this.end = function() {
+        ended = true;
+        unsubAll();
+        return typeof sink === "function" ? sink(end()) : void 0;
+      };
+    }
+
+    return Bus;
+
+  })(EventStream);
+
+  Source = (function() {
+    function Source(obs, sync, subscribe, lazy) {
+      this.obs = obs;
+      this.sync = sync;
+      this.subscribe = subscribe;
+      this.lazy = lazy != null ? lazy : false;
+      this.queue = [];
+      if (this.subscribe == null) {
+        this.subscribe = this.obs.subscribeInternal;
+      }
+    }
+
+    Source.prototype.toString = function() {
+      return this.obs.toString.call(this);
+    };
+
+    Source.prototype.markEnded = function() {
+      return this.ended = true;
+    };
+
+    Source.prototype.consume = function() {
+      if (this.lazy) {
+        return _.always(this.queue[0]);
+      } else {
+        return this.queue[0];
+      }
+    };
+
+    Source.prototype.push = function(x) {
+      return this.queue = [x];
+    };
+
+    Source.prototype.mayHave = function() {
+      return true;
+    };
+
+    Source.prototype.hasAtLeast = function() {
+      return this.queue.length;
+    };
+
+    Source.prototype.flatten = true;
+
+    return Source;
+
+  })();
+
+  ConsumingSource = (function(_super) {
+    __extends(ConsumingSource, _super);
+
+    function ConsumingSource() {
+      return ConsumingSource.__super__.constructor.apply(this, arguments);
+    }
+
+    ConsumingSource.prototype.consume = function() {
+      return this.queue.shift();
+    };
+
+    ConsumingSource.prototype.push = function(x) {
+      return this.queue.push(x);
+    };
+
+    ConsumingSource.prototype.mayHave = function(c) {
+      return !this.ended || this.queue.length >= c;
+    };
+
+    ConsumingSource.prototype.hasAtLeast = function(c) {
+      return this.queue.length >= c;
+    };
+
+    ConsumingSource.prototype.flatten = false;
+
+    return ConsumingSource;
+
+  })(Source);
+
+  BufferingSource = (function(_super) {
+    __extends(BufferingSource, _super);
+
+    function BufferingSource(obs) {
+      this.obs = obs;
+      BufferingSource.__super__.constructor.call(this, this.obs, true, this.obs.subscribeInternal);
+    }
+
+    BufferingSource.prototype.consume = function() {
+      var values;
+      values = this.queue;
+      this.queue = [];
+      return function() {
+        return values;
+      };
+    };
+
+    BufferingSource.prototype.push = function(x) {
+      return this.queue.push(x());
+    };
+
+    BufferingSource.prototype.hasAtLeast = function() {
+      return true;
+    };
+
+    return BufferingSource;
+
+  })(Source);
+
+  Source.isTrigger = function(s) {
+    if (s instanceof Source) {
+      return s.sync;
+    } else {
+      return s instanceof EventStream;
+    }
+  };
+
+  Source.fromObservable = function(s) {
+    if (s instanceof Source) {
+      return s;
+    } else if (s instanceof Property) {
+      return new Source(s, false);
+    } else {
+      return new ConsumingSource(s, true);
+    }
+  };
+
+  describe = function() {
+    var args, context, method;
+    context = arguments[0], method = arguments[1], args = 3 <= arguments.length ? __slice.call(arguments, 2) : [];
+    if ((context || method) instanceof Desc) {
+      return context || method;
+    } else {
+      return new Desc(context, method, args);
+    }
+  };
+
+  findDeps = function(x) {
+    if (isArray(x)) {
+      return _.flatMap(findDeps, x);
+    } else if (isObservable(x)) {
+      return [x];
+    } else if (x instanceof Source) {
+      return [x.obs];
+    } else {
+      return [];
+    }
+  };
+
+  Desc = (function() {
+    function Desc(context, method, args) {
+      this.context = context;
+      this.method = method;
+      this.args = args;
+      this.cached = null;
+    }
+
+    Desc.prototype.deps = function() {
+      return this.cached || (this.cached = findDeps([this.context].concat(this.args)));
+    };
+
+    Desc.prototype.apply = function(obs) {
+      obs.desc = this;
+      return obs;
+    };
+
+    Desc.prototype.toString = function() {
+      return _.toString(this.context) + "." + _.toString(this.method) + "(" + _.map(_.toString, this.args) + ")";
+    };
+
+    return Desc;
+
+  })();
+
+  withDescription = function() {
+    var desc, obs, _i;
+    desc = 2 <= arguments.length ? __slice.call(arguments, 0, _i = arguments.length - 1) : (_i = 0, []), obs = arguments[_i++];
+    return describe.apply(null, desc).apply(obs);
+  };
+
+  Bacon.when = function() {
+    var f, i, index, ix, len, needsBarrier, pat, patSources, pats, patterns, resultStream, s, sources, triggerFound, usage, _i, _j, _len, _len1, _ref1;
+    patterns = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+    if (patterns.length === 0) {
+      return Bacon.never();
+    }
+    len = patterns.length;
+    usage = "when: expecting arguments in the form (Observable+,function)+";
+    assert(usage, len % 2 === 0);
+    sources = [];
+    pats = [];
+    i = 0;
+    while (i < len) {
+      patSources = _.toArray(patterns[i]);
+      f = patterns[i + 1];
+      pat = {
+        f: (isFunction(f) ? f : (function() {
+          return f;
+        })),
+        ixs: []
+      };
+      triggerFound = false;
+      for (_i = 0, _len = patSources.length; _i < _len; _i++) {
+        s = patSources[_i];
+        index = _.indexOf(sources, s);
+        if (!triggerFound) {
+          triggerFound = Source.isTrigger(s);
+        }
+        if (index < 0) {
+          sources.push(s);
+          index = sources.length - 1;
+        }
+        _ref1 = pat.ixs;
+        for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+          ix = _ref1[_j];
+          if (ix.index === index) {
+            ix.count++;
+          }
+        }
+        pat.ixs.push({
+          index: index,
+          count: 1
+        });
+      }
+      assert("At least one EventStream required", triggerFound || (!patSources.length));
+      if (patSources.length > 0) {
+        pats.push(pat);
+      }
+      i = i + 2;
+    }
+    if (!sources.length) {
+      return Bacon.never();
+    }
+    sources = _.map(Source.fromObservable, sources);
+    needsBarrier = (_.any(sources, function(s) {
+      return s.flatten;
+    })) && (containsDuplicateDeps(_.map((function(s) {
+      return s.obs;
+    }), sources)));
+    return resultStream = new EventStream(describe.apply(null, [Bacon, "when"].concat(__slice.call(patterns))), function(sink) {
+      var cannotMatch, cannotSync, ends, match, nonFlattened, part, triggers;
+      triggers = [];
+      ends = false;
+      match = function(p) {
+        var _k, _len2, _ref2;
+        _ref2 = p.ixs;
+        for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
+          i = _ref2[_k];
+          if (!sources[i.index].hasAtLeast(i.count)) {
+            return false;
+          }
+        }
+        return true;
+      };
+      cannotSync = function(source) {
+        return !source.sync || source.ended;
+      };
+      cannotMatch = function(p) {
+        var _k, _len2, _ref2;
+        _ref2 = p.ixs;
+        for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
+          i = _ref2[_k];
+          if (!sources[i.index].mayHave(i.count)) {
+            return true;
+          }
+        }
+      };
+      nonFlattened = function(trigger) {
+        return !trigger.source.flatten;
+      };
+      part = function(source) {
+        return function(unsubAll) {
+          var flush, flushLater, flushWhileTriggers;
+          flushLater = function() {
+            return UpdateBarrier.whenDoneWith(resultStream, flush);
+          };
+          flushWhileTriggers = function() {
+            var functions, p, reply, trigger, _k, _len2;
+            if (triggers.length > 0) {
+              reply = Bacon.more;
+              trigger = triggers.pop();
+              for (_k = 0, _len2 = pats.length; _k < _len2; _k++) {
+                p = pats[_k];
+                if (match(p)) {
+                  functions = (function() {
+                    var _l, _len3, _ref2, _results;
+                    _ref2 = p.ixs;
+                    _results = [];
+                    for (_l = 0, _len3 = _ref2.length; _l < _len3; _l++) {
+                      i = _ref2[_l];
+                      _results.push(sources[i.index].consume());
+                    }
+                    return _results;
+                  })();
+                  reply = sink(trigger.e.apply(function() {
+                    var fun, values;
+                    values = (function() {
+                      var _l, _len3, _results;
+                      _results = [];
+                      for (_l = 0, _len3 = functions.length; _l < _len3; _l++) {
+                        fun = functions[_l];
+                        _results.push(fun());
+                      }
+                      return _results;
+                    })();
+                    return p.f.apply(p, values);
+                  }));
+                  if (triggers.length) {
+                    triggers = _.filter(nonFlattened, triggers);
+                  }
+                  if (reply === Bacon.noMore) {
+                    return reply;
+                  } else {
+                    return flushWhileTriggers();
+                  }
+                }
+              }
+            } else {
+              return Bacon.more;
+            }
+          };
+          flush = function() {
+            var reply;
+            reply = flushWhileTriggers();
+            if (ends) {
+              ends = false;
+              if (_.all(sources, cannotSync) || _.all(pats, cannotMatch)) {
+                reply = Bacon.noMore;
+                sink(end());
+              }
+            }
+            if (reply === Bacon.noMore) {
+              unsubAll();
+            }
+            return reply;
+          };
+          return source.subscribe(function(e) {
+            var reply;
+            if (e.isEnd()) {
+              ends = true;
+              source.markEnded();
+              flushLater();
+            } else if (e.isError()) {
+              reply = sink(e);
+            } else {
+              source.push(e.value);
+              if (source.sync) {
+                triggers.push({
+                  source: source,
+                  e: e
+                });
+                if (needsBarrier || UpdateBarrier.hasWaiters()) {
+                  flushLater();
+                } else {
+                  flush();
+                }
+              }
+            }
+            if (reply === Bacon.noMore) {
+              unsubAll();
+            }
+            return reply || Bacon.more;
+          });
+        };
+      };
+      return compositeUnsubscribe.apply(null, (function() {
+        var _k, _len2, _results;
+        _results = [];
+        for (_k = 0, _len2 = sources.length; _k < _len2; _k++) {
+          s = sources[_k];
+          _results.push(part(s));
+        }
+        return _results;
+      })());
+    });
+  };
+
+  containsDuplicateDeps = function(observables, state) {
+    var checkObservable;
+    if (state == null) {
+      state = [];
+    }
+    checkObservable = function(obs) {
+      var deps;
+      if (Bacon._.contains(state, obs)) {
+        return true;
+      } else {
+        deps = obs.internalDeps();
+        if (deps.length) {
+          state.push(obs);
+          return Bacon._.any(deps, checkObservable);
+        } else {
+          state.push(obs);
+          return false;
+        }
+      }
+    };
+    return Bacon._.any(observables, checkObservable);
+  };
+
+  Bacon.update = function() {
+    var i, initial, lateBindFirst, patterns;
+    initial = arguments[0], patterns = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+    lateBindFirst = function(f) {
+      return function() {
+        var args;
+        args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+        return function(i) {
+          return f.apply(null, [i].concat(args));
+        };
+      };
+    };
+    i = patterns.length - 1;
+    while (i > 0) {
+      if (!(patterns[i] instanceof Function)) {
+        patterns[i] = (function(x) {
+          return function() {
+            return x;
+          };
+        })(patterns[i]);
+      }
+      patterns[i] = lateBindFirst(patterns[i]);
+      i = i - 2;
+    }
+    return withDescription.apply(null, [Bacon, "update", initial].concat(__slice.call(patterns), [Bacon.when.apply(Bacon, patterns).scan(initial, (function(x, f) {
+      return f(x);
+    }))]));
+  };
+
+  compositeUnsubscribe = function() {
+    var ss;
+    ss = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+    return new CompositeUnsubscribe(ss).unsubscribe;
+  };
+
+  CompositeUnsubscribe = (function() {
+    function CompositeUnsubscribe(ss) {
+      var s, _i, _len;
+      if (ss == null) {
+        ss = [];
+      }
+      this.unsubscribe = __bind(this.unsubscribe, this);
+      this.unsubscribed = false;
+      this.subscriptions = [];
+      this.starting = [];
+      for (_i = 0, _len = ss.length; _i < _len; _i++) {
+        s = ss[_i];
+        this.add(s);
+      }
+    }
+
+    CompositeUnsubscribe.prototype.add = function(subscription) {
+      var ended, unsub, unsubMe;
+      if (this.unsubscribed) {
+        return;
+      }
+      ended = false;
+      unsub = nop;
+      this.starting.push(subscription);
+      unsubMe = (function(_this) {
+        return function() {
+          if (_this.unsubscribed) {
+            return;
+          }
+          ended = true;
+          _this.remove(unsub);
+          return _.remove(subscription, _this.starting);
+        };
+      })(this);
+      unsub = subscription(this.unsubscribe, unsubMe);
+      if (!(this.unsubscribed || ended)) {
+        this.subscriptions.push(unsub);
+      }
+      _.remove(subscription, this.starting);
+      return unsub;
+    };
+
+    CompositeUnsubscribe.prototype.remove = function(unsub) {
+      if (this.unsubscribed) {
+        return;
+      }
+      if ((_.remove(unsub, this.subscriptions)) !== void 0) {
+        return unsub();
+      }
+    };
+
+    CompositeUnsubscribe.prototype.unsubscribe = function() {
+      var s, _i, _len, _ref1;
+      if (this.unsubscribed) {
+        return;
+      }
+      this.unsubscribed = true;
+      _ref1 = this.subscriptions;
+      for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+        s = _ref1[_i];
+        s();
+      }
+      this.subscriptions = [];
+      return this.starting = [];
+    };
+
+    CompositeUnsubscribe.prototype.count = function() {
+      if (this.unsubscribed) {
+        return 0;
+      }
+      return this.subscriptions.length + this.starting.length;
+    };
+
+    CompositeUnsubscribe.prototype.empty = function() {
+      return this.count() === 0;
+    };
+
+    return CompositeUnsubscribe;
+
+  })();
+
+  Bacon.CompositeUnsubscribe = CompositeUnsubscribe;
+
+  Some = (function() {
+    function Some(value) {
+      this.value = value;
+    }
+
+    Some.prototype.getOrElse = function() {
+      return this.value;
+    };
+
+    Some.prototype.get = function() {
+      return this.value;
+    };
+
+    Some.prototype.filter = function(f) {
+      if (f(this.value)) {
+        return new Some(this.value);
+      } else {
+        return None;
+      }
+    };
+
+    Some.prototype.map = function(f) {
+      return new Some(f(this.value));
+    };
+
+    Some.prototype.forEach = function(f) {
+      return f(this.value);
+    };
+
+    Some.prototype.isDefined = true;
+
+    Some.prototype.toArray = function() {
+      return [this.value];
+    };
+
+    Some.prototype.inspect = function() {
+      return "Some(" + this.value + ")";
+    };
+
+    Some.prototype.toString = function() {
+      return this.inspect();
+    };
+
+    return Some;
+
+  })();
+
+  None = {
+    getOrElse: function(value) {
+      return value;
+    },
+    filter: function() {
+      return None;
+    },
+    map: function() {
+      return None;
+    },
+    forEach: function() {},
+    isDefined: false,
+    toArray: function() {
+      return [];
+    },
+    inspect: function() {
+      return "None";
+    },
+    toString: function() {
+      return this.inspect();
+    }
+  };
+
+  DepCache = (function() {
+    var collectDeps, dependsOn, flatDeps, invalidate;
+    flatDeps = {};
+    dependsOn = function(orig, o) {
+      var myDeps;
+      myDeps = flatDeps[orig.id];
+      if (!myDeps) {
+        myDeps = flatDeps[orig.id] = {};
+        collectDeps(orig, orig);
+      }
+      return myDeps[o.id];
+    };
+    collectDeps = function(orig, o) {
+      var dep, _i, _len, _ref1, _results;
+      _ref1 = o.internalDeps();
+      _results = [];
+      for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+        dep = _ref1[_i];
+        flatDeps[orig.id][dep.id] = true;
+        _results.push(collectDeps(orig, dep));
+      }
+      return _results;
+    };
+    invalidate = function() {
+      return flatDeps = {};
+    };
+    return {
+      invalidate: invalidate,
+      dependsOn: dependsOn
+    };
+  })();
+
+  UpdateBarrier = (function() {
+    var afterTransaction, afters, currentEventId, findIndependent, flush, hasWaiters, inTransaction, independent, invalidateDeps, rootEvent, waiters, whenDoneWith, wrappedSubscribe;
+    rootEvent = void 0;
+    waiters = [];
+    afters = [];
+    afterTransaction = function(f) {
+      if (rootEvent) {
+        return afters.push(f);
+      } else {
+        return f();
+      }
+    };
+    independent = function(waiter) {
+      return !_.any(waiters, (function(other) {
+        return DepCache.dependsOn(waiter.obs, other.obs);
+      }));
+    };
+    whenDoneWith = function(obs, f) {
+      if (rootEvent) {
+        return waiters.push({
+          obs: obs,
+          f: f
+        });
+      } else {
+        return f();
+      }
+    };
+    findIndependent = function() {
+      while (!independent(waiters[0])) {
+        waiters.push(waiters.shift());
+      }
+      return waiters.shift();
+    };
+    flush = function() {
+      var _results;
+      _results = [];
+      while (waiters.length) {
+        _results.push(findIndependent().f());
+      }
+      return _results;
+    };
+    invalidateDeps = DepCache.invalidate;
+    inTransaction = function(event, context, f, args) {
+      var result, theseAfters, _i, _len;
+      if (rootEvent) {
+        return f.apply(context, args);
+      } else {
+        rootEvent = event;
+        try {
+          result = f.apply(context, args);
+          flush();
+        } finally {
+          rootEvent = void 0;
+          while (afters.length) {
+            theseAfters = afters;
+            afters = [];
+            for (_i = 0, _len = theseAfters.length; _i < _len; _i++) {
+              f = theseAfters[_i];
+              f();
+            }
+          }
+          invalidateDeps();
+        }
+        return result;
+      }
+    };
+    currentEventId = function() {
+      if (rootEvent) {
+        return rootEvent.id;
+      } else {
+        return void 0;
+      }
+    };
+    wrappedSubscribe = function(obs) {
+      return function(sink) {
+        var doUnsub, unsub, unsubd;
+        unsubd = false;
+        doUnsub = function() {};
+        unsub = function() {
+          unsubd = true;
+          return doUnsub();
+        };
+        doUnsub = obs.subscribeInternal(function(event) {
+          return afterTransaction(function() {
+            var reply;
+            if (!unsubd) {
+              reply = sink(event);
+              if (reply === Bacon.noMore) {
+                return unsub();
+              }
+            }
+          });
+        });
+        return unsub;
+      };
+    };
+    hasWaiters = function() {
+      return waiters.length > 0;
+    };
+    return {
+      whenDoneWith: whenDoneWith,
+      hasWaiters: hasWaiters,
+      inTransaction: inTransaction,
+      currentEventId: currentEventId,
+      wrappedSubscribe: wrappedSubscribe
+    };
+  })();
+
+  Bacon.EventStream = EventStream;
+
+  Bacon.Property = Property;
+
+  Bacon.Observable = Observable;
+
+  Bacon.Bus = Bus;
+
+  Bacon.Initial = Initial;
+
+  Bacon.Next = Next;
+
+  Bacon.End = End;
+
+  Bacon.Error = Error;
+
+  nop = function() {};
+
+  latterF = function(_, x) {
+    return x();
+  };
+
+  former = function(x, _) {
+    return x;
+  };
+
+  initial = function(value) {
+    return new Initial(_.always(value));
+  };
+
+  next = function(value) {
+    return new Next(_.always(value));
+  };
+
+  end = function() {
+    return new End();
+  };
+
+  toEvent = function(x) {
+    if (x instanceof Event) {
+      return x;
+    } else {
+      return next(x);
+    }
+  };
+
+  cloneArray = function(xs) {
+    return xs.slice(0);
+  };
+
+  assert = function(message, condition) {
+    if (!condition) {
+      throw new Exception(message);
+    }
+  };
+
+  assertEventStream = function(event) {
+    if (!(event instanceof EventStream)) {
+      throw new Exception("not an EventStream : " + event);
+    }
+  };
+
+  assertFunction = function(f) {
+    return assert("not a function : " + f, isFunction(f));
+  };
+
+  isFunction = function(f) {
+    return typeof f === "function";
+  };
+
+  isArray = function(xs) {
+    return xs instanceof Array;
+  };
+
+  isObservable = function(x) {
+    return x instanceof Observable;
+  };
+
+  assertArray = function(xs) {
+    if (!isArray(xs)) {
+      throw new Exception("not an array : " + xs);
+    }
+  };
+
+  assertNoArguments = function(args) {
+    return assert("no arguments supported", args.length === 0);
+  };
+
+  assertString = function(x) {
+    if (typeof x !== "string") {
+      throw new Exception("not a string : " + x);
+    }
+  };
+
+  partiallyApplied = function(f, applied) {
+    return function() {
+      var args;
+      args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+      return f.apply(null, applied.concat(args));
+    };
+  };
+
+  makeSpawner = function(args) {
+    if (args.length === 1 && isObservable(args[0])) {
+      return _.always(args[0]);
+    } else {
+      return makeFunctionArgs(args);
+    }
+  };
+
+  makeFunctionArgs = function(args) {
+    args = Array.prototype.slice.call(args);
+    return makeFunction_.apply(null, args);
+  };
+
+  makeFunction_ = withMethodCallSupport(function() {
+    var args, f;
+    f = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+    if (isFunction(f)) {
+      if (args.length) {
+        return partiallyApplied(f, args);
+      } else {
+        return f;
+      }
+    } else if (isFieldKey(f)) {
+      return toFieldExtractor(f, args);
+    } else {
+      return _.always(f);
+    }
+  });
+
+  makeFunction = function(f, args) {
+    return makeFunction_.apply(null, [f].concat(__slice.call(args)));
+  };
+
+  makeObservable = function(x) {
+    if (isObservable(x)) {
+      return x;
+    } else {
+      return Bacon.once(x);
+    }
+  };
+
+  isFieldKey = function(f) {
+    return (typeof f === "string") && f.length > 1 && f.charAt(0) === ".";
+  };
+
+  Bacon.isFieldKey = isFieldKey;
+
+  toFieldExtractor = function(f, args) {
+    var partFuncs, parts;
+    parts = f.slice(1).split(".");
+    partFuncs = _.map(toSimpleExtractor(args), parts);
+    return function(value) {
+      var _i, _len;
+      for (_i = 0, _len = partFuncs.length; _i < _len; _i++) {
+        f = partFuncs[_i];
+        value = f(value);
+      }
+      return value;
+    };
+  };
+
+  toSimpleExtractor = function(args) {
+    return function(key) {
+      return function(value) {
+        var fieldValue;
+        if (value == null) {
+          return void 0;
+        } else {
+          fieldValue = value[key];
+          if (isFunction(fieldValue)) {
+            return fieldValue.apply(value, args);
+          } else {
+            return fieldValue;
+          }
+        }
+      };
+    };
+  };
+
+  toFieldKey = function(f) {
+    return f.slice(1);
+  };
+
+  toCombinator = function(f) {
+    var key;
+    if (isFunction(f)) {
+      return f;
+    } else if (isFieldKey(f)) {
+      key = toFieldKey(f);
+      return function(left, right) {
+        return left[key](right);
+      };
+    } else {
+      return assert("not a function or a field key: " + f, false);
+    }
+  };
+
+  toOption = function(v) {
+    if (v instanceof Some || v === None) {
+      return v;
+    } else {
+      return new Some(v);
+    }
+  };
+
+  _ = {
+    indexOf: Array.prototype.indexOf ? function(xs, x) {
+      return xs.indexOf(x);
+    } : function(xs, x) {
+      var i, y, _i, _len;
+      for (i = _i = 0, _len = xs.length; _i < _len; i = ++_i) {
+        y = xs[i];
+        if (x === y) {
+          return i;
+        }
+      }
+      return -1;
+    },
+    indexWhere: function(xs, f) {
+      var i, y, _i, _len;
+      for (i = _i = 0, _len = xs.length; _i < _len; i = ++_i) {
+        y = xs[i];
+        if (f(y)) {
+          return i;
+        }
+      }
+      return -1;
+    },
+    head: function(xs) {
+      return xs[0];
+    },
+    always: function(x) {
+      return function() {
+        return x;
+      };
+    },
+    negate: function(f) {
+      return function(x) {
+        return !f(x);
+      };
+    },
+    empty: function(xs) {
+      return xs.length === 0;
+    },
+    tail: function(xs) {
+      return xs.slice(1, xs.length);
+    },
+    filter: function(f, xs) {
+      var filtered, x, _i, _len;
+      filtered = [];
+      for (_i = 0, _len = xs.length; _i < _len; _i++) {
+        x = xs[_i];
+        if (f(x)) {
+          filtered.push(x);
+        }
+      }
+      return filtered;
+    },
+    map: function(f, xs) {
+      var x, _i, _len, _results;
+      _results = [];
+      for (_i = 0, _len = xs.length; _i < _len; _i++) {
+        x = xs[_i];
+        _results.push(f(x));
+      }
+      return _results;
+    },
+    each: function(xs, f) {
+      var key, value, _results;
+      _results = [];
+      for (key in xs) {
+        value = xs[key];
+        _results.push(f(key, value));
+      }
+      return _results;
+    },
+    toArray: function(xs) {
+      if (isArray(xs)) {
+        return xs;
+      } else {
+        return [xs];
+      }
+    },
+    contains: function(xs, x) {
+      return _.indexOf(xs, x) !== -1;
+    },
+    id: function(x) {
+      return x;
+    },
+    last: function(xs) {
+      return xs[xs.length - 1];
+    },
+    all: function(xs, f) {
+      var x, _i, _len;
+      if (f == null) {
+        f = _.id;
+      }
+      for (_i = 0, _len = xs.length; _i < _len; _i++) {
+        x = xs[_i];
+        if (!f(x)) {
+          return false;
+        }
+      }
+      return true;
+    },
+    any: function(xs, f) {
+      var x, _i, _len;
+      if (f == null) {
+        f = _.id;
+      }
+      for (_i = 0, _len = xs.length; _i < _len; _i++) {
+        x = xs[_i];
+        if (f(x)) {
+          return true;
+        }
+      }
+      return false;
+    },
+    without: function(x, xs) {
+      return _.filter((function(y) {
+        return y !== x;
+      }), xs);
+    },
+    remove: function(x, xs) {
+      var i;
+      i = _.indexOf(xs, x);
+      if (i >= 0) {
+        return xs.splice(i, 1);
+      }
+    },
+    fold: function(xs, seed, f) {
+      var x, _i, _len;
+      for (_i = 0, _len = xs.length; _i < _len; _i++) {
+        x = xs[_i];
+        seed = f(seed, x);
+      }
+      return seed;
+    },
+    flatMap: function(f, xs) {
+      return _.fold(xs, [], (function(ys, x) {
+        return ys.concat(f(x));
+      }));
+    },
+    cached: function(f) {
+      var value;
+      value = None;
+      return function() {
+        if (value === None) {
+          value = f();
+          f = null;
+        }
+        return value;
+      };
+    },
+    toString: function(obj) {
+      var ex, internals, key, value;
+      try {
+        recursionDepth++;
+        if (obj == null) {
+          return "undefined";
+        } else if (isFunction(obj)) {
+          return "function";
+        } else if (isArray(obj)) {
+          if (recursionDepth > 5) {
+            return "[..]";
+          }
+          return "[" + _.map(_.toString, obj).toString() + "]";
+        } else if (((obj != null ? obj.toString : void 0) != null) && obj.toString !== Object.prototype.toString) {
+          return obj.toString();
+        } else if (typeof obj === "object") {
+          if (recursionDepth > 5) {
+            return "{..}";
+          }
+          internals = (function() {
+            var _results;
+            _results = [];
+            for (key in obj) {
+              if (!__hasProp.call(obj, key)) continue;
+              value = (function() {
+                try {
+                  return obj[key];
+                } catch (_error) {
+                  ex = _error;
+                  return ex;
+                }
+              })();
+              _results.push(_.toString(key) + ":" + _.toString(value));
+            }
+            return _results;
+          })();
+          return "{" + internals + "}";
+        } else {
+          return obj;
+        }
+      } finally {
+        recursionDepth--;
+      }
+    }
+  };
+
+  recursionDepth = 0;
+
+  Bacon._ = _;
+
+  Bacon.scheduler = {
+    setTimeout: function(f, d) {
+      return setTimeout(f, d);
+    },
+    setInterval: function(f, i) {
+      return setInterval(f, i);
+    },
+    clearInterval: function(id) {
+      return clearInterval(id);
+    },
+    now: function() {
+      return new Date().getTime();
+    }
+  };
+
+  if ((typeof define !== "undefined" && define !== null) && (define.amd != null)) {
+    define([], function() {
+      return Bacon;
+    });
+    this.Bacon = Bacon;
+  } else if (typeof module !== "undefined" && module !== null) {
+    module.exports = Bacon;
+    Bacon.Bacon = Bacon;
+  } else {
+    this.Bacon = Bacon;
+  }
+
+}).call(this);

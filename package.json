@@ -1,0 +1,22 @@
+{
+	"name": "nui",
+	"version": "0.0.1",
+	"private": true,
+	"author": {
+		"name": "agj"
+	},
+	"dependencies": {
+		"almond": "^0.3.0",
+		"gulp": "^3.8.7",
+		"gulp-clean": "^0.3.1",
+		"gulp-rename": "^1.2.0",
+		"gulp-replace": "^0.4.0",
+		"gulp-util": "^3.0.1",
+		"main-bower-files": "^2.0.0",
+		"requirejs": "^2.1.14",
+		"sugar": "^1.4.1"
+	},
+	"engines": {
+		"node": ">=0.10.31"
+	}
+}

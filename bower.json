@@ -1,0 +1,13 @@
+{
+	"name": "nui",
+	"version": "0.0.1",
+	"private": true,
+	"dependencies": {
+		"bacon": "^0.7.22",
+		"jquery": "^2.1.1",
+		"lazy.js": "^0.3.2",
+		"requirejs": "^2.1.15",
+		"rsvp": "^3.0.13",
+		"signals": "^1.0.0"
+	}
+}
