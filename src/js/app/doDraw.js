@@ -65,6 +65,16 @@ define( function(require) {
 			.map(absolutizeStrokes())
 			.map(strokeToBeziers);
 
+		var pointStrokes = joinEnds(
+			bezierStrokes
+			.map(map(expandBezier(5)))
+			.map(removeEdgePoints)
+			.map(flatten)
+			.map(removeRedundantPoints)
+			.map(map(normalizePoint({ x: canvas.width, y: canvas.width })))
+		);
+
+		// Draw proper character.
 		bezierStrokes.forEach(
 			to.call('forEach', [seq(
 				map(normalizePoint({ x: canvas.width, y: canvas.width })),
@@ -72,29 +82,30 @@ define( function(require) {
 			)])
 		);
 
-		joinEnds(
-			bezierStrokes
-			.map(map(expandBezier(5)))
-			// .map(fix(SPY))
-			.map(removeEdgePoints)
-			.map(flatten)
-			.map(removeRedundantPoints)
-			.map(map(normalizePoint({ x: canvas.width, y: canvas.width })))
-		)
+		// Draw yarn.
+		pointStrokes.reduce( function (prev, points) {
+			drawLine(ctx, prev, first(points), false);
+			return last(-1, points).reduce( function (prev, point) {
+				drawLine(ctx, prev, point, true);
+				return point;
+			}, first(points));
+		}, merge(first(first(pointStrokes)), { x: -10 }));
 
-		.forEach( function (points) {
-			// lazy(points).consecutive(2).each( argumentize(function (a, b) {
-			// 	draw.line(ctx, new DrawStyle().lineColor(0x000000).lineWeight(3).lineAlpha(0.3), a, b);
-			// }));
+		// Draw holes and pins.
+		pointStrokes.forEach( function (points) {
 			drawHole(first(points));
 			drawHole(last(points));
 			points.slice(1, -1).forEach(drawPin);
 		});
 	});
 
+	function drawLine(ctx, pa, pb, over) {
+		draw.line(ctx, new DrawStyle().lineColor(0x0066ff).lineWeight(5).lineAlpha(over ? 0.6 : 0.2), pa, pb);
+	}
+
 	var drawBezier = autoCurry(function (ctx, points) {
 		draw.curve.apply(null,
-			[ctx, new DrawStyle().lineColor(0x000000).lineWeight(2).lineAlpha(0.2)]
+			[ctx, new DrawStyle().lineColor(0xfdb588).lineWeight(16).lineAlpha(1).lineCapsStyle('round')]
 			.concat(points)
 		);
 	});

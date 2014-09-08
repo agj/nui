@@ -9,14 +9,16 @@ define( function(require) {
 	var autoCurry = require('agj/function/autoCurry');
 
 
-	var holeStyle = new DrawStyle().lineColor(0xff0000).lineWeight(3).lineAlpha(0.5);
-	var pinStyle = new DrawStyle().fillColor(0x0000ff).fillAlpha(0.4);
+	var holeStyle = new DrawStyle().lineColor(0xdd0033).lineWeight(3).lineAlpha(0.5);
+	var pinStyle = new DrawStyle().lineColor(0xdd0033).lineWeight(3).lineAlpha(0.5);
 
 	var drawHole = autoCurry( function (ctx, point) {
 		draw.circle(ctx, holeStyle, merge(point, { radius: 5 } ));
 	});
-	var drawPin = autoCurry( function (ctx, point) {
-		draw.circle(ctx, pinStyle, merge(point, { radius: 3 } ));
+
+	var drawPin = autoCurry( function (ctx, pt) {
+		draw.line(ctx, pinStyle, { x: pt.x - 7, y: pt.y }, { x: pt.x + 7, y: pt.y });
+		draw.line(ctx, pinStyle, { x: pt.x, y: pt.y - 7 }, { x: pt.x, y: pt.y + 7 });
 	});
 
 	return {
