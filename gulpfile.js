@@ -14,25 +14,16 @@ var path = {
 	bower: 'src/bower_components/',
 };
 
-var bowerComponents = [
-	'requirejs/require.js',
-	'bacon/dist/Bacon.min.js',
-	'jquery/dist/jquery.min.js',
-	'lazy.js/lazy.js',
-	'rsvp/rsvp.js',
-	'signals/dist/signals.min.js',
-];
-
 
 /////
 
 gulp.task('default', ['clean'], function () {
-	gulp.start('build');
+	return gulp.start('build');
 });
 
 gulp.task('bower', function () {
-	gulp.src(mainBowerFiles())
-	.pipe(gulp.dest(path.src + 'js/lib'));
+	return gulp.src(mainBowerFiles())
+		.pipe(gulp.dest(path.src + 'js/lib'));
 });
 
 
@@ -56,25 +47,23 @@ gulp.task('copyFiles', function () {
 		.pipe(gulp.dest(path.build));
 });
 
-gulp.task('parseAMD',
-	function (callback) {
-		gutil.log(
-			rjs.optimize(
-				{
-					mainConfigFile: path.src + 'js/app.js',
-					baseUrl: path.src + 'js/lib/',
-					include: '../app',
-					name: '../../../node_modules/almond/almond',
-					out: path.build + 'js/script.js',
-					wrap: true,
-					optimize: 'uglify2',
-				},
-				function (buildResponse) {
-					callback();
-				},
-				callback
-			)
-		);
-	}
-);
+gulp.task('parseAMD', function (callback) {
+	gutil.log(
+		rjs.optimize(
+			{
+				mainConfigFile: path.src + 'js/app.js',
+				baseUrl: path.src + 'js/lib/',
+				include: '../app',
+				name: '../../../node_modules/almond/almond',
+				out: path.build + 'js/script.js',
+				wrap: true,
+				optimize: 'uglify2',
+			},
+			function (buildResponse) {
+				callback();
+			},
+			callback
+		)
+	);
+});
 
