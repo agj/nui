@@ -11,6 +11,7 @@ define( function (require) {
 	var radians           = require('app/point/radians');
 	var radianDiff        = require('app/point/radianDifference');
 	var diffPoints        = require('app/point/subtract');
+	var distance          = require('app/point/distance');
 
 	var tau = Math.PI * 2;
 
@@ -27,11 +28,15 @@ define( function (require) {
 	}
 
 	function inflects(prev, point, next) {
-		return 1 / 8 <
-			radianDiff(
+		var angle = radianDiff(
 				radians(diffPoints(prev, point)),
 				radians(diffPoints(point, next))
 			) / tau;
+		var dist = distance(prev, point) / 109;
+		if (dist < 1 / 16) return angle > 1 / 3;
+		if (dist < 1 / 8) return angle > 1 / 4;
+		if (dist < 1 / 4) return angle > 1 / 8;
+		return angle > 1 / 32;
 	}
 
 	return removeRedundantPoints;

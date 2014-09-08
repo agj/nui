@@ -21,7 +21,7 @@ define( function (require) {
 	var fix = fixArity(1);
 
 	function joinEnds(strokes) {
-		var refPoints = strokes.map(fix(first));//.concat(strokes.map(fix(last)));
+		var refPoints = strokes.map(fix(first)).concat(strokes.map(fix(last)));
 		return strokes.map( function (points) {
 			var isFirstOrLast = within([first(points), last(points)]);
 			return lazy(points)

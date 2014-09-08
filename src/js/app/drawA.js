@@ -8,9 +8,9 @@ define( function(require) {
 	var merge = require('agj/object/merge');
 	var autoCurry = require('agj/function/autoCurry');
 
-
-	var holeStyle = new DrawStyle().lineColor(0xdd0033).lineWeight(3).lineAlpha(0.5);
-	var pinStyle = new DrawStyle().lineColor(0xdd0033).lineWeight(3).lineAlpha(0.5);
+	var color = 0x000000;
+	var holeStyle = new DrawStyle().lineColor(color).lineWeight(3).lineAlpha(1);
+	var pinStyle = new DrawStyle().lineColor(color).lineWeight(3).lineAlpha(1);
 
 	var drawHole = autoCurry( function (ctx, point) {
 		draw.circle(ctx, holeStyle, merge(point, { radius: 5 } ));

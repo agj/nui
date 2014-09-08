@@ -82,6 +82,13 @@ define( function(require) {
 			)])
 		);
 
+		// Draw holes and pins.
+		pointStrokes.forEach( function (points) {
+			drawHole(first(points));
+			drawHole(last(points));
+			points.slice(1, -1).forEach(drawPin);
+		});
+
 		// Draw yarn.
 		pointStrokes.reduce( function (prev, points) {
 			drawLine(ctx, prev, first(points), false);
@@ -90,17 +97,10 @@ define( function(require) {
 				return point;
 			}, first(points));
 		}, merge(first(first(pointStrokes)), { x: -10 }));
-
-		// Draw holes and pins.
-		pointStrokes.forEach( function (points) {
-			drawHole(first(points));
-			drawHole(last(points));
-			points.slice(1, -1).forEach(drawPin);
-		});
 	});
 
 	function drawLine(ctx, pa, pb, over) {
-		draw.line(ctx, new DrawStyle().lineColor(0x0066ff).lineWeight(5).lineAlpha(over ? 0.6 : 0.2), pa, pb);
+		draw.line(ctx, new DrawStyle().lineColor(0x0066ff).lineWeight(5).lineAlpha(over ? 0.6 : 0.2).lineCapsStyle('round'), pa, pb);
 	}
 
 	var drawBezier = autoCurry(function (ctx, points) {
