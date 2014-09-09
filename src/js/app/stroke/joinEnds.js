@@ -29,7 +29,6 @@ define( function (require) {
 					function (point) {
 						var ptIndex = findIndex(refPoints, seq(distance(point), is.lt(15)));
 						if (ptIndex === -1) {
-							// refPoints.push(point);
 							return point;
 						} else {
 							return refPoints[ptIndex];

@@ -2,7 +2,7 @@
 define( function (require) {
 	'use strict';
 
-	var λ = require('lambda');
+	var λ = require('app/lambda');
 
 	var mapObj = require('agj/object/map');
 

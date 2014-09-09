@@ -4,31 +4,33 @@ define( function(require) {
 
 	var $    = require('jquery');
 	var lazy = require('lazy');
-	var λ    = require('lambda');
+	var λ    = require('app/lambda');
 
-	var log       = require('agj/utils/log');
-	var draw      = require('agj/graphics/draw');
-	var DrawStyle = require('agj/graphics/DrawStyle');
-	var merge     = require('agj/object/merge');
-	var mapObj    = require('agj/object/map');
-	var first     = require('agj/array/first');
-	var last      = require('agj/array/last');
-	var findIndex = require('agj/array/findIndex');
-	var clone     = require('agj/array/clone');
-	var within    = require('agj/array/within');
-	var flatten   = require('agj/array/flatten');
-	var partial   = require('agj/function/partial');
-	var autoCurry = require('agj/function/autoCurry');
-	var seq       = require('agj/function/sequence');
-	var not       = require('agj/function/not');
-	var fixArity  = require('agj/function/fixArity');
-	var returnArg = require('agj/function/returnArg');
-	var is        = require('agj/is');
-	var to        = require('agj/to');
+	var log        = require('agj/utils/log');
+	var draw       = require('agj/graphics/draw');
+	var DrawStyle  = require('agj/graphics/DrawStyle');
+	var merge      = require('agj/object/merge');
+	var mapObj     = require('agj/object/map');
+	var bound      = require('agj/object/bindMethod');
+	var first      = require('agj/array/first');
+	var last       = require('agj/array/last');
+	var findIndex  = require('agj/array/findIndex');
+	var clone      = require('agj/array/clone');
+	var within     = require('agj/array/within');
+	var flatten    = require('agj/array/flatten');
+	var partial    = require('agj/function/partial');
+	var autoCurry  = require('agj/function/autoCurry');
+	var seq        = require('agj/function/sequence');
+	var not        = require('agj/function/not');
+	var fixArity   = require('agj/function/fixArity');
+	var returnArg  = require('agj/function/returnArg');
+	var is         = require('agj/is');
+	var to         = require('agj/to');
 
 	var config                = require('app/config');
 	var drawA                 = require('app/drawA');
 	var SPY                   = require('app/inspect');
+	var unique                = require('app/array/unique');
 	var argumentize           = require('app/function/argumentize');
 	var argumentizeReduce     = require('app/function/argumentizeReduce');
 	var provided              = require('app/function/provided');
@@ -48,6 +50,7 @@ define( function(require) {
 	var removeEdgePoints      = require('app/stroke/removeEdgePoints');
 	var joinEnds              = require('app/stroke/joinEnds');
 	var removeRedundantPoints = require('app/stroke/removeRedundantPoints');
+	var unifyRedundantPins    = require('app/stroke/unifyRedundantPins');
 
 	var fix = fixArity(1);
 	var tau = Math.PI * 2;
@@ -65,14 +68,14 @@ define( function(require) {
 			.map(absolutizeStrokes())
 			.map(strokeToBeziers);
 
-		var pointStrokes = joinEnds(
-			bezierStrokes
+		var pointStrokes = bezierStrokes
 			.map(map(expandBezier(5)))
 			.map(removeEdgePoints)
 			.map(flatten)
 			.map(removeRedundantPoints)
+			.passTo(unifyRedundantPins)
 			.map(map(normalizePoint({ x: canvas.width, y: canvas.width })))
-		);
+			.passTo(joinEnds);
 
 		// Draw proper character.
 		bezierStrokes.forEach(

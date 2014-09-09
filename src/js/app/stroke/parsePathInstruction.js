@@ -3,7 +3,7 @@ define( function (require) {
 	'use strict';
 
 	var lazy = require('lazy');
-	var λ = require('lambda');
+	var λ = require('app/lambda');
 
 	var first = require('agj/array/first');
 	var last = require('agj/array/last');

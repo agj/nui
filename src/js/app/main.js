@@ -2,10 +2,12 @@
 define( function(require) {
 	'use strict';
 
+	require('app/addPassTo')();
+
 	var $ = require('jquery');
 	var parsePath = require('parse-svg-path');
 	var lazy = require('lazy');
-	var λ = require('lambda');
+	var λ = require('app/lambda');
 	var rsvp = require('rsvp');
 	var path = require('path');
 
