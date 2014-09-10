@@ -25,13 +25,13 @@ define( function (require) {
 		return strokes.map( function (points) {
 			if (points.length <= 2) return points;
 			var isHole = within([first(points), last(points)]);
-			return points.reduce( function (acc, pin) {
-				if (isHole(pin)) return acc.concat([pin]);
+			return points.map( function (pin) {
+				if (isHole(pin)) return pin;
 				var neighbors = pins.filter(isNear(pin));
-				if (neighbors.length <= 1) return acc.concat([pin]);
-				neighbors = unique(flatten(neighbors.map( seq(isNear, bound(pins, 'filter')) )));
-				return acc.concat([midPoint(neighbors)]);
-			}, []);
+				if (neighbors.length <= 1) return pin;
+				neighbors = neighbors.map( seq(isNear, bound(pins, 'filter')) ).passTo(flatten).passTo(unique);
+				return midPoint(neighbors);
+			});
 		});
 	}
 
@@ -41,8 +41,8 @@ define( function (require) {
 
 	function midPoint(points) {
 		return {
-			x: points.map(to.prop('x')).reduce(λ('a+b')) / points.length,
-			y: points.map(to.prop('y')).reduce(λ('a+b')) / points.length,
+			x: points.map(to.prop('x')).reduce(λ('a + b')) / points.length,
+			y: points.map(to.prop('y')).reduce(λ('a + b')) / points.length,
 		};
 	}
 

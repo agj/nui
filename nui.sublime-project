@@ -1,0 +1,14 @@
+{
+	"folders":
+	[
+		{
+			"folder_exclude_patterns":
+			[
+				"node_modules",
+				"src/bower_components",
+				"src/js/lib/agj"
+			],
+			"path": "/Volumes/Data/personal/interactive/games/縫"
+		}
+	]
+}

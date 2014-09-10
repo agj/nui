@@ -1,0 +1,2074 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"unify",
+				"unifyRedundantPins"
+			],
+			[
+				"bezie",
+				"beziersToPoints"
+			],
+			[
+				"stroke",
+				"strokeToBeziers"
+			],
+			[
+				"abso",
+				"absolutizeStrokes"
+			],
+			[
+				"bezier",
+				"bezierToPoints"
+			],
+			[
+				"argument",
+				"argumentizeReduce"
+			],
+			[
+				"instr",
+				"instructionToPoints"
+			],
+			[
+				"first",
+				"firstPt"
+			],
+			[
+				"st",
+				"strokes"
+			],
+			[
+				"m",
+				"map"
+			],
+			[
+				"drawp",
+				"drawPin_"
+			],
+			[
+				"drawh",
+				"drawHole_"
+			],
+			[
+				"dr",
+				"drawStyle"
+			],
+			[
+				"set",
+				"setLine"
+			],
+			[
+				"me",
+				"merge"
+			],
+			[
+				"linejoint",
+				"lineJointStyles"
+			],
+			[
+				"_",
+				"_lineCapsStyles"
+			],
+			[
+				"draw",
+				"DrawStyle"
+			],
+			[
+				"parse",
+				"parsePathInstruction"
+			],
+			[
+				"parsep",
+				"parsePath"
+			],
+			[
+				"instruct",
+				"instructions"
+			],
+			[
+				"parsePat",
+				"parsePathInstruction"
+			],
+			[
+				"recta",
+				"Rectangle"
+			],
+			[
+				"parsepa",
+				"parsePathInstruction"
+			],
+			[
+				"colortext",
+				"colorTextAbout"
+			],
+			[
+				"varia",
+				"variadicized4"
+			],
+			[
+				"current",
+				"currentRule"
+			],
+			[
+				"curr",
+				"currentRule"
+			],
+			[
+				"product",
+				"productCallback"
+			],
+			[
+				"execute",
+				"executeWithNum"
+			],
+			[
+				"executew",
+				"executeWithFnNum"
+			],
+			[
+				"pos",
+				"pos-r	position: relative;"
+			],
+			[
+				"append",
+				"appendChild"
+			],
+			[
+				"prefi",
+				"prefixed_andDashed"
+			],
+			[
+				"formsec",
+				"formSection"
+			],
+			[
+				"data-comm",
+				"data-comment-form-section"
+			],
+			[
+				"bind",
+				"bindMethod"
+			],
+			[
+				"json_",
+				"json_encode"
+			],
+			[
+				"var",
+				"var_export"
+			],
+			[
+				"len",
+				"length"
+			],
+			[
+				"requi",
+				"require"
+			],
+			[
+				"gen",
+				"generarHTML"
+			],
+			[
+				"obtenerur",
+				"obtenerURLVars"
+			],
+			[
+				"exists",
+				"file_exists"
+			],
+			[
+				"obtene",
+				"obtenerURLAudio"
+			],
+			[
+				"usarext",
+				"usarExternoEtiquetaAudio"
+			],
+			[
+				"obtenerm",
+				"obtenerMimeSegunFormato"
+			],
+			[
+				"obtenerM",
+				"obtenerMimeDeArchivo"
+			],
+			[
+				"exp",
+				"explode"
+			],
+			[
+				"obtener",
+				"obtenerMIME"
+			],
+			[
+				"lla",
+				"llaveAPIVoiceRSS"
+			],
+			[
+				"corr",
+				"correccionesTexto"
+			],
+			[
+				"array_key",
+				"array_key_exists"
+			],
+			[
+				"url",
+				"urlencode"
+			],
+			[
+				"background-c",
+				"background-color"
+			],
+			[
+				"inline",
+				"inline-block"
+			],
+			[
+				"promo",
+				"promoteArgSolid"
+			],
+			[
+				"exten",
+				"extendObject"
+			],
+			[
+				"match",
+				"matchParameters"
+			],
+			[
+				"split",
+				"splitTrimAndFilter"
+			],
+			[
+				"require",
+				"requireSequentially"
+			],
+			[
+				"declarator",
+				"declaratorDefault"
+			],
+			[
+				"declara",
+				"declaratorWithDefault"
+			],
+			[
+				"decar",
+				"declaratorWithDefault"
+			],
+			[
+				"curry",
+				"curryingMaybe1"
+			],
+			[
+				"curryin",
+				"curryingMaybe2"
+			],
+			[
+				"curryi",
+				"curryingMaybe3"
+			],
+			[
+				"class",
+				"className"
+			],
+			[
+				"to",
+				"toBe"
+			],
+			[
+				"promoteArgs",
+				"promoteArgSolid"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"re",
+				"require"
+			],
+			[
+				"memo",
+				"memoize"
+			],
+			[
+				"returnThisl",
+				"returnThisList"
+			],
+			[
+				"pic",
+				"pictures"
+			],
+			[
+				"selectiont",
+				"selectionTypes"
+			],
+			[
+				"selection",
+				"selectionType"
+			],
+			[
+				"select",
+				"selectionType"
+			],
+			[
+				"img",
+				"imgID"
+			],
+			[
+				"promot",
+				"promoteArg"
+			],
+			[
+				"extendut",
+				"extendUtils"
+			],
+			[
+				"constru",
+				"constructProto"
+			],
+			[
+				"util",
+				"utilFunctions"
+			],
+			[
+				"returnt",
+				"returnThisList"
+			],
+			[
+				"get",
+				"get2D"
+			],
+			[
+				"promise",
+				"promiseRequire"
+			],
+			[
+				"haso",
+				"hasOwn"
+			],
+			[
+				"hasow",
+				"hasOwnProperty"
+			],
+			[
+				"met",
+				"methodGrabber"
+			],
+			[
+				"array",
+				"arrayMethods"
+			],
+			[
+				"params",
+				"paramsFactory"
+			],
+			[
+				"check",
+				"check"
+			],
+			[
+				"obj",
+				"objGetter"
+			],
+			[
+				"return",
+				"returnArg"
+			],
+			[
+				"definep",
+				"defineProp"
+			],
+			[
+				"object",
+				"objectLiteral"
+			],
+			[
+				"greater",
+				"greaterOrEqual"
+			],
+			[
+				"auto",
+				"autoCurryArityFn"
+			],
+			[
+				"variad",
+				"variadic"
+			],
+			[
+				"autoCurry",
+				"autoCurryArityFn"
+			],
+			[
+				"autocurry",
+				"autoCurryArityFn"
+			],
+			[
+				"nativ",
+				"nativeGrabber"
+			],
+			[
+				"previn",
+				"prevIndexTo"
+			],
+			[
+				"getrando",
+				"getRandomIndexExcept"
+			],
+			[
+				"register",
+				"registeredModules"
+			],
+			[
+				"definemod",
+				"defineModule"
+			],
+			[
+				"button",
+				"button-width"
+			],
+			[
+				"d",
+				"d-i	display: inline;"
+			],
+			[
+				"word",
+				"wordHTML"
+			],
+			[
+				"pro",
+				"progress"
+			],
+			[
+				"background",
+				"background-color"
+			],
+			[
+				"_twee",
+				"_tweenUpdateBinding"
+			],
+			[
+				"_twe",
+				"_tweenStreamUnsubscriber"
+			],
+			[
+				"rsv",
+				"RSVP"
+			],
+			[
+				"signa",
+				"streamFromSignal"
+			],
+			[
+				"definemo",
+				"defineModule"
+			],
+			[
+				"definemodu",
+				"defineModules"
+			],
+			[
+				"event",
+				"event-constants"
+			],
+			[
+				"ba",
+				"background-size"
+			],
+			[
+				"unto",
+				"untouch"
+			],
+			[
+				"define",
+				"defineModule"
+			],
+			[
+				"r",
+				"fl-r	float: right;"
+			],
+			[
+				"twee",
+				"ArrayTween"
+			],
+			[
+				"isfi",
+				"isFixed"
+			],
+			[
+				"cur-",
+				"cur-p	cursor: pointer;"
+			],
+			[
+				"cur",
+				"cur-d	cursor: default;"
+			],
+			[
+				"actionspa",
+				"actionSpan"
+			],
+			[
+				"isfix",
+				"isFixedPosition"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "src/js/app/doDraw.js",
+			"settings":
+			{
+				"buffer_size": 4279,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "\ndefine( function (require) {\n	'use strict';\n\n	var λ = require('app/lambda');\n\n	var first   = require('agj/array/first');\n	var last    = require('agj/array/last');\n	var flatten = require('agj/array/flatten');\n	var within  = require('agj/array/within');\n	var seq     = require('agj/function/sequence');\n	var bound   = require('agj/object/bindMethod');\n	var log     = require('agj/utils/log');\n	var to      = require('agj/to');\n	var is      = require('agj/is');\n\n	var distance = require('app/point/distance');\n	var unique   = require('app/array/unique');\n	var SPY      = require('app/inspect');\n\n	var xSPY = to.id;\n\n	function unifyRedundantPins(strokes) {\n		var pins = flatten(strokes.map(to.call('slice', [1, -1])));\n		return strokes.map( function (points) {\n			if (points.length <= 2) return points;\n			var isHole = within([first(points), last(points)]);\n			return points.map( function (pin) {\n 				if (isHole(pin)) return pin;\n				var neighbors = pins.filter(isNear(pin));\n				if (neighbors.length <= 1) return pin;\n				neighbors = neighbors.map( seq(isNear, bound(pins, 'filter')) ).passTo(flatten).passTo(unique);\n				return midPoint(neighbors);\n			});\n		});\n	}\n\n	function isNear(point) {\n		return seq(distance(point), λ('/ 109'), is.lt(1 / 16));\n	}\n\n	function midPoint(points) {\n		return {\n			x: points.map(to.prop('x')).reduce(λ('a + b')) / points.length,\n			y: points.map(to.prop('y')).reduce(λ('a + b')) / points.length,\n		};\n	}\n\n	return unifyRedundantPins;\n\n});\n",
+			"file": "src/js/app/stroke/unifyRedundantPins.js",
+			"file_size": 1473,
+			"file_write_time": 1410325464000000,
+			"settings":
+			{
+				"buffer_size": 1470,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 27.0,
+		"selected_items":
+		[
+			[
+				"wrap",
+				"Word Wrap: Toggle"
+			],
+			[
+				"picke",
+				"Color Picker"
+			],
+			[
+				"pick",
+				"Color Picker"
+			],
+			[
+				"diff",
+				"FileDiffs: Menu"
+			],
+			[
+				"dif",
+				"FileDiffs: Menu"
+			],
+			[
+				"picker",
+				"Color Picker"
+			],
+			[
+				"wr",
+				"Word Wrap: Toggle"
+			],
+			[
+				"anyel",
+				"Preferences: Alignment Key Bindings – Default"
+			],
+			[
+				"align",
+				"Preferences: Alignment Key Bindings – Default"
+			],
+			[
+				"disable",
+				"Package Control: Disable Package"
+			],
+			[
+				"color",
+				"Color Picker"
+			],
+			[
+				"word",
+				"Word Wrap: Toggle"
+			],
+			[
+				"wordwrap",
+				"Word Wrap: Toggle"
+			],
+			[
+				"encod",
+				"ConvertToUTF8: Reload with Encoding"
+			],
+			[
+				"case",
+				"Convert Case: Lower Case"
+			],
+			[
+				"actionscr",
+				"Set Syntax: ActionScript"
+			],
+			[
+				"javascri",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"packag",
+				"Package Control: Disable Package"
+			],
+			[
+				"peek",
+				"SublimePeek: Get Help for Function"
+			],
+			[
+				"textpastr",
+				"Text Pastry: Menu"
+			],
+			[
+				"pastry",
+				"Text Pastry: From 0 To X"
+			],
+			[
+				"markdow",
+				"Set Syntax: Markdown"
+			],
+			[
+				"wordwra",
+				"Word Wrap: Toggle"
+			],
+			[
+				"utf",
+				"ConvertToUTF8: Reload with Encoding"
+			],
+			[
+				"enablepack",
+				"Package Control: Enable Package"
+			],
+			[
+				"dispac",
+				"Package Control: Disable Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"packdis",
+				"Package Control: Disable Package"
+			],
+			[
+				"packaena",
+				"Package Control: Enable Package"
+			],
+			[
+				"package",
+				"Package Control: Disable Package"
+			],
+			[
+				"javascr",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"php",
+				"Set Syntax: PHP"
+			],
+			[
+				"xml",
+				"Set Syntax: XML"
+			],
+			[
+				"packa",
+				"Package Control: Install Package"
+			],
+			[
+				"jasmi	",
+				"Snippet: jasmine-it"
+			],
+			[
+				"tabs",
+				"Indentation: Convert to Tabs"
+			],
+			[
+				"tab",
+				"Indentation: Convert to Tabs"
+			],
+			[
+				"lint",
+				"SublimeLinter: Show Error List"
+			],
+			[
+				"actionscript",
+				"Set Syntax: ActionScript"
+			],
+			[
+				"reindent",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"packainst",
+				"Package Control: Install Package"
+			],
+			[
+				"html",
+				"Set Syntax: HTML"
+			],
+			[
+				"css",
+				"Set Syntax: CSS"
+			],
+			[
+				"picer",
+				"Color picker"
+			],
+			[
+				"pic",
+				"Color picker"
+			],
+			[
+				"remove pack",
+				"Package Control: Remove Package"
+			],
+			[
+				"remove pac",
+				"Package Control: Remove Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"snipp genera",
+				"Snippet: general-closure"
+			],
+			[
+				"upper",
+				"Convert Case: Upper Case"
+			],
+			[
+				"reload",
+				"ConvertToUTF8: Reload with Encoding"
+			],
+			[
+				"pcinst",
+				"Package Control: Install Package"
+			],
+			[
+				"pac",
+				"Package Control: Install Package"
+			],
+			[
+				"yaml",
+				"Set Syntax: YAML"
+			],
+			[
+				"lua",
+				"Set Syntax: Lua"
+			],
+			[
+				"sort",
+				"Sort Lines"
+			],
+			[
+				"bash",
+				"Set Syntax: Shell Script (Bash)"
+			],
+			[
+				"package control",
+				"Package Control: Upgrade Package"
+			],
+			[
+				"packa inst",
+				"Package Control: Install Package"
+			],
+			[
+				"package contr",
+				"Package Control: Remove Package"
+			],
+			[
+				"snippet",
+				"Snippet: for (…) {…} (Improved Native For-Loop)"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"key",
+				"Preferences: Key Bindings - Default"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"typescr",
+				"Set Syntax: TypeScript"
+			],
+			[
+				"javscr",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"general clo",
+				"Snippet: General closure"
+			],
+			[
+				"general clos",
+				"Snippet: General closure"
+			],
+			[
+				"snipp",
+				"Snippet: Long Tag"
+			],
+			[
+				"general cl",
+				"Snippet: General closure"
+			],
+			[
+				"snippet:",
+				"Snippet: Anonymous Function"
+			],
+			[
+				"lint err",
+				"SublimeLinter: Show Error List"
+			],
+			[
+				"linter err",
+				"SublimeLinter: Show Error List"
+			],
+			[
+				"lnt",
+				"SublimeLinter: Disable Linting"
+			],
+			[
+				"sideb",
+				"View: Toggle Side Bar"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"linter",
+				"SublimeLinter: Show Error List"
+			],
+			[
+				"pacak",
+				"Package Control: Install Package"
+			],
+			[
+				"paceage",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 593.0
+	},
+	"console":
+	{
+		"height": 139.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Volumes/Data/personal/interactive/_common/agj-js/src/agj/is.js",
+		"/Volumes/Data/personal/interactive/_common/agj-js/src/agj/to.js",
+		"/Volumes/Data/personal/interactive/_common/agj-js/src/agj/object/module.js",
+		"/Volumes/Data/personal/interactive/_common/agj-js/tests/spec/object/module.js",
+		"/Volumes/Data/personal/interactive/_common/agj-js/tests/spec/object.js",
+		"/Volumes/Data/personal/interactive/_common/agj-js/tests/spec/object/getter.js",
+		"/Volumes/Data/personal/interactive/_common/agj-js/src/agj/object/lateProp.js",
+		"/Volumes/Data/personal/interactive/_common/agj-js/src/agj/object/valueToKey.js",
+		"/Volumes/Data/personal/interactive/_common/agj-js/src/agj/function/autoCurry.js",
+		"/Volumes/Data/personal/interactive/_common/agj-js/src/agj/object/clone.js",
+		"/Volumes/Data/personal/interactive/_common/agj-js/src/agj/object/merge.js",
+		"/Volumes/Data/personal/interactive/_common/agj-js/tests/spec/object/extend.js",
+		"/Volumes/Data/personal/interactive/_common/agj-js/tests/spec/object/clone.js",
+		"/Volumes/Data/personal/interactive/_common/agj-js/tests/spec/object/merge.js",
+		"/Volumes/Data/personal/interactive/_common/agj-js/src/agj/utils/defineModule.js",
+		"/Volumes/Data/personal/interactive/_common/agj-js/src/agj/utils/defineModules.js",
+		"/Volumes/Data/personal/interactive/_common/agj-js/src/agj/object/adopt.js",
+		"/Volumes/Data/personal/interactive/_common/agj-js/src/agj/object/extend.js",
+		"/Volumes/Data/personal/interactive/_common/agj-js/tests/spec/util/util.js",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/lib/agj/extend/object.js",
+		"/Volumes/Data/personal/interactive/_common/agj-js/tests/spec/object/adopt.js",
+		"/Volumes/Data/personal/interactive/_common/agj-js/src/agj/utils/mixin.js",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/lib/agj/object/mergeInto.js",
+		"/Volumes/Data/personal/interactive/_common/agj-js/tests/spec/array/has.js",
+		"/Volumes/Data/personal/interactive/_common/agj-js/tests/spec/array/within.js",
+		"/Volumes/Data/personal/interactive/_common/agj-js/tests/spec/object/BASE.js",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/lib/agj/extend/utils/utils.js",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/app/function/argumentize.js",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/app/addPassTo.js",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/app/main.js",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/app/stroke/unifyRedundantPins.js",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/app/prototypeTo.js",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/app/lambda.js",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/app/stroke/joinEnds.js",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/app/stroke/parsePathInstruction.js",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/app/stroke/expandBezier.js",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/app/point/normalizePoint.js",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/lib/lambda.js",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/lib/agj/function/memoize.js",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/app/inspect.js",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/app.js",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/app/stroke/removeRedundantPoints.js",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/app/array/unique.js",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/app/point/distance.js",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/lib/agj/object/bindMethod.js",
+		"/Volumes/Data/personal/interactive/_common/agj-js/src/agj/string/padLeft.js",
+		"/Volumes/Data/personal/interactive/_common/agj-js/src/agj/string/padRight.js",
+		"/Users/agj/Library/Application Support/Sublime Text 2/Packages/User/ConvertToUTF8.sublime-settings",
+		"/Users/agj/Library/Application Support/Sublime Text 2/Packages/ConvertToUTF8/ConvertToUTF8.sublime-settings",
+		"/Volumes/Data/personal/interactive/games/縫/tests/spec/main.js",
+		"/Volumes/Data/personal/interactive/games/縫/gulpfile.js",
+		"/Volumes/Data/personal/interactive/games/縫/package.json",
+		"/Volumes/Data/personal/interactive/games/縫/node_modules/main-bower-files/package.json",
+		"/Volumes/Data/personal/interactive/games/縫/bower.json",
+		"/Volumes/Data/personal/interactive/games/縫/src/bower_components/signals/bower.json",
+		"/Volumes/Data/personal/interactive/games/縫/src/bower_components/rsvp/bower.json",
+		"/Volumes/Data/personal/interactive/games/縫/src/bower_components/requirejs/bower.json",
+		"/Volumes/Data/personal/interactive/games/縫/src/bower_components/lazy.js/bower.json",
+		"/Volumes/Data/personal/interactive/games/縫/src/bower_components/jquery/bower.json",
+		"/Volumes/Data/personal/interactive/games/縫/src/bower_components/bacon/bower.json",
+		"/Volumes/Data/personal/interactive/games/縫/build/index.html",
+		"/Volumes/Data/personal/interactive/games/縫/build/js/script.js",
+		"/Volumes/Data/personal/work/rodrigo valenzuela/01 fil doux/gulpfile.js",
+		"/Volumes/Data/personal/work/rodrigo valenzuela/01 fil doux/src/js/fabrics-main.js",
+		"/Volumes/Data/personal/work/rodrigo valenzuela/01 fil doux/src/js/lib/fabrics.js",
+		"/Volumes/Data/personal/interactive/_common/html base/src/index.html",
+		"/Volumes/Data/personal/interactive/_common/html base/src/js/app.js",
+		"/Volumes/Data/personal/interactive/_common/html base/src/js/app/main.js",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/app/doDraw.js",
+		"/Volumes/Data/personal/interactive/games/縫/README.md",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/app/drawA.js",
+		"/Volumes/Data/personal/interactive/games/縫/.gitignore",
+		"/Volumes/Data/personal/interactive/games/縫/src/index.html",
+		"/Volumes/Data/personal/interactive/games/縫/node_modules/sugar/package.json",
+		"/Volumes/Data/personal/interactive/games/縫/node_modules/requirejs/package.json",
+		"/Volumes/Data/personal/interactive/games/縫/node_modules/gulp-util/package.json",
+		"/Volumes/Data/personal/interactive/games/縫/node_modules/gulp-requirejs-replace-script/package.json",
+		"/Volumes/Data/personal/interactive/games/縫/node_modules/gulp-requirejs-replace-script/.npmignore",
+		"/Volumes/Data/personal/interactive/games/縫/node_modules/gulp-replace/package.json",
+		"/Volumes/Data/personal/interactive/games/縫/node_modules/gulp-rename/package.json",
+		"/Volumes/Data/personal/interactive/games/縫/node_modules/gulp-clean/package.json",
+		"/Volumes/Data/personal/interactive/games/縫/node_modules/gulp/package.json",
+		"/Volumes/Data/personal/interactive/games/縫/node_modules/almond/package.json",
+		"/Volumes/Data/personal/interactive/games/縫/.bowerrc",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/app/stroke/removeEdgePoints.js",
+		"/Users/agj/Library/Application Support/Sublime Text 2/Packages/ColorPicker/sublimecp.py",
+		"/Users/agj/Library/Application Support/Sublime Text 2/Packages/ColorPicker/sublimecp.pyc",
+		"/Users/agj/Library/Application Support/Sublime Text 2/Packages/ColorPicker/ColorPicker.sublime-commands",
+		"/Volumes/Data/personal/interactive/_common/agj-js/src/agj/graphics/draw.js",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/app/stroke/strokeToBeziers.js",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/app/point/radianDifference.js",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/app/point/radians.js",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/app/difference.js",
+		"/Volumes/Data/personal/interactive/_common/agj-js/src/agj/utils/log.js",
+		"/Volumes/Data/personal/interactive/games/縫/src/data/svg/06b8b.svg",
+		"/Volumes/Data/personal/interactive/_common/agj-js/src/agj/geom/Point.js",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/app/point/subtract.js",
+		"/Volumes/Data/personal/interactive/_common/agj-js/src/agj/math.js",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/app/point/add.js",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/app/stroke/beziersToPoints.js",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/app/function/argumentizeReduce.js",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/app/stroke/absolutizeStrokes.js",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/app/map.js",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/app/bind.js",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/app/provided.js",
+		"/Volumes/Data/personal/interactive/games/縫/src/data/svg/04e0d.svg",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/app/config.js",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/app/point/interpolate.js",
+		"/Volumes/Data/personal/interactive/_common/agj-js/src/agj/function/overload.js",
+		"/Volumes/Data/personal/interactive/_common/agj-js/src/agj/array/find.js",
+		"/Volumes/Data/personal/interactive/_common/agj-js/src/agj/array/findIndex.js",
+		"/Volumes/Data/personal/interactive/_common/agj-js/src/agj/array/first.js",
+		"/Volumes/Data/personal/interactive/_common/agj-js/src/agj/array/last.js",
+		"/Volumes/Data/personal/interactive/_common/agj-js/src/agj/function/autoCurryArityFn.js",
+		"/Volumes/Data/personal/interactive/_common/agj-js/src/agj/function/iterate.js",
+		"/Volumes/Data/personal/interactive/_common/agj-js/src/agj/function/partialRight.js",
+		"/Volumes/Data/personal/interactive/_common/agj-js/src/agj/function/returnArg.js",
+		"/Volumes/Data/personal/interactive/_common/agj-js/tests/spec/function/overload.js",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/lib/agj/array/find.js",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/lib/agj/array/findIndex.js",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/lib/agj/array/first.js",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/lib/agj/array/last.js",
+		"/Volumes/Data/personal/interactive/_common/agj-js/src/agj/function/partial.js",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/lib/agj/array/reduce.js",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/lib/agj/function/autoCurryArityFn.js",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/lib/agj/function/iterate.js",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/lib/agj/function/partial.js",
+		"/Volumes/Data/personal/interactive/games/縫/src/js/lib/agj/function/partialRight.js"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+			"/Volumes/Data/personal/interactive/_common/agj-js",
+			"<open folders",
+			"/Volumes/Data/personal/interactive/_common/agj-js/src/agj",
+			"<open folders>",
+			"",
+			"/Users/agj/Documents/Adobe Flash Builder 4.7",
+			"/Applications/Adobe Flash Builder 4.7",
+			"<open folders>",
+			"/Volumes/Data/personal/web/_local/htdocs/agj/blog"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"getProp",
+			"getter",
+			"lateProp",
+			"keyToValue",
+			"not",
+			"bindMethod",
+			"module",
+			"not",
+			"is",
+			"key",
+			"obj2",
+			"obj1",
+			"extend",
+			"merge",
+			"objSource",
+			"objTarget",
+			"objSource",
+			"objTarget",
+			"objmap",
+			"mergeinto",
+			"mergeInto",
+			"base",
+			"mergeInto",
+			"merge",
+			"extend",
+			"mergeInto",
+			"b: 3",
+			"extend",
+			"mergeInto",
+			"number",
+			"removeEdgePoints",
+			"log",
+			"spy",
+			"SPY(",
+			"log('done'), ",
+			"bound",
+			"require('lambda",
+			"memo",
+			"seq",
+			"sequence",
+			"to",
+			"removeRedundantPoints",
+			"flatten",
+			"last",
+			"lazy",
+			"忍",
+			"isFirstOrLast",
+			"accumulated",
+			"argumentize",
+			"function",
+			"cur",
+			"bindmet",
+			"map",
+			"pin",
+			"忍",
+			"substr(",
+			"angle",
+			"array",
+			"last",
+			"dist",
+			"deploy",
+			"main",
+			"rename",
+			"rjs",
+			"gutil",
+			"rjsrepl",
+			"0.5",
+			"diffPoints",
+			"0xff0000",
+			"#",
+			"5",
+			"3",
+			"fill",
+			"status",
+			"radianDiff",
+			"diffPoints",
+			"radianDiff",
+			"distance",
+			"argumentizeReduce",
+			"is",
+			"to",
+			"fix",
+			"fixArity",
+			"findIndex",
+			"joinEnds",
+			"removeEdgePoints",
+			"joinend",
+			"last",
+			"diff",
+			"dist",
+			"SPY",
+			"diff",
+			"radianDifference",
+			"diff",
+			"SPY",
+			"log(",
+			"spy",
+			"inspect",
+			"radians",
+			"overload",
+			"normalizePoint",
+			"subtractPoint",
+			"add",
+			"offsetPoint",
+			"overload",
+			"subtract",
+			"radians",
+			"add",
+			"angle",
+			"unifyRedundantPoints",
+			"firstOrLast",
+			"expandBezier",
+			"argument",
+			"flatten",
+			"beziersToPoints",
+			"merge",
+			"drawbezier",
+			"last",
+			"require('lambda-functional')",
+			"lazy",
+			"array",
+			"last",
+			"interpolate",
+			"array",
+			"first",
+			"beziersToPoints",
+			"strokeToBeziers",
+			"last"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"require('lambda')",
+			"overload.REST",
+			"",
+			"black",
+			"domGenerator",
+			"dom-generator",
+			"toArray",
+			"defineModule",
+			"mergeInto",
+			"getKeyFromValue",
+			"toEl",
+			"anyEl",
+			"returnThis",
+			"returnArg",
+			"promoteArg",
+			"promoteArgSolid",
+			"fixArity",
+			"autoCurry",
+			"autoCurryArityFn",
+			"set2D",
+			"prevTo",
+			"prevIndex",
+			"nextOrPrevIndex",
+			"prevIndex",
+			"prevIndexTo",
+			"nextTo",
+			"nextIndex",
+			"mapToObject",
+			"getRandom",
+			"getDifference",
+			"get2D",
+			"anyEl(",
+			"el(",
+			"el",
+			"'../to-el'",
+			"'Tree'",
+			"#",
+			"ú",
+			"$1\"$2\"",
+			"Chile:",
+			"Chile\\:",
+			"  headline: $1",
+			"\"",
+			"",
+			"é",
+			"[$1]",
+			"\"$1\":$2",
+			"  body: >\\n        ",
+			"\\n        ",
+			"  body: $1",
+			"\\n",
+			"í",
+			"ó",
+			"ñ",
+			"á",
+			"",
+			"<?php echo $site->browseLink ?>",
+			"ú",
+			"$1",
+			"",
+			"í",
+			"é",
+			"á",
+			"ó",
+			"",
+			"- ",
+			" utility\"",
+			"",
+			"{ a: $1,  r: $2 },",
+			"{ a: $1,  r: $2 }",
+			"{ a: $1,  r: $2,  l: true }",
+			"approve",
+			"/",
+			":",
+			"\\",
+			"/",
+			"\\",
+			"",
+			"/",
+			"tilde",
+			"grave",
+			"diaeresis",
+			"circumflex",
+			"acute",
+			"\"^\"",
+			"\"¨\"",
+			"\"`\"",
+			"new signals.Signal",
+			"IEM",
+			"* ",
+			"\\n\\n//",
+			"N",
+			"",
+			"N",
+			"O",
+			"I",
+			"A",
+			"_",
+			"O_H",
+			"U",
+			"\\t\\t$1,",
+			"// $1\\n\\tstatic public const LISTA_$1:Vector.<String> = new <String>\\[\\n\\t\\t\\n\\t\\];",
+			"N",
+			"U",
+			"I",
+			"O",
+			"Y",
+			"I",
+			"E",
+			"A",
+			"_",
+			"\\tstatic public const $1:String = \"$1\";",
+			"",
+			"// $1",
+			"$1",
+			"",
+			"_",
+			" ",
+			"  lineas:      []\\n  espacios:    []",
+			"[listel]",
+			"[listel, muro]",
+			"[piso, muro]",
+			"",
+			"(listen)",
+			"」 ",
+			" 「",
+			"* ",
+			"cb"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "src/js/app/doDraw.js",
+					"settings":
+					{
+						"buffer_size": 4279,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3221,
+								3221
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": false,
+								"ids": false
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"is_preview": true,
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"devel": true,
+								"evil": false,
+								"indent": 0.0,
+								"regexdash": false,
+								"smarttabs": true,
+								"sub": true,
+								"trailing": true,
+								"white": false,
+								"wsh": false
+							},
+							"origin_encoding": "ASCII",
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": true,
+							"sublimelinter_gutter_marks_theme": "simple",
+							"sublimelinter_mark_style": "none",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 884.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "src/js/app/stroke/unifyRedundantPins.js",
+					"settings":
+					{
+						"buffer_size": 1470,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								895,
+								895
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": false,
+								"ids": false
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"devel": true,
+								"evil": false,
+								"indent": 0.0,
+								"regexdash": false,
+								"smarttabs": true,
+								"sub": true,
+								"trailing": true,
+								"white": false,
+								"wsh": false
+							},
+							"origin_encoding": "UTF-8",
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": true,
+							"sublimelinter_gutter_marks_theme": "simple",
+							"sublimelinter_mark_style": "none",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 34.0
+	},
+	"input":
+	{
+		"height": 33.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 112.0
+	},
+	"replace":
+	{
+		"height": 64.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"is",
+				"agj-js/src/agj/is.js"
+			],
+			[
+				"to",
+				"agj-js/src/agj/to.js"
+			],
+			[
+				"unifyred",
+				"縫/src/js/app/stroke/unifyRedundantPins.js"
+			],
+			[
+				"getter",
+				"agj-js/tests/spec/object/getter.js"
+			],
+			[
+				"lateprop",
+				"agj-js/src/agj/object/lateProp.js"
+			],
+			[
+				"autocurr",
+				"agj-js/src/agj/function/autoCurry.js"
+			],
+			[
+				"module",
+				"agj-js/tests/spec/object/module.js"
+			],
+			[
+				"merge",
+				"agj-js/tests/spec/object/merge.js"
+			],
+			[
+				"clone",
+				"agj-js/tests/spec/object/clone.js"
+			],
+			[
+				"specobject",
+				"agj-js/tests/spec/object.js"
+			],
+			[
+				"definemodules",
+				"agj-js/src/agj/utils/defineModules.js"
+			],
+			[
+				"extend",
+				"agj-js/tests/spec/object/extend.js"
+			],
+			[
+				"modue",
+				"agj-js/tests/spec/object/module.js"
+			],
+			[
+				"adopt",
+				"agj-js/src/agj/object/adopt.js"
+			],
+			[
+				"mer",
+				"agj-js/src/agj/object/merge.js"
+			],
+			[
+				"within",
+				"agj-js/tests/spec/array/within.js"
+			],
+			[
+				"has",
+				"agj-js/tests/spec/array/has.js"
+			],
+			[
+				"testobject",
+				"agj-js/tests/spec/object.js"
+			],
+			[
+				"agjutils",
+				"src/js/lib/agj/extend/utils/utils.js"
+			],
+			[
+				"mergeint",
+				"src/js/lib/agj/object/mergeInto.js"
+			],
+			[
+				"argument",
+				"src/js/app/function/argumentize.js"
+			],
+			[
+				"addpasst",
+				"src/js/app/addPassTo.js"
+			],
+			[
+				"main",
+				"src/js/app/main.js"
+			],
+			[
+				"lambda",
+				"src/js/app/lambda.js"
+			],
+			[
+				"memoize",
+				"src/js/lib/agj/function/memoize.js"
+			],
+			[
+				"app",
+				"src/js/app.js"
+			],
+			[
+				"remove",
+				"src/js/app/stroke/removeRedundantPoints.js"
+			],
+			[
+				"unique",
+				"src/js/app/array/unique.js"
+			],
+			[
+				"bindmet",
+				"src/js/lib/agj/object/bindMethod.js"
+			],
+			[
+				"joinend",
+				"src/js/app/stroke/joinEnds.js"
+			],
+			[
+				"removeredun",
+				"src/js/app/stroke/removeRedundantPoints.js"
+			],
+			[
+				"dodraw",
+				"src/js/app/doDraw.js"
+			],
+			[
+				"gulp",
+				"縫/gulpfile.js"
+			],
+			[
+				"package",
+				"縫/package.json"
+			],
+			[
+				"index",
+				"縫/src/index.html"
+			],
+			[
+				"removeredu",
+				"縫/src/js/app/stroke/removeRedundantPoints.js"
+			],
+			[
+				"joinends",
+				"縫/src/js/app/stroke/joinEnds.js"
+			],
+			[
+				"removeedge",
+				"縫/src/js/app/stroke/removeEdgePoints.js"
+			],
+			[
+				"drawa",
+				"縫/src/js/app/drawA.js"
+			],
+			[
+				"draw",
+				"agj-js/src/agj/graphics/draw.js"
+			],
+			[
+				"stroketo",
+				"縫/src/js/app/stroke/strokeToBeziers.js"
+			],
+			[
+				"diff",
+				"縫/src/js/app/difference.js"
+			],
+			[
+				"radians",
+				"縫/src/js/app/point/radians.js"
+			],
+			[
+				"inspect",
+				"縫/src/js/app/inspect.js"
+			],
+			[
+				"log",
+				"agj-js/src/agj/utils/log.js"
+			],
+			[
+				"radia",
+				"縫/src/js/app/point/radianDifference.js"
+			],
+			[
+				"radiandif",
+				"縫/src/js/app/point/radianDifference.js"
+			],
+			[
+				"distanc",
+				"縫/src/js/app/point/distance.js"
+			],
+			[
+				"removeede",
+				"縫/src/js/app/stroke/removeEdgePoints.js"
+			],
+			[
+				"radiandiff",
+				"縫/src/js/app/point/radianDifference.js"
+			],
+			[
+				"agjmath",
+				"agj-js/src/agj/math.js"
+			],
+			[
+				"add",
+				"縫/src/js/app/point/add.js"
+			],
+			[
+				"point",
+				"agj-js/src/agj/geom/Point.js"
+			],
+			[
+				"expand",
+				"縫/src/js/app/stroke/expandBezier.js"
+			],
+			[
+				"bezierstopoi",
+				"縫/src/js/app/stroke/beziersToPoints.js"
+			],
+			[
+				"bezierstopo",
+				"縫/src/js/app/stroke/beziersToPoints.js"
+			],
+			[
+				"parsepathinstr",
+				"縫/src/js/app/stroke/parsePathInstruction.js"
+			],
+			[
+				"parsepat",
+				"縫/src/js/app/stroke/parsePathInstruction.js"
+			],
+			[
+				"map",
+				"縫/src/js/app/map.js"
+			],
+			[
+				"apppoint",
+				"縫/src/js/app/point/distance.js"
+			],
+			[
+				"overload",
+				"agj-js/src/agj/function/overload.js"
+			],
+			[
+				"pointadd",
+				"縫/src/js/app/point/add.js"
+			],
+			[
+				"first",
+				"agj-js/src/agj/array/first.js"
+			],
+			[
+				"unify",
+				"縫/src/js/app/unify.js"
+			],
+			[
+				"distance",
+				"縫/src/js/app/point/distance.js"
+			],
+			[
+				"toarray",
+				"agj-js/src/agj/utils/toArray.js"
+			],
+			[
+				"flatten",
+				"agj-js/tests/spec/array/flatten.js"
+			],
+			[
+				"when",
+				"縫/src/js/app/when.js"
+			],
+			[
+				"path",
+				"縫/src/js/lib/path.js"
+			],
+			[
+				"provided",
+				"縫/src/js/app/provided.js"
+			],
+			[
+				"parserg",
+				"agj-js/src/agj/color/parseRGB.js"
+			],
+			[
+				"graphics",
+				"agj-js/tests/spec/graphics.js"
+			],
+			[
+				"specmain",
+				"agj-js/tests/spec/main.js"
+			],
+			[
+				"maybe",
+				"agj-js/src/agj/function/maybe.js"
+			],
+			[
+				"findin",
+				"agj-js/tests/spec/array/findIndex.js"
+			],
+			[
+				"find",
+				"agj-js/tests/spec/array/find.js"
+			],
+			[
+				"offsetpoin",
+				"縫/src/js/app/offsetPoint.js"
+			],
+			[
+				"partial",
+				"agj-js/tests/spec/function/partial.js"
+			],
+			[
+				"flip",
+				"agj-js/src/agj/function/flip.js"
+			],
+			[
+				"objisem",
+				"agj-js/src/agj/object/isEmpty.js"
+			],
+			[
+				"isempt",
+				"agj-js/src/agj/object/isEmpty.js"
+			],
+			[
+				"objectisem",
+				"agj-js/src/agj/object/isEmpty.js"
+			],
+			[
+				"is.js",
+				"agj-js/tests/spec/is.js"
+			],
+			[
+				"funct",
+				"agj-js/tests/spec/function.js"
+			],
+			[
+				"array",
+				"agj-js/tests/spec/array.js"
+			],
+			[
+				"promote",
+				"agj-js/tests/spec/function/promoteArg.js"
+			],
+			[
+				"promotear",
+				"agj-js/tests/spec/function/promoteArg.js"
+			],
+			[
+				"par",
+				"agj-js/tests/spec/function/partial.js"
+			],
+			[
+				"objectmap",
+				"agj-js/src/agj/object/map.js"
+			],
+			[
+				"dra",
+				"agj-js/src/agj/graphics/draw.js"
+			],
+			[
+				"specfunct",
+				"agj-js/tests/spec/function.js"
+			],
+			[
+				"indexht",
+				"縫/src/index.html"
+			],
+			[
+				"drawst",
+				"agj-js/src/agj/graphics/DrawStyle.js"
+			],
+			[
+				"drawstyle",
+				"agj-js/src/agj/graphics/DrawStyle.js"
+			],
+			[
+				"agjhas",
+				"agj-js/src/agj/array/has.js"
+			],
+			[
+				"specarray",
+				"agj-js/tests/spec/array.js"
+			],
+			[
+				"agjis",
+				"agj-js/src/agj/is.js"
+			],
+			[
+				"mayb",
+				"agj-js/tests/spec/function/maybe.js"
+			],
+			[
+				"returnt",
+				"agj-js/src/agj/function/returnThis.js"
+			],
+			[
+				"app.js",
+				"縫/src/js/app.js"
+			],
+			[
+				"gulpfile.js",
+				"縫/gulpfile.js"
+			],
+			[
+				"rsvp",
+				"縫/src/js/lib/rsvp.js"
+			],
+			[
+				"dodra",
+				"縫/src/js/app/doDraw.js"
+			],
+			[
+				"datasvg",
+				"縫/src/data/svg/04e2d.svg"
+			],
+			[
+				"parsesv",
+				"縫/src/js/lib/parse-svg-path.js"
+			],
+			[
+				"next",
+				"agj-js/src/agj/array/nextTo.js"
+			],
+			[
+				"nextindex",
+				"agj-js/src/agj/array/nextIndex.js"
+			],
+			[
+				"last",
+				"tests/spec/array/last.js"
+			],
+			[
+				"cartesian",
+				"tests/spec/array/cartesianProduct.js"
+			],
+			[
+				"overlo",
+				"src/agj/function/overload.js"
+			],
+			[
+				"over",
+				"tests/spec/function/overload.js"
+			],
+			[
+				"style",
+				"front/src/less/style.less"
+			],
+			[
+				"tobase",
+				"src/agj/number/toBase.js"
+			],
+			[
+				"logbas",
+				"src/agj/number/logBase.js"
+			],
+			[
+				"logbase",
+				"src/agj/number/logBase.js"
+			],
+			[
+				"base",
+				"src/agj/number/toBase.js"
+			],
+			[
+				"specnum",
+				"tests/spec/reusable/number-functions.js"
+			],
+			[
+				"specnumber",
+				"tests/spec/number.js"
+			],
+			[
+				"sequence",
+				"src/agj/function/sequence.js"
+			],
+			[
+				"iterate",
+				"src/agj/function/iterate.js"
+			],
+			[
+				"variad",
+				"src/agj/function/variadic.js"
+			],
+			[
+				"returnar",
+				"tests/spec/function/returnArg.js"
+			],
+			[
+				"before",
+				"tests/spec/function/before.js"
+			],
+			[
+				"after",
+				"tests/spec/function/after.js"
+			],
+			[
+				"toarr",
+				"src/agj/utils/toArray.js"
+			],
+			[
+				"arityfn",
+				"src/agj/function/autoCurryArityFn.js"
+			],
+			[
+				"fixarity",
+				"tests/spec/function/fixArity.js"
+			],
+			[
+				"fixarit",
+				"src/agj/function/fixArity.js"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 184.0,
+	"status_bar_visible": true
+}
