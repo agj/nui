@@ -53,41 +53,47 @@ define( function(require) {
 			var yarn = [];
 
 			bezierStrokes = bezierStrokes
-			.map(map(map(normalizePointCanvas)));
-
+				.map(map(map(normalizePointCanvas)));
 			pointStrokes = pointStrokes
-			.map(map(normalizePointCanvas));
-
+				.map(map(normalizePointCanvas));
 			var holes = pointStrokes
-			.map( function (points) {
-				return [first(points), last(points)];
-			})
-			.passTo(flatten);
-
+				.map( function (points) {
+					return [first(points), last(points)];
+				})
+				.passTo(flatten);
 			var pins = pointStrokes
-			.map( function (points) {
-				return points.slice(1, -1);
-			})
-			.passTo(flatten);
+				.map( function (points) {
+					return points.slice(1, -1);
+				})
+				.passTo(flatten);
 
 			doDraw(canvas, bezierStrokes, pointStrokes, yarn);
 
-
+			var routeChanged = streamify(kanjiRoute.matched);
 			var clickPoint = streamify(canvas, on.mouse.click)
-			.map(eventToCoords(canvas));
-
+				.map(eventToCoords(canvas))
+				.takeUntil(routeChanged);
 			var closestHole = clickPoint
-			.map(getClosest(holes))
-			.toProperty();
+				.map(getClosest(holes))
+				.toProperty();
+			var clickOnHole = clickPoint
+				.zip(closestHole)
+				.map(argumentize(distance))
+				.filter(is.less(20))
+				.map(closestHole);
+			var cursorPoint = streamify(canvas, on.mouse.move)
+				.map(eventToCoords(canvas))
+				.toProperty()
+				.takeUntil(routeChanged);
 
-			clickPoint
-			.zip(closestHole)
-			.map(argumentize(distance))
-			.filter(is.less(20))
-			.map(closestHole)
-			.takeUntil(streamify(kanjiRoute.matched))
+			cursorPoint.onValue( function (point) {
+				doDraw(canvas, bezierStrokes, pointStrokes, yarn.concat([[point]]));
+			});
+
+			clickOnHole
+			.zip(cursorPoint.sampledBy(clickOnHole))
 			.doAction(log)
-			.onValue( function (hole) {
+			.onValue( argumentize(function (hole, cursor) {
 				if (!yarn.length || last(last(yarn)) !== hole) {
 					if (!yarn.length) yarn.push([]);
 					if (last(yarn).length <= 1) last(yarn).push(hole);
@@ -96,12 +102,8 @@ define( function(require) {
 					yarn[yarn.length - 1] = last(yarn).passTo(first(-1));
 					yarn = yarn.filter(not(is.empty));
 				}
-				doDraw(canvas, bezierStrokes, pointStrokes, yarn);
-			});
-
-			// event($('#game'), on.mouse.move)
-			// .map(eventToCoords(canvas))
-			// .onValue(log);
+				doDraw(canvas, bezierStrokes, pointStrokes, yarn.concat([[cursor]]));
+			}));
 		});
 	});
 
@@ -141,5 +143,11 @@ define( function(require) {
 			return distance(ref, a) > distance(ref, b) ? b : a;
 		});
 	});
+
+	function setLastInYarn(yarn, point) {
+		if (!yarn.length) yarn.push([]);
+		if (!last(yarn).length) last(yarn).push(point);
+		else last(yarn)[last(yarn).length - 1] = point;
+	}
 
 });
