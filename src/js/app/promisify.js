@@ -32,12 +32,12 @@ define( function(require) {
 		});
 	}
 
-	var when = overload(
+	var promisify = overload(
 		[[sequence(to.prop('then'), is.fn)], fromThenable],
 		[[sequence(to.prop('to'), is.fn)], fromPath],
 		[[is.fn], fromFn]
 	);
 
-	return when;
+	return promisify;
 
 });

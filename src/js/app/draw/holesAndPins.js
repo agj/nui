@@ -14,16 +14,13 @@ define( function(require) {
 	var SPY               = require('app/inspect');
 	var drawA             = require('app/draw/a');
 	var map               = require('app/function/map');
-	var normalizePoint    = require('app/point/normalizePoint');
 
 	var holesAndPins = autoCurry( function (canvas, pointStrokes) {
 		var ctx = canvas.getContext('2d');
-		var normalizePointCanvas = normalizePoint({ width: canvas.width, height: canvas.height, x: 0, y: 0 });
 		var drawHole = drawA.hole(ctx);
 		var drawPin = drawA.pin(ctx);
 
 		pointStrokes
-		.map(map(normalizePointCanvas))
 		.forEach( function (points) {
 			drawHole(first(points));
 			drawHole(last(points));

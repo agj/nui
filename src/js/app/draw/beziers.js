@@ -12,15 +12,12 @@ define( function(require) {
 
 	var SPY               = require('app/inspect');
 	var map               = require('app/function/map');
-	var normalizePoint    = require('app/point/normalizePoint');
 
 	var beziers = autoCurry( function (canvas, bezierStrokes) {
 		var ctx = canvas.getContext('2d');
-		var normalizePointCanvas = normalizePoint({ width: canvas.width, height: canvas.height, x: 0, y: 0 });
 
 		bezierStrokes
 		.passTo(flatten(1))
-		.map(map(normalizePointCanvas))
 		.forEach(drawBezier(ctx));
 	});
 

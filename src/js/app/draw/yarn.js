@@ -13,14 +13,9 @@ define( function(require) {
 	var to           = require('agj/to');
 
 	var map               = require('app/function/map');
-	var normalizePoint    = require('app/point/normalizePoint');
 
 	var yarn = autoCurry( function (canvas, pointStrokes) {
 		var ctx = canvas.getContext('2d');
-		var normalizePointCanvas = normalizePoint({ width: canvas.width, height: canvas.height, x: 0, y: 0 });
-
-		pointStrokes = pointStrokes
-		.map(map(normalizePointCanvas));
 
 		pointStrokes
 		.reduce( function (prev, points) {
