@@ -16,6 +16,7 @@ define( function(require) {
 	var partial   = require('agj/function/partial');
 	var passThis  = require('agj/function/passThis');
 	var seq       = require('agj/function/sequence');
+	var not       = require('agj/function/not');
 	var autoCurry = require('agj/function/autoCurry');
 	var hex       = require('agj/number/inBase')(16);
 	var first     = require('agj/array/first');
@@ -49,7 +50,7 @@ define( function(require) {
 			var rawStrokes = svgToRawStrokes(svg);
 			var bezierStrokes = rawToBeziers(rawStrokes);
 			var pointStrokes = beziersToPoints(bezierStrokes);
-			var yarn = [{ x: 0, y: 0 }];
+			var yarn = [];
 
 			bezierStrokes = bezierStrokes
 			.map(map(map(normalizePointCanvas)));
@@ -69,7 +70,7 @@ define( function(require) {
 			})
 			.passTo(flatten);
 
-			doDraw(canvas, bezierStrokes, pointStrokes);
+			doDraw(canvas, bezierStrokes, pointStrokes, yarn);
 
 
 			var clickPoint = streamify(canvas, on.mouse.click)
@@ -85,7 +86,18 @@ define( function(require) {
 			.filter(is.less(20))
 			.map(closestHole)
 			.takeUntil(streamify(kanjiRoute.matched))
-			.onValue(log);
+			.doAction(log)
+			.onValue( function (hole) {
+				if (!yarn.length || last(last(yarn)) !== hole) {
+					if (!yarn.length) yarn.push([]);
+					if (last(yarn).length <= 1) last(yarn).push(hole);
+					else yarn.push([hole]);
+				} else if (yarn.length && last(last(yarn)) === hole) {
+					yarn[yarn.length - 1] = last(yarn).passTo(first(-1));
+					yarn = yarn.filter(not(is.empty));
+				}
+				doDraw(canvas, bezierStrokes, pointStrokes, yarn);
+			});
 
 			// event($('#game'), on.mouse.move)
 			// .map(eventToCoords(canvas))

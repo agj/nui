@@ -11,13 +11,13 @@ define( function(require) {
 	var drawHolesAndPins = require('app/draw/holesAndPins');
 	var drawYarn         = require('app/draw/yarn');
 
-	var doDraw = autoCurry( function (canvas, bezierStrokes, pointStrokes) {
+	var doDraw = autoCurry( function (canvas, bezierStrokes, pointStrokes, yarn) {
 		var ctx = canvas.getContext('2d');
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 		drawBeziers(canvas, bezierStrokes);
 		drawHolesAndPins(canvas, pointStrokes);
-		drawYarn(canvas, pointStrokes);
+		if (yarn.length > 0) drawYarn(canvas, yarn);
 	});
 
 	return doDraw;
