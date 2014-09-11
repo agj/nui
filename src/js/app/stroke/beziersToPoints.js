@@ -15,16 +15,15 @@ define( function(require) {
 	var removeRedundantPoints = require('app/stroke/removeRedundantPoints');
 	var unifyRedundantPins    = require('app/stroke/unifyRedundantPins');
 
-	var beziersToPoints = autoCurry(function (dimensions, bezierStrokes) {
+	var beziersToPoints = function (bezierStrokes) {
 		return bezierStrokes
 			.map(map(expandBezier(5)))
 			.map(removeEdgePoints)
 			.map(flatten)
 			.map(removeRedundantPoints)
 			.passTo(unifyRedundantPins)
-			.map(map(normalizePoint({ x: dimensions.width, y: dimensions.width })))
 			.passTo(joinEnds);
-	});
+	};
 
 	return beziersToPoints;
 

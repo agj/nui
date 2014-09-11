@@ -14,6 +14,7 @@ define( function (require) {
 	var to      = require('agj/to');
 	var is      = require('agj/is');
 
+	var cfg      = require('app/configuration');
 	var distance = require('app/point/distance');
 	var unique   = require('app/array/unique');
 	var SPY      = require('app/inspect');
@@ -36,7 +37,7 @@ define( function (require) {
 	}
 
 	function isNear(point) {
-		return seq(distance(point), λ('/ 109'), is.lt(1 / 16));
+		return seq(distance(point), λ('/' + cfg.SVG_SIZE), is.lt(1 / 16));
 	}
 
 	function midPoint(points) {

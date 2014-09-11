@@ -2,6 +2,7 @@
 define( function (require) {
 	'use strict';
 
+	var λ    = require('app/lambda');
 	var lazy = require('lazy');
 
 	var findIndex = require('agj/array/findIndex');
@@ -15,6 +16,7 @@ define( function (require) {
 	var is        = require('agj/is');
 	var to        = require('agj/to');
 
+	var cfg               = require('app/configuration');
 	var argumentizeReduce = require('app/function/argumentizeReduce');
 	var distance          = require('app/point/distance');
 
@@ -27,7 +29,7 @@ define( function (require) {
 			return lazy(points)
 				.map( provided( not(isFirstOrLast), to.id,
 					function (point) {
-						var ptIndex = findIndex(refPoints, seq(distance(point), is.lt(15)));
+						var ptIndex = findIndex(refPoints, seq(distance(point), λ('/' + cfg.SVG_SIZE), is.lt(1 / 20)));
 						if (ptIndex === -1) {
 							return point;
 						} else {

@@ -22,7 +22,7 @@ define( function(require) {
 	var on       = require('agj/utils/eventConstants');
 
 	var when                 = require('app/when');
-	var doDraw               = require('app/doDraw');
+	var doDraw               = require('app/draw/doDraw');
 	var map                  = require('app/function/map');
 	var parsePathInstruction = require('app/stroke/parsePathInstruction');
 
@@ -33,8 +33,7 @@ define( function(require) {
 
 	path.map('#/kanji/:id')
 	.to( passThis(function (path) {
-		var canvas = $('#game');
-		var canvasPos = canvas.position();
+		var canvas = $('#game')[0];
 
 		var strokes;
 
@@ -50,21 +49,26 @@ define( function(require) {
 				.map(map(parsePathInstruction))
 				.toArray();
 		})
-		.then(doDraw(canvas[0]));
+		.then(doDraw(canvas));
 
 		event($('#game'), on.mouse.move)
-		.map( function (e) {
-			return {
-				x: e.pageX - canvasPos.left,
-				y: e.pageY - canvasPos.top,
-			};
-		})
+		.map(eventToCoords(canvas))
 		.onValue(log);
 	}));
 
 	function event(target, name) {
 		return bacon.fromEventTarget(target, name);
 	}
+
+	var eventToCoords = function (el) {
+		var pos = $(el).position();
+		return function (e) {
+			return {
+				x: e.pageX - pos.left,
+				y: e.pageY - pos.top,
+			};
+		};
+	};
 
 
 	function raise(err) {

@@ -9,6 +9,7 @@ define( function (require) {
 	var log   = require('agj/utils/log');
 	var to    = require('agj/to');
 
+	var cfg               = require('app/configuration');
 	var argumentizeReduce = require('app/function/argumentizeReduce');
 	var radians           = require('app/point/radians');
 	var radianDiff        = require('app/point/radianDifference');
@@ -37,8 +38,8 @@ define( function (require) {
 				radians(diffPoints(prev, point)),
 				radians(diffPoints(point, next))
 			) / tau;
-		var dist = distance(prev, point) / 109;
-		var distToEnd = distance(point, lastPoint) / 109;
+		var dist = distance(prev, point) / cfg.SVG_SIZE;
+		var distToEnd = distance(point, lastPoint) / cfg.SVG_SIZE;
 
 		// log(angle, 'angle');
 		// log(dist, 'dist');
