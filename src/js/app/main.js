@@ -22,6 +22,7 @@ define( function(require) {
 	var first     = require('agj/array/first');
 	var last      = require('agj/array/last');
 	var flatten   = require('agj/array/flatten');
+	var within    = require('agj/array/within');
 	var to        = require('agj/to');
 	var is        = require('agj/is');
 	var on        = require('agj/utils/eventConstants');
@@ -31,6 +32,7 @@ define( function(require) {
 	var doDraw          = require('app/draw/doDraw');
 	var map             = require('app/function/map');
 	var argumentize     = require('app/function/argumentize');
+	var all             = require('app/function/all');
 	var distance        = require('app/point/distance');
 	var normalizePoint  = require('app/point/normalizePoint');
 	var svgToRawStrokes = require('app/stroke/svgToRawStrokes');
@@ -51,6 +53,7 @@ define( function(require) {
 			var bezierStrokes = rawToBeziers(rawStrokes);
 			var pointStrokes = beziersToPoints(bezierStrokes);
 			var yarn = [];
+			var freeYarn = [];
 
 			bezierStrokes = bezierStrokes
 				.map(map(map(normalizePointCanvas)));
@@ -86,9 +89,24 @@ define( function(require) {
 				.toProperty()
 				.takeUntil(routeChanged);
 
-			cursorPoint.onValue( function (point) {
-				doDraw(canvas, bezierStrokes, pointStrokes, yarn.concat([[point]]));
-			});
+			cursorPoint
+			.slidingWindow(2, 2)
+			.onValue( argumentize(function (before, now) {
+				if (yarn.length) {
+					var lastPoint = freeYarn.length ? last(freeYarn) : last(last(yarn));
+					var match = pins
+						.filter(all(
+							not(is.equal(lastPoint)),
+							inTriangle(before, now, lastPoint)
+						))
+						[0];
+					if (match) {
+						freeYarn.push(match);
+					}
+				}
+				// if (freeYarn.length < 1) freeYarn.push(now);
+				doDraw(canvas, bezierStrokes, pointStrokes, yarn.concat([freeYarn.concat(now)]));
+			}));
 
 			clickOnHole
 			.zip(cursorPoint.sampledBy(clickOnHole))
@@ -103,7 +121,16 @@ define( function(require) {
 					yarn = yarn.filter(not(is.empty));
 				}
 				doDraw(canvas, bezierStrokes, pointStrokes, yarn.concat([[cursor]]));
+				// freeYarn = yarn.length ? [last(last(yarn))] : [];
+				freeYarn = [];
 			}));
+
+			streamify(canvas, on.mouse.leave)
+			.takeUntil(routeChanged)
+			.onValue( function () {
+				doDraw(canvas, bezierStrokes, pointStrokes, yarn);
+				freeYarn = [];
+			});
 		});
 	});
 
@@ -149,5 +176,14 @@ define( function(require) {
 		if (!last(yarn).length) last(yarn).push(point);
 		else last(yarn)[last(yarn).length - 1] = point;
 	}
+
+	var inTriangle = autoCurry(function (p0, p1, p2, p) {
+		var A = 1/2 * (-p1.y * p2.x + p0.y * (-p1.x + p2.x) + p0.x * (p1.y - p2.y) + p1.x * p2.y);
+		var sign = A < 0 ? -1 : 1;
+		var s = (p0.y * p2.x - p0.x * p2.y + (p2.y - p0.y) * p.x + (p0.x - p2.x) * p.y) * sign;
+		var t = (p0.x * p1.y - p0.y * p1.x + (p0.y - p1.y) * p.x + (p1.x - p0.x) * p.y) * sign;
+		
+		return s > 0 && t > 0 && (s + t) < 2 * A * sign;
+	});
 
 });
