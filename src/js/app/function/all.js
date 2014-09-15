@@ -5,11 +5,11 @@ define( function(require) {
 	var toArray = require('agj/utils/toArray');
 
 	function all() {
-		var fns = toArray(arguments);
+		var predicates = toArray(arguments);
 		return function () {
 			var args = toArray(arguments);
-			return fns.every( function (fn) {
-				return fn.apply(this, args);
+			return predicates.every( function (predicate) {
+				return predicate.apply(this, args);
 			});
 		};
 	}

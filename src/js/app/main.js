@@ -23,6 +23,7 @@ define( function(require) {
 	var last      = require('agj/array/last');
 	var flatten   = require('agj/array/flatten');
 	var within    = require('agj/array/within');
+	var merge     = require('agj/object/merge');
 	var to        = require('agj/to');
 	var is        = require('agj/is');
 	var on        = require('agj/utils/eventConstants');
@@ -34,11 +35,16 @@ define( function(require) {
 	var argumentize     = require('app/function/argumentize');
 	var all             = require('app/function/all');
 	var distance        = require('app/point/distance');
+	var pointSubtract   = require('app/point/subtract');
+	var radians         = require('app/point/radians');
 	var normalizePoint  = require('app/point/normalizePoint');
 	var svgToRawStrokes = require('app/stroke/svgToRawStrokes');
 	var rawToBeziers    = require('app/stroke/rawToBeziers');
 	var beziersToPoints = require('app/stroke/beziersToPoints');
 	var SPY             = require('app/inspect');
+
+	var tail = last(-1);
+	var initial = first(-1);
 
 
 	var kanjiRoute = crossroads.addRoute('/kanji/{kanji}');
@@ -86,25 +92,39 @@ define( function(require) {
 				.map(closestHole);
 			var cursorPoint = streamify(canvas, on.mouse.move)
 				.map(eventToCoords(canvas))
-				.toProperty()
-				.takeUntil(routeChanged);
+				.takeUntil(routeChanged)
+				.toProperty();
 
 			cursorPoint
 			.slidingWindow(2, 2)
 			.onValue( argumentize(function (before, now) {
+				var match;
 				if (yarn.length) {
-					var lastPoint = freeYarn.length ? last(freeYarn) : last(last(yarn));
-					var match = pins
+					var allPoints = flatten(yarn).concat(freeYarn);
+					var lastPoint = last(allPoints);
+					match = pins
 						.filter(all(
 							not(is.equal(lastPoint)),
 							inTriangle(before, now, lastPoint)
 						))
 						[0];
 					if (match) {
-						freeYarn.push(match);
+						freeYarn.push(merge(match, {
+							angle: radians(pointSubtract(match, lastPoint)),
+							turn: bend([lastPoint, match, now]),
+						}));
 					}
 				}
-				// if (freeYarn.length < 1) freeYarn.push(now);
+				// if (!match && yarn.length) {
+				// 	while (freeYarn.length >= 1) {
+				// 		var start = [last(last(yarn))].concat(freeYarn).passTo(last(2));
+				// 		if (bendsRight(start.concat(before)) !== bendsRight(start.concat(now))) {
+				// 			freeYarn = initial(freeYarn);
+				// 		} else {
+				// 			break;
+				// 		}
+				// 	}
+				// }
 				doDraw(canvas, bezierStrokes, pointStrokes, yarn.concat([freeYarn.concat(now)]));
 			}));
 
@@ -136,7 +156,9 @@ define( function(require) {
 
 
 	hasher.initialized.addOnce(parseHash);
-	hasher.changed.add(parseHash);
+	hasher.changed.add( function (newHash, oldHash) {
+		crossroads.parse(newHash);
+	});
 
 	rsvp.on('error', raise);
 
@@ -149,10 +171,6 @@ define( function(require) {
 
 	function raise(err) {
 		console.assert(false, err);
-	}
-
-	function parseHash(newHash, oldHash) {
-		crossroads.parse(newHash);
 	}
 
 	var eventToCoords = function (el) {
@@ -177,13 +195,32 @@ define( function(require) {
 		else last(yarn)[last(yarn).length - 1] = point;
 	}
 
-	var inTriangle = autoCurry(function (p0, p1, p2, p) {
-		var A = 1/2 * (-p1.y * p2.x + p0.y * (-p1.x + p2.x) + p0.x * (p1.y - p2.y) + p1.x * p2.y);
+	var inTriangle = autoCurry(function (ta, tb, tc, p) {
+		var A = 1/2 * (-tb.y * tc.x + ta.y * (-tb.x + tc.x) + ta.x * (tb.y - tc.y) + tb.x * tc.y);
 		var sign = A < 0 ? -1 : 1;
-		var s = (p0.y * p2.x - p0.x * p2.y + (p2.y - p0.y) * p.x + (p0.x - p2.x) * p.y) * sign;
-		var t = (p0.x * p1.y - p0.y * p1.x + (p0.y - p1.y) * p.x + (p1.x - p0.x) * p.y) * sign;
+		var s = (ta.y * tc.x - ta.x * tc.y + (tc.y - ta.y) * p.x + (ta.x - tc.x) * p.y) * sign;
+		var t = (ta.x * tb.y - ta.y * tb.x + (ta.y - tb.y) * p.x + (tb.x - ta.x) * p.y) * sign;
 		
 		return s > 0 && t > 0 && (s + t) < 2 * A * sign;
 	});
+
+	function bendsRight(points) {
+		return bend(points) >= 0;
+	}
+
+	function bend(points) {
+		return pointSubtract(
+				radians(pointSubtract(points[2], points[1])),
+				radians(pointSubtract(points[1], points[2]))
+			);
+	}
+
+	var tau = Math.PI * 2;
+
+	function radianDifference(ra, rb) {
+		var diff = ra > rb ? ra - rb : rb - ra;
+		while (diff > Math.PI) diff = Math.abs(diff - tau);
+		return diff;
+	}
 
 });
